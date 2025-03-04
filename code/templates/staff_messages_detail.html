@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Lending</title>
+    <link rel="stylesheet" href="../static/css/main_style.css"> <!-- Link to external stylesheet -->
+    <script src="../static/js/theme-toggle.js" defer></script>
+        <link rel="stylesheet" href="../static/css/ranking_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav">Book Lending</a> <!-- Home page link -->
+                <a href="/messageBoard" class="nav active">Message Board</a> <!-- Link to message board -->
+                <a href="/lostFound" class="nav">Lost and Found</a> <!-- Link to lost and found section -->
+                <a href="/reading_ranking" class="nav" aria-current="page">Reading Ranking</a>
+            </div>
+            <div class="profile">
+                <a href="profile.html">
+                    <img src="{{session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                </a> <!-- Display profile image -->
+                <a href="/profile">Profile</a> <!-- Link to the user's profile -->
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+        <button class="return-button"  onclick="location.href='/messageBoard'">Return</button> <!-- Button for going back -->
+        <!-- Message List Section -->
+        <div class="message-list">
+            <!-- Each message item consists of a user's avatar, name, and message -->
+            <div class="message-item">
+                <img src="../static/photo/default_avatar.png" alt="Book Thumbnail"> <!-- User's profile image -->
+                <div class="message-info">
+                    <p><strong>Student Name:</strong> zhengqiya</p>
+                    <p><strong>Message:</strong> balabala</p> <!-- Display user's message -->
+                </div>
+            </div>
+
+            <div class="reply-item">
+                <img src="../static/photo/default_avatar.png" alt="Book Thumbnail">
+                <div class="message-info">
+                    <p><strong>Staff Name:</strong> Boran</p>
+                    <p><strong>Message:</strong> balabala</p>
+                </div>
+            </div>
+
+            <div class="message-item">
+                <img src="../static/photo/default_avatar.png" alt="Book Thumbnail">
+                <div class="message-info">
+                    <p><strong>Student Name:</strong> dabianren</p>
+                    <p><strong>Message:</strong> balabala</p>
+                </div>
+            </div>
+
+            <div class="reply-item">
+                <img src="../static/photo/default_avatar.png" alt="Book Thumbnail">
+                <div class="message-info">
+                    <p><strong>Satff Name:</strong> yangyangnao</p>
+                    <p><strong>Message:</strong> balabala</p>
+                </div>
+            </div>
+
+            <div class="message-item">
+                <img src="../static/photo/default_avatar.png" alt="Book Thumbnail">
+                <div class="message-info">
+                    <p><strong>Student Name:</strong> Aidian</p>
+                    <p><strong>Message:</strong> balabala</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar Section for posting new messages -->
+        <div class="search-bar">
+            <input type="text" class="message_search" placeholder="Please input here…"> <!-- Input box for typing a message -->
+            <button>Reply</button> <!-- Button to post a comment -->
+        </div>
+    </div>
+ <script>
+        // Role information passed from the back end is dynamically set to the front end
+        const userRole = "{{ userRole }}";
+        console.log(userRole); // 打印角色，检查是否正确传递到前端
+ </script>
+
+</body>
+</html>

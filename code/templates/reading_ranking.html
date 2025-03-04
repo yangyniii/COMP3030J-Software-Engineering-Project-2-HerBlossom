@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reading Ranking</title>
+    <link rel="stylesheet" href="../static/css/main_style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/ranking_style.css">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav">Book Lending</a> <!-- Home page link -->
+                <a href="/messageBoard" class="nav">Message Board</a> <!-- Link to message board -->
+                <a href="/lostFound" class="nav">Lost and Found</a> <!-- Link to lost and found section -->
+                <a href="/reading_ranking" class="nav active" aria-current="page">Reading Ranking</a>
+            </div>
+            <div class="profile">
+                {% if 'email' in session %}
+                    <!-- Display user profile if signed in -->
+                    <a href="/profile">
+                        <img src="{{ session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                    </a>
+                    <a href="/profile">Profile</a>
+                {% else %}
+                    <!-- Display sign-in option if not signed in -->
+                    <a href="/signin">
+                        <img src="../static/photo/default_avatar.png" alt="Profile Image">
+                    </a>
+                    <a href="/signin">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="tab-buttons">
+            <div id="books-tab" class="tab active">Books</div>
+            <div id="users-tab" class="tab">Users</div>
+        </div>
+
+
+         <!-- Reading Ranking Section -->
+        <div class="reading-ranking" id="books-section">
+            <h2>Reading Volume Ranking</h2>
+            {% if books %}
+                <div class="podium">
+                    <div class="book rank-2">
+                        <div class="item">
+                            <a href="/book_detail?book_id={{ books[1].id }}" class="book-item-link">
+                                <img src="{{ books[1].thumbnail_url }}" alt="{{ books[1].title }}">
+                                <p><strong>{{ books[1].title }}</strong></p>
+                                <p>{{ books[1].author }}</p>
+                                <p>Read Count: {{ books[1].read_count }}</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="book rank-1">
+                        <div class="item">
+                            <a href="/book_detail?book_id={{ books[0].id }}" class="book-item-link">
+                                <img src="{{ books[0].thumbnail_url }}" alt="{{ books[0].title }}">
+                                <p><strong>{{ books[0].title }}</strong></p>
+                                <p>{{ books[0].author }}</p>
+                                <p>Read Count: {{ books[0].read_count }}</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="book rank-3">
+                        <div class="item">
+                            <a href="/book_detail?book_id={{ books[2].id }}" class="book-item-link">
+                                <img src="{{ books[2].thumbnail_url }}" alt="{{ books[2].title }}">
+                                <p><strong>{{ books[2].title }}</strong></p>
+                                <p>{{ books[2].author }}</p>
+                                <p>Read Count: {{ books[2].read_count }}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    {% for book in books[3:] %}
+                        <div class="item">
+                            <div class="imgBx">
+                                <img src="{{ book.thumbnail_url }}" alt="{{ book.title }}">
+                            </div>
+                            <a href="/book_detail?book_id={{ book.id }}" class="book-item-link">
+                                <div class="info">
+                                    <strong style="margin: 5px;">{{ book.title }}</strong>
+                                    <p style="margin: 3px;">{{ book.author }}</p>
+                                    <p style="margin: 3px;">Read Count: {{ book.read_count }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No books available for ranking.</p>
+            {% endif %}
+        </div>
+
+        <div class="reading-ranking" id="users-section" style="display: none;">
+            <h2>Monthly User Reading Ranking</h2>
+            <div id="users-ranking-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const booksTab = document.getElementById('books-tab');
+        const usersTab = document.getElementById('users-tab');
+        const booksSection = document.getElementById('books-section');
+        const usersSection = document.getElementById('users-section');
+        const usersRankingContent = document.getElementById('users-ranking-content');
+
+        booksTab.addEventListener('click', () => {
+            booksTab.classList.add('active');
+            usersTab.classList.remove('active');
+            booksSection.style.display = 'block';
+            usersSection.style.display = 'none';
+        });
+
+        usersTab.addEventListener('click', () => {
+            usersTab.classList.add('active');
+            booksTab.classList.remove('active');
+            booksSection.style.display = 'none';
+            usersSection.style.display = 'block';
+            fetchUserRanking();
+        });
+
+        function fetchUserRanking() {
+            fetch('/user_ranking')
+                .then(response => response.json())
+                .then(data => {
+                    usersRankingContent.innerHTML = data.users.map((user, index) => `
+                        <div class="item">
+                            <div class="imgBx">
+                                <img src="${user.avatar}" alt="${user.name}">
+                            </div>
+                            <div class="info">
+                                <strong style="margin: 5px;">${user.name}</strong>
+                                <p style="margin: 5px;">Total Reading Volumn: ${user.read_count}</p>
+                                ${index < 3 ? `
+                                    <div class="rank">
+                                        <strong>${index + 1}</strong>
+                                    </div>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => console.error('Error fetching user ranking:', error));
+        }
+
+
+        setInterval(() => {
+            fetch('/heartbeat', { method: 'POST' })  <!-- Send a POST request to the server -->
+                .then(response => response.json())   <!-- Parse the JSON response -->
+                .then(data => {
+                    console.log('Heartbeat received:', data);  <!-- Log the server response -->
+                })
+                .catch(error => {
+                    console.error('Heartbeat failed:', error);  <!-- Handle errors -->
+                });
+        }, 5000);  <!-- Interval set to 5 seconds -->
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found</title> <!-- Page title -->
+    <link rel="stylesheet" href="../static/css/main_style.css"> <!-- Link to external stylesheet -->
+    <script src="../static/js/theme-toggle.js" defer></script>
+        <link rel="stylesheet" href="../static/css/ranking_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav">Book Lending</a> <!-- Home page link -->
+                <a href="/messageBoard" class="nav ">Message Board</a> <!-- Link to message board -->
+                <a href="/lostFound" class="nav active">Lost and Found</a> <!-- Link to lost and found section -->
+                <a href="/reading_ranking" class="nav" aria-current="page">Reading Ranking</a>
+            </div>
+            <div class="profile">
+                {% if 'email' in session %}
+                    <!-- If user is logged in (session contains email) -->
+                    <a href="/profile">
+                        <img src="{{ session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                    </a>
+                    <a href="/profile">Profile</a> <!-- Link to user profile -->
+                {% else %}
+                    <!-- If user is not logged in, show sign-in option -->
+                    <a href="/signin">
+                        <img src="../static/photo/default_avatar.png" alt="Profile Image">
+                    </a>
+                    <a href="/signin">Sign In</a> <!-- Link to sign in page -->
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+
+                <!-- Search Bar Section -->
+        <div class="search-bar">
+            <button id="add-lost-btn">Add Lost</button> <!-- Search button -->
+            <input type="text" id="search-input" placeholder="Search for lost items..."> <!-- Input box for searching lost items -->
+            <button id="search-button">Search</button>
+        </div>
+
+        <!-- Date Filter Section -->
+        <div class="date-filter">
+            <label for="dateLost">Filter by Date Lost:</label>
+            <input type="date" id="dateLost" name="dateLost" onchange="filterByDate()"> <!-- Date input for filtering -->
+        </div>
+
+        <!-- List Section -->
+        <div class="lost-found-list" id="lost-list">
+            <!-- will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Heartbeat Script -->
+    <script>
+        setInterval(() => {
+            fetch('/heartbeat', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Heartbeat received:', data);
+                })
+                .catch(error => {
+                    console.error('Heartbeat failed:', error);
+                });
+        }, 5000);
+
+        // Fetch books information on page load
+        window.onload = function () {
+            fetch('/post_lost')
+                .then(response => response.json())
+                .then(data => {
+                    const lostList = document.getElementById('lost-list');
+                    if (data.losts) {
+                        data.losts.forEach(lost => {
+                            const lostItem = document.createElement('div');
+                            lostItem.className = 'lost-item';
+                            lostItem.innerHTML = `
+                                <a href="/lost_detail?lost_id=${lost.id}" class="lost-item-link">
+                                    <img src="${lost.thumbnail_url}" alt="Lost Thumbnail" class="lost-image">
+                                    <div class="lost-info">
+                                        <p><strong>Lost Name:</strong> ${lost.name}</p>
+                                        <p><strong>Date:</strong> ${lost.date}</p>
+                                        <p><strong>Location:</strong> ${lost.location}</p>
+                                    </div>
+                                </a>
+                            `;
+                            lostList.appendChild(lostItem);
+                        });
+                    } else {
+                        lostList.innerHTML = '<p>No lost found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        };
+
+        // Add Lost Button Click Event
+        document.getElementById('add-lost-btn').onclick = function() {
+            window.location.href = '/add_lost';
+        };
+
+        // Search button click event
+        document.getElementById('search-button').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            fetchLosts(searchTerm);
+        });
+
+        // Function to fetch losts
+        function fetchLosts(searchTerm = '') {
+            fetch(`/search_losts?name=${searchTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    const lostList = document.getElementById('lost-list');
+                    lostList.innerHTML = ''; // Clear existing losts
+                    if (data.losts && data.losts.length > 0) {
+                        data.losts.forEach(lost => {
+                            const lostItem = document.createElement('div');
+                            lostItem.className = 'lost-item';
+                            lostItem.innerHTML = `
+                                <a href="/lost_detail?lost_id=${lost.id}" class="lost-item-link">
+                                    <img src="${lost.thumbnail_url}" alt="Lost Thumbnail" class="lost-image">
+                                    <div class="lost-info">
+                                        <p><strong>Lost Name:</strong> ${lost.name}</p>
+                                        <p><strong>Date:</strong> ${lost.date}</p>
+                                        <p><strong>Location:</strong> ${lost.location}</p>
+                                    </div>
+                                </a>
+                            `;
+                            lostList.appendChild(lostItem);
+                        });
+                    } else {
+                        lostList.innerHTML = '<p>No losts found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                }
+
+        // Enter key press event for search input
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = document.getElementById('search-input').value;
+                fetchLosts(searchTerm);
+            }
+        });
+
+        // filterByDate function
+        function filterByDate() {
+            const selectedDate = document.getElementById('dateLost').value;
+            fetchLostsByDate(selectedDate);
+        }
+
+        function fetchLostsByDate(date) {
+            fetch(`/search_losts_by_date?date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    const lostList = document.getElementById('lost-list');
+                    lostList.innerHTML = '';
+                    if (data.losts && data.losts.length > 0) {
+                        data.losts.forEach(lost => {
+                            const lostItem = document.createElement('div');
+                            lostItem.className = 'lost-item';
+                            lostItem.innerHTML = `
+                                <a href="/lost_detail?lost_id=${lost.id}" class="lost-item-link">
+                                    <img src="${lost.thumbnail_url}" alt="Lost Thumbnail" class="lost-image">
+                                    <div class="lost-info">
+                                        <p><strong>Lost Name:</strong> ${lost.name}</p>
+                                        <p><strong>Date:</strong> ${lost.date}</p>
+                                        <p><strong>Location:</strong> ${lost.location}</p>
+                                    </div>
+                                </a>
+                            `;
+                            lostList.appendChild(lostItem);
+                        });
+                    } else {
+                        lostList.innerHTML = '<p>No losts found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+    <script>
+        const toggleButton = document.getElementById('toggleTheme');
+        toggleButton.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                toggleButton.textContent = 'Switch to Light Mode';
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                toggleButton.textContent = 'Switch to Dark Mode';
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.classList.add(savedTheme);
+                const toggleButton = document.getElementById('toggleTheme');
+                toggleButton.textContent = savedTheme === 'dark-mode' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+            }
+        });
+    </script>
+</body>
+</html>

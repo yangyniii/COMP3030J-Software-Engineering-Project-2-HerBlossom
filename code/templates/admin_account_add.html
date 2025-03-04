@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Account</title> <!-- Title of the page -->
+    <link rel="stylesheet" href="../static/css/style1.css"> <!-- Link to external stylesheet -->
+        <link rel="stylesheet" href="../static/css/ranking_style.css">
+    <base href="http://127.0.0.1:5222/"> <!-- Base URL for relative links -->
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Button to return to the homepage -->
+        <button class="return-button" onclick="location.href='../'">Return</button>
+
+        <!-- Sign-in form -->
+        <form>
+            <!-- Logo Image -->
+            <img src="../static/photo/logo.png" alt="Logo" style="display: block; margin: 0 auto 10px;width: 350px; height: auto;">
+
+            <!-- Identification Dropdown -->
+            <label for="identification">Identification:</label>
+            <select id="identification" name="identification">
+                <option value="">Select an option</option> <!-- Default placeholder option -->
+                <option value="Student">Student</option>
+                <option value="Staff">Staff</option>
+                <option value="Administrator">Administrator</option>
+            </select>
+
+            <!-- Name input field -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Please enter your name" required>
+
+            <!-- Email input field -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Please enter your email" required>
+
+            <!-- Password input field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Please enter your password" required>
+
+            <!-- Verify Password input field -->
+            <label for="verify-password">Verify Password:</label>
+            <input type="password" id="verify-password" name="verify-password" placeholder="Please verify your password" required>
+
+            <!-- Buttons for submission or cancellation -->
+            <div class="button-group">
+                <button type="button" onclick="validateForm()">Add</button> <!-- Sign in button -->
+                <button type="button">Cancel</button> <!-- Cancel button -->
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Function to validate form input
+        function validateForm() {
+            // Get values from form fields
+            const identification = document.getElementById("identification").value;
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const verifyPassword = document.getElementById("verify-password").value;
+
+            // Check if all fields are filled out
+            if (!identification || !name || !email || !password || !verifyPassword) {
+                alert("Your information is not completely filled in");
+                return;
+            }
+
+            // Check if password and verify password match
+            if (password !== verifyPassword) {
+                alert("Password does not match, please enter again");
+                return;
+            }
+
+            // // Check if password meets the required pattern
+            // const pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            // if (!pattern.test(password)) {
+            //     alert("Password must be at least 8 characters long and contain at least one letter, one number, and one special character (@$!%*?&).");
+            //     return;
+            // }
+            //
+            // // Validate email format
+            // const patternEmail = /.*@.*$/;
+            // if (!patternEmail.test(email)) {
+            //     alert("Email must be in a valid email format (e.g., name@domain.com).");
+            //     return;
+            // }
+
+            // Send POST request to the server for registration
+            fetch('/addAccount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    identification: identification,
+                    name: name,
+                    email: email,
+                    password: password,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/'; // Redirect to homepage if registration is successful
+                } else {
+                    alert('Failed to sign up. Please try again.'); // Alert in case of failure
+                }
+            });
+        }
+    </script>
+</body>
+</html>

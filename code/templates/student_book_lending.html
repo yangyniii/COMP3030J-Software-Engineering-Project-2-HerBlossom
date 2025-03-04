@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Lending</title>
+    <link rel="stylesheet" href="../static/css/main_style.css"> <!-- Link to external stylesheet -->
+    <script src="../static/js/theme-toggle.js" defer></script>
+    <link rel="stylesheet" href="../static/css/ranking_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav active">Book Lending</a> <!-- Home page link -->
+                <a href="/messageBoard" class="nav ">Message Board</a> <!-- Link to message board -->
+                <a href="/lostFound" class="nav">Lost and Found</a> <!-- Link to lost and found section -->
+                <a href="/reading_ranking" class="nav" aria-current="page">Reading Ranking</a>
+            </div>
+            <div class="profile">
+                {% if 'email' in session %}
+                    <!-- Display user profile if signed in -->
+                    <a href="/profile">
+                        <img src="{{ session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                    </a>
+                    <a href="/profile">Profile</a>
+                {% else %}
+                    <!-- Display sign-in option if not signed in -->
+                    <a href="/signin">
+                        <img src="../static/photo/default_avatar.png" alt="Profile Image">
+                    </a>
+                    <a href="/signin">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+
+        <!-- Search Bar Section -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for books..."> <!-- Search input box -->
+            <button id="search-button">Search</button> <!-- Search button -->
+        </div>
+
+        <!-- Tags Section (for book categories) -->
+        <div class="tags">
+            <span class="tag" data-tag="Dystopian">Dystopian</span>
+            <span class="tag" data-tag="Fiction">Fiction</span>
+            <span class="tag" data-tag="Classic">Classic</span>
+        </div>
+
+        <!-- Book List Section -->
+        <div class="book-list" id="book-list">
+            <!-- Books will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Heartbeat Script (Sends periodic heartbeat requests to server every 5 seconds) -->
+    <script>
+        setInterval(() => {
+            fetch('/heartbeat', { method: 'POST' })  <!-- Send a POST request to the server -->
+                .then(response => response.json())   <!-- Parse the JSON response -->
+                .then(data => {
+                    console.log('Heartbeat received:', data);  <!-- Log the server response -->
+                })
+                .catch(error => {
+                    console.error('Heartbeat failed:', error);  <!-- Handle errors -->
+                });
+        }, 5000);  <!-- Interval set to 5 seconds -->
+
+        // Fetch books information on page load
+        window.onload = function () {
+            fetch('/post_book')
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    if (data.books) {
+                        data.books.forEach(book => {
+                            const bookItem = document.createElement('div');
+                            bookItem.className = 'book-item';
+                            bookItem.innerHTML = `
+                            <a href="/book_detail?book_id=${book.id}" class="book-item-link">
+                                <div class="flex-container">
+                                    <img src="${book.thumbnail_url}" alt="Book Thumbnail" class="book-image">
+                                    <div class="book-info">
+                                        <p><strong>Book Name:</strong> ${book.title}</p>
+                                        <p><strong>Author:</strong> ${book.author}</p>
+                                        <p><strong>Publisher:</strong> ${book.publisher}</p>
+                                        <p><strong>Number of Collections:</strong> ${book.collections}</p>
+                                        <p><strong>Number of Borrowed:</strong> ${book.borrowed}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            `;
+                            bookList.appendChild(bookItem);
+                        });
+                    } else {
+                        bookList.innerHTML = '<p>No books found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Search button click event
+        document.getElementById('search-button').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            fetchBooks(searchTerm);
+        });
+
+        // Function to fetch books
+        function fetchBooks(searchTerm = '') {
+            fetch(`/search_books?title=${searchTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    bookList.innerHTML = ''; // Clear existing books
+                    if (data.books && data.books.length > 0) {
+                        data.books.forEach(book => {
+                            const bookItem = document.createElement('div');
+                            bookItem.className = 'book-item';
+                            bookItem.innerHTML = `
+                            <a href="/book_detail?book_id=${book.id}" class="book-item-link">
+                                <div class="flex-container">
+                                    <img src="${book.thumbnail_url}" alt="Book Thumbnail" class="book-image">
+                                    <div class="book-info">
+                                        <p><strong>Book Name:</strong> ${book.title}</p>
+                                        <p><strong>Author:</strong> ${book.author}</p>
+                                        <p><strong>Publisher:</strong> ${book.publisher}</p>
+                                        <p><strong>Number of Collections:</strong> ${book.collections}</p>
+                                        <p><strong>Number of Borrowed:</strong> ${book.borrowed}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            `;
+                            bookList.appendChild(bookItem);
+                        });
+                    } else {
+                        bookList.innerHTML = '<p>No books found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Enter key press event for search input
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = document.getElementById('search-input').value;
+                fetchBooks(searchTerm);
+            }
+        });
+
+        // Function to fetch books by tag
+        function fetchBooksByTag(tag) {
+            fetch(`/search_books_by_tag?tag=${tag}`)
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    bookList.innerHTML = ''; // Clear existing books
+                    if (data.books && data.books.length > 0) {
+                        data.books.forEach(book => {
+                            const bookItem = document.createElement('div');
+                            bookItem.className = 'book-item';
+                            bookItem.innerHTML = `
+                            <a href="/book_detail?book_id=${book.id}" class="book-item-link">
+                                <div class="flex-container">
+                                    <img src="${book.thumbnail_url}" alt="Book Thumbnail" class="book-image">
+                                    <div class="book-info">
+                                        <p><strong>Book Name:</strong> ${book.title}</p>
+                                        <p><strong>Author:</strong> ${book.author}</p>
+                                        <p><strong>Publisher:</strong> ${book.publisher}</p>
+                                        <p><strong>Number of Collections:</strong> ${book.collections}</p>
+                                        <p><strong>Number of Borrowed:</strong> ${book.borrowed}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            `;
+                            bookList.appendChild(bookItem);
+                        });
+                    } else {
+                        bookList.innerHTML = '<p>No books found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Add click event listeners to tags
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const tagValue = this.getAttribute('data-tag');
+                fetchBooksByTag(tagValue);
+            });
+        });
+    </script>
+</body>
+</html>

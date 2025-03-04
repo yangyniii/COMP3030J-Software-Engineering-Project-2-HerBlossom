@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Found Detail</title>
+    <link rel="stylesheet" href="../static/css/detail.css">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="lost-found-container">
+    <button class="return-button" onclick="location.href='/lostFound'">Return</button>
+
+    <div class="lost-detail">
+        <div class="lost-image">
+            <img src="{{ lost.thumbnail_url }}" alt="Lost Thumbnail" id="lost-thumbnail" style="max-width: 200px; max-height: 200px;">
+            <input type="file" id="upload-thumbnail" style="display: none;" accept="image/*">
+            <!-- 将按钮移动到这里 -->
+            <button class="action-button" id="change-thumbnail-button">Change Thumbnail</button>
+        </div>
+
+        <div class="lost-info">
+            <p><strong>Lost Name:</strong> <span id="name">{{ lost.name }}</span></p>
+            <p><strong>Found Date:</strong> <span id="date">{{ lost.date }}</span></p>
+            <p><strong>Found Location:</strong> <span id="location">{{ lost.location }}</span></p>
+            <p><strong>Description:</strong> <span id="description">{{ lost.description }}</span></p>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <button class="action-button" id="first-button" style="display:none;"></button>
+        <button class="action-button" id="second-button" style="display:none;"></button>
+        <button class="action-button" id="third-button" style="display:none;"></button>
+    </div>
+</div>
+
+
+    <script>
+        // Role information passed from the back end is dynamically set to the front end
+        const identification = "{{ identification }}";
+        console.log(identification);
+
+        // Get button element
+        const firstButton = document.getElementById('first-button');
+        const secondButton = document.getElementById('second-button');
+        const thirdButton = document.getElementById('third-button');
+
+        // Set the button text and visibility based on the user role
+        if (identification === 'Staff'|| identification === 'Administrator') {
+            firstButton.textContent = 'Change';
+            secondButton.textContent = 'Save';
+            thirdButton.textContent = 'Delete';
+
+            // Make buttons visible
+            firstButton.style.display = 'inline-block';
+            secondButton.style.display = 'inline-block';
+            thirdButton.style.display = 'inline-block';
+        } else {
+            // Hide buttons or ensure they are inaccessible for students
+            firstButton.style.display = 'none';
+            secondButton.style.display = 'none';
+            thirdButton.style.display = 'none';
+
+            // Optionally disable buttons to prevent any accidental interactions
+            firstButton.disabled = true;
+            secondButton.disabled = true;
+            thirdButton.disabled = true;
+        }
+
+        // Add event listener to the "Lend" button
+        firstButton.addEventListener('click', function() {
+            if (identification === 'Staff' || identification === 'Administrator') {
+                enableEditMode();
+            }
+        });
+
+        // Add event listener to the "Save" button
+        secondButton.addEventListener('click', function() {
+            if (identification === 'Staff' || identification === 'Administrator') {
+                saveChanges();
+            }
+        });
+
+        thirdButton.addEventListener('click', function() {
+            if (identification === 'Staff' || identification === 'Administrator') {
+                deleteLost();
+            }
+        });
+
+
+        function saveChanges() {
+            const lostInfoElements = document.querySelectorAll('.lost-info input');
+            const updatedLostInfo = {
+                lost_id: "{{ lost.id }}"
+            };
+
+            lostInfoElements.forEach(input => {
+                const fieldName = input.parentElement.id;
+                updatedLostInfo[fieldName] = input.value;
+            });
+
+            fetch('/update_lost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedLostInfo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Lost information updated successfully!');
+                    // Revert back to display mode
+                    disableEditMode();
+                } else {
+                    alert('Failed to update lost information: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        }
+
+        function disableEditMode() {
+            const lostInfoElements = document.querySelectorAll('.lost-info input');
+            lostInfoElements.forEach(input => {
+                input.parentElement.textContent = input.value;
+            });
+        }
+
+        function enableEditMode() {
+            const lostInfoElements = document.querySelectorAll('.lost-info span');
+            lostInfoElements.forEach(element => {
+                const currentText = element.textContent;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                element.innerHTML = '';
+                element.appendChild(input);
+            });
+        }
+
+         function deleteLost() {
+                const lostId = "{{ lost.id }}";
+
+                fetch(`/delete_lost?lost_id=${lostId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Lost information deleted successfully!');
+                        window.location.href = '/lostFound';
+                    } else {
+                        alert('Failed to delete lost information: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your request.');
+                });
+            }
+
+
+
+        // 获取 change-thumbnail-button 元素
+        const changeThumbnailButton = document.getElementById('change-thumbnail-button');
+
+        // 根据用户身份决定按钮可见性
+        if (identification === 'Staff' || identification === 'Administrator') {
+            // 如果是 staff 或 admin，则显示按钮
+            changeThumbnailButton.style.display = 'block';
+        } else {
+            // 否则隐藏按钮
+            changeThumbnailButton.style.display = 'none';
+        }
+
+        // 添加事件监听器，点击按钮触发上传文件操作
+        changeThumbnailButton.addEventListener('click', function() {
+            document.getElementById('upload-thumbnail').click();
+        });
+
+
+    document.getElementById('upload-thumbnail').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // 实时预览图片
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('lost-thumbnail').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // 上传图片到后端
+            const formData = new FormData();
+            formData.append('lost_id', "{{ lost.id }}");
+            formData.append('thumbnail', file);
+
+            fetch('/upload_lost_thumbnail', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thumbnail updated successfully!');
+                } else {
+                    alert('Failed to update thumbnail: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the thumbnail.');
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

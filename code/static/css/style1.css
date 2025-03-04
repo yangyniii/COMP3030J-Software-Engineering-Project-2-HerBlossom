@@ -1,0 +1,378 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Set the background color to light blue */
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+.register-button {
+    position: absolute;
+    top: 120px;
+    right: 320px;
+    background-color: #254f6b; /* Set background color of the register button */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px;
+    cursor: pointer; /* Change cursor to pointer on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.register-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.container {
+    position: relative;
+    background-color: #e6f2ff; /* Set container background color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    width: 600px; /* Set container width */
+    height: auto; /* Set container height */
+    text-align: left;
+}
+
+.container img {
+    display: block;
+    margin: 0 auto 20px; /* Center the image horizontally and add bottom margin */
+    width: auto;
+    height: 100px; /* Set image height */
+}
+
+.container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold; /* Bold the labels */
+    font-size: 20px;
+}
+
+.container input, .container select {
+    width: 100%; /* Full width for inputs and select elements */
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Border around input and select elements */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in the width/height calculation */
+}
+
+.remember-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Set gap between checkbox and label */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.remember-container input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-right: 10px; /* Add margin between checkbox and label */
+}
+
+.button-group {
+    display: flex;
+    position: relative;
+    justify-content: center; /* Center buttons horizontally */
+    gap: 400px; /* Add large gap between buttons */
+}
+
+.container button {
+    background-color: #254f6b; /* Set background color of buttons */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px;
+}
+
+.container button:hover {
+    background-color: #357ab7; /* Change background color on hover */
+}
+
+.profile-photo {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-photo img {
+    width: 200px;
+    height: 200px; /* Set profile photo size */
+}
+
+.profile-photo button {
+    margin-top: 10px; /* Add margin above the button */
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column; /* Stack profile info vertically */
+    gap: 20px; /* Add gap between profile sections */
+}
+
+.profile-info div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add gap between label and value */
+    margin-bottom: 10px;
+}
+
+/* style1.css */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #e6f2ff; /* Container background color */
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Maximum width for better readability */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.ban-button {
+    background-color: #254f6b; /* Set background color of buttons */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px;
+    display: flex; /* Use flexbox for vertical alignment */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Add small gap between buttons */
+}
+
+/* Dark mode styles for modal */
+body.dark-mode .modal {
+    background-color: rgba(33, 37, 41, 0.8); /* Dark background with opacity */
+}
+
+body.dark-mode .modal-content {
+    background-color: #1e2a33; /* Dark background color */
+    border-color: #444; /* Dark border */
+    color: #e0e0e0; /* Light text color */
+}
+
+body.dark-mode .close {
+    color: #aaa;
+}
+
+body.dark-mode .close:hover,
+body.dark-mode .close:focus {
+    color: #e0e0e0;
+}
+
+body.dark-mode .ban-button {
+    background-color: #ff5722; /* Orange color for better visibility in dark mode */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px;
+    display: flex; /* Use flexbox for vertical alignment */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+}
+
+body.dark-mode .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Add small gap between buttons */
+}
+
+/* Other existing styles remain unchanged */
+
+
+body.dark-mode .text {
+    color: #000000;
+}
+
+/* Bold all labels in profile info section */
+.profile-info label {
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 100px; /* Ensure label width consistency */
+}
+
+/* Control the style of spans in profile info */
+.profile-info span {
+    flex: 1;
+    font-size: 18px;
+    color: #333; /* Set color for the text */
+}
+
+.profile-info #password {
+    flex: 1;
+}
+
+.return-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #254f6b; /* Set background color for the return button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer; /* Change cursor to pointer on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.return-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Add small gap between buttons */
+}
+
+.signout-button {
+    background-color: #d9534f; /* Set background color for signout button */
+}
+
+.signout-button:hover {
+    background-color: #c9302c; /* Change background color on hover */
+}
+
+nav.breadcrumb {
+    padding: 0.8em 1em;
+    border: 1px solid hsl(0deg 0% 90%); /* Set border for breadcrumb navigation */
+    border-radius: 4px; /* Rounded corners */
+    background: hsl(300deg 14% 97%); /* Light background color */
+}
+
+nav.breadcrumb ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none; /* Remove default list styles */
+}
+
+nav.breadcrumb li {
+    display: inline;
+}
+
+nav.breadcrumb li + li::before {
+    display: inline-block;
+    margin: 0 0.25em;
+    transform: rotate(15deg);
+    border-right: 0.1em solid currentcolor; /* Add separator between breadcrumb items */
+    height: 0.8em;
+    content: "";
+}
+
+nav.breadcrumb [aria-current="page"] {
+    color: #000;
+    font-weight: 700; /* Highlight the current page in the breadcrumb */
+    text-decoration: none;
+}
+
+/* 深色模式样式 */
+body.dark-mode {
+    background-color: #121212; /* 深色背景 */
+    color: #e0e0e0; /* 浅色文字 */
+}
+
+body.dark-mode .container {
+    background-color: #1e2a33; /* 容器背景色 */
+}
+
+body.dark-mode .navbar {
+    background-color: #1f3c53; /* 深色背景的导航栏 */
+}
+
+body.dark-mode .navbar a {
+    color: #e0e0e0; /* 浅色文字 */
+}
+
+body.dark-mode .message-item {
+    background-color: #2a2a2a; /* 深色背景的消息项 */
+    color: #e0e0e0; /* 浅色文字 */
+}
+
+body.dark-mode .navbar a.active {
+    color: #64b5f6; /* 激活状态下的链接颜色 */
+}
+
+body.dark-mode .message-list {
+    background-color: #181818; /* 深色背景的消息列表 */
+}
+
+body.dark-mode .text {
+    color: #bfd5ec;
+}
+
+body.dark-mode .search-bar input {
+    background-color: #333; /* 深色输入框 */
+    color: #e0e0e0; /* 浅色文字 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .search-bar button {
+    background-color: #1f3c53; /* 深色按钮背景 */
+    color: #fff; /* 白色文字 */
+}
+
+body.dark-mode .search-bar button:hover {
+    background-color: #003f6b; /* 深色按钮悬停效果 */
+}
+
+/* Bold all labels in profile info section */
+body.dark-mode .profile-info label {
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 100px; /* Ensure label width consistency */
+    color: #f0f5ff; /* Set color for the text */
+}
+
+/* Control the style of spans in profile info */
+body.dark-mode .profile-info span {
+    flex: 1;
+    font-size: 18px;
+    color: #f0f5ff; /* Set color for the text */
+}
+
+body.dark-mode .profile-info #password {
+    flex: 1;
+}

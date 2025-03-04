@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Management</title>
+    <link rel="stylesheet" href="../static/css/main_style.css">
+        <link rel="stylesheet" href="../static/css/ranking_style.css">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar Section -->
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav active" aria-current="page">Account Management</a>
+                <a href="/log-file" class="nav" aria-current="page">Log File</a>
+            </div>
+            <div class="profile">
+                {% if 'email' in session %}
+                <!-- Display user profile if signed in -->
+                    <a href="/profile">
+                        <img src="{{ session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                    </a>
+                    <a href="/profile">Profile</a>
+                {% else %}
+                <!-- Display sign-in option if not signed in -->
+                    <a href="/signin">
+                        <img src="../static/photo/default_avatar.png" alt="Profile Image">
+                    </a>
+                    <a href="/signin">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+
+        <!-- Search Bar Section -->
+        <div class="search-bar">
+            <a href="/addAccount">
+                <button>Add</button>
+            </a>
+            <input type="text" placeholder="Search for accounts...">
+        </div>
+
+        <!-- Tags Section -->
+        <div class="tags">
+            <span id="all-tag">All</span>
+            <span id="student-tag">Student</span>
+            <span id="staff-tag">Staff</span>
+            <span id="admin-tag">Administrator</span>
+        </div>
+
+        <!-- Account List Section -->
+        <div class="book-list" id="account-list">
+            <!-- User cards will be dynamically added here -->
+        </div>
+    </div>
+
+<script>
+    // Function to fetch and display users based on the role or name
+    function fetchUsers(role = '', name = '') {
+        let url;
+        if (role) {
+            url = `/get_users_by_role?role=${role}`;
+        } else if (name) {
+            url = `/get_users_by_name?name=${name}`;
+        } else {
+            url = '/get_all_users';
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(users => {
+                const accountList = document.getElementById('account-list');
+                accountList.innerHTML = ''; // Clear existing content
+
+                if (users.length === 0) {
+                    accountList.innerHTML = '<p>No accounts found.</p>';
+                } else {
+                    users.forEach(user => {
+                        const userItem = `
+                            <a href="/account_detail?email=${encodeURIComponent(user.email)}" class="book-item-link">
+                                <div class="book-item">
+                                    <img src="${user.avatar}" alt="Profile Image">
+                                    <div class="book-info">
+                                        <p><strong>Account Name:</strong> ${user.name}</p>
+                                        <p><strong>Account Email:</strong> ${user.email}</p>
+                                        <p><strong>Role:</strong> ${user.identification}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                        accountList.innerHTML += userItem;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+            });
+    }
+
+    // Event listeners for tags
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchUsers();  // Default fetch all users
+
+        // Tag click event listeners
+        document.getElementById('all-tag').addEventListener('click', () => fetchUsers());
+        document.getElementById('student-tag').addEventListener('click', () => fetchUsers('Student'));
+        document.getElementById('staff-tag').addEventListener('click', () => fetchUsers('Staff'));
+        document.getElementById('admin-tag').addEventListener('click', () => fetchUsers('Administrator'));
+
+        // Search bar event listener
+        const searchBar = document.querySelector('.search-bar input[type="text"]');
+        searchBar.addEventListener('input', (event) => {
+            const name = event.target.value.trim();
+            fetchUsers('', name);  // Pass the name to fetchUsers
+        });
+    });
+</script>
+</body>
+</html>

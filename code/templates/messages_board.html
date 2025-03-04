@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages Board</title> <!-- Title for the Messages Board page -->
+    <link rel="stylesheet" href="../static/css/main_style.css"> <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="../static/css/ranking_style.css">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav">Book Lending</a> <!-- Home page link -->
+                <a href="/messageBoard" class="nav active">Message Board</a> <!-- Link to message board -->
+                <a href="/lostFound" class="nav">Lost and Found</a> <!-- Link to lost and found section -->
+                <a href="/reading_ranking" class="nav" aria-current="page">Reading Ranking</a>
+            </div>
+            <div class="profile">
+                <a href="profile.html">
+                    <img src="{{session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                </a> <!-- Display profile image -->
+                <a href="/profile">Profile</a> <!-- Link to the user's profile -->
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+
+        <!-- Message List Section -->
+        <div class="message-list">
+            {% for msg in messages %}
+            <!-- Each message item consists of a user's avatar, name, and message -->
+            <div class="message-item">
+                <img src="{{ msg.avatar }}" alt="Profile Image">
+                <div class="message-info">
+                    <p><strong>Student Name:</strong>  {{ msg.sender_name }}</p>
+                    <p><strong>Message:</strong>  {{ msg.message }}</p> <!-- Display user's message -->
+                </div>
+               <button class="check-btn" onclick="location.href='/messages_detail?message_id={{ msg.id }}'">Check</button>
+            </div>
+                {% endfor %}
+            </div>
+
+
+        <!-- Search Bar Section for posting new messages -->
+            <div class="search-bar">
+                {% if identification != 'Staff' %}
+                <input type="text" class="message_search" placeholder="Please input here…"> <!-- Input box for typing a message -->
+                <button id="comment-btn">Comment</button>
+                 {% endif %}
+            </div>
+
+        </div>
+
+    <!-- Heartbeat Script (Sends a periodic heartbeat request to the server every 5 seconds) -->
+    <script>
+
+        setInterval(() => {
+            fetch('/heartbeat', { method: 'POST' })  <!-- Send POST request to server -->
+                .then(response => response.json())   <!-- Parse the response as JSON -->
+                .then(data => {
+                    console.log('Heartbeat received:', data);  <!-- Log the server response -->
+                })
+                .catch(error => {
+                    console.error('Heartbeat failed:', error);  <!-- Handle errors -->
+                });
+        }, 5000);  <!-- Set the interval to 5 seconds -->
+
+
+
+        document.getElementById('comment-btn').addEventListener('click', function () {
+    const messageInput = document.querySelector('.message_search');
+    const messageContent = messageInput.value.trim();
+
+    if (!messageContent) {
+        alert('Please enter a message.');
+        return;
+    }
+
+    fetch('/post_message', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: messageContent })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Message posted successfully.') {
+            messageInput.value = ''; // 清空输入框
+
+            // 清空现有消息列表
+            const messageList = document.querySelector('.message-list');
+            messageList.innerHTML = '';
+
+            location.reload();
+            // 遍历新的消息列表并渲染到页面
+            data.messages.forEach(msg => {
+                const newMessageHtml = `
+                    <div class="message-item">
+                       <img src="${avatarUrl}" alt="Profile Image">
+                        <div class="message-info">
+                            <p><strong>Student Name:</strong> ${msg.sender_name}</p>
+                            <p><strong>Message:</strong> ${msg.message}</p>
+
+                        </div>
+                        <button class="check-btn" onclick="location.href='/messages_detail?message_id=${msg.id}'">Check</button>
+                    </div>
+                `;
+                messageList.insertAdjacentHTML('beforeend', newMessageHtml);
+            });
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+    </script>
+</body>
+</html>

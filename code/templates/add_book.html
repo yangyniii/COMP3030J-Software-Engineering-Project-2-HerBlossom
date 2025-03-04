@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Book</title>
+    <link rel="stylesheet" href="../static/css/style1.css"> <!-- Link to external stylesheet -->
+</head>
+<body>
+    <div class="container">
+        <h2>Add a New Book</h2>
+        <form id="add-book-form" method="POST" action="/add_book" enctype="multipart/form-data">
+    <div class="profile-photo">
+        <img id="cover" src="../static/photo/book.png" alt="Book Cover" style="max-width: 200px; max-height: 200px;">
+        <input type="file" name="thumbnail_url" accept="image/*" required>
+    </div>
+
+            <p><strong>Book Name:</strong>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <p><strong>Author:</strong>
+            <input type="text" id="author" name="author" required><br><br>
+
+            <p><strong>Publisher:</strong>
+            <input type="text" id="publisher" name="publisher" required><br><br>
+
+            <p><strong>Edition:</strong>
+            <input type="text" id="edition" name="edition" required><br><br>
+
+            <p><strong>ISBN:</strong>
+            <input type="text" id="isbn" name="isbn" required><br><br>
+
+            <p><strong>Tag:</strong>
+            <select id="tag" name="tag" required>
+                <option value="Dystopian">Dystopian</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Classic">Classic</option>
+            </select><br><br>
+
+            <p><strong>Description:</strong>
+            <textarea id="description" name="description" required></textarea><br><br>
+
+            <p><strong>Collections:</strong>
+            <input type="number" id="collections" name="collections" required><br><br>
+
+            <button type="button" onclick="goBack()">Return</button>
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+
+    <script>
+        // 获取 collections 输入框元素
+        const collectionsInput = document.getElementById('collections');
+
+        // 添加表单提交事件监听器
+        document.querySelector('form').addEventListener('submit', function(event) {
+            // 检查输入值是否为负数
+            if (parseInt(collectionsInput.value) < 0) {
+                // 如果输入值为负数，阻止表单提交
+                event.preventDefault();
+                alert('Collections value cannot be negative. Please enter a valid number.');
+            }
+        });
+
+        document.querySelector('input[name="thumbnail_url"]').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('cover').src = e.target.result; // 动态更新图片预览
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('add-book-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target); // FormData for multipart/form-data
+
+            fetch('/add_book', {
+                method: 'POST',
+                body: formData // Send formData directly
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Book added successfully!');
+                    window.location.href = '/'; // Redirect to home page
+                } else {
+                    alert('Failed to add book: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        });
+        function goBack() {
+            window.history.back();
+        }
+
+    </script>
+</body>
+</html>

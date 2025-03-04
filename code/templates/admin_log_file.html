@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log File</title>
+    <link rel="stylesheet" href="../static/css/main_style.css">
+    <link rel="stylesheet" href="../static/css/ranking_style.css">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar Section -->
+        <div class="navbar">
+            <div class="divider"></div>
+            <div class="nav-buttons">
+                <a href="/" class="nav" aria-current="page">Account Management</a>
+                <a href="/log-file" class="nav" aria-current="page">Log File</a>
+            </div>
+            <div class="profile">
+                {% if 'email' in session %}
+                    <a href="/profile">
+                        <img src="{{ session.avatar_url if 'avatar_url' in session else '../static/photo/default_avatar.png' }}" alt="Profile Image">
+                    </a>
+                    <a href="/profile">Profile</a>
+                {% else %}
+                    <a href="/signin">
+                        <img src="../static/photo/default_avatar.png" alt="Profile Image">
+                    </a>
+                    <a href="/signin">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="divider"></div> <!-- Divider line between navbar and content -->
+
+        <!-- Filter Section -->
+        <div class="filter-bar">
+            <label for="log-type">Filter by Type:</label>
+            <select id="log-type">
+                <option value="all">All</option>
+                <option value="info">Info</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+            </select>
+        </div>
+
+        <!-- Log List Section -->
+         <div class="book-list" id="log-list">
+            <!-- Log entries will be dynamically added here -->
+        </div>
+
+    </div>
+
+    <script>
+        // Function to fetch and display logs based on the type
+        function fetchLogs(logType = 'all') {
+            let url = `/get_logs?type=${logType}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(logs => {
+                    const logList = document.getElementById('log-list');
+                    logList.innerHTML = ''; // Clear existing content
+
+                    if (logs.length === 0) {
+                        logList.innerHTML = '<p>No logs found.</p>';
+                    } else {
+                        logs.forEach(log => {
+                            const logItem = `
+                                <div class="log-item ${log.type}">
+                                    <p><strong>Type:</strong> ${log.type.toUpperCase()}</p>
+                                    <p><strong>Date:</strong> ${log.date}</p>
+                                    <p><strong>Message:</strong> ${log.message}</p>
+                                </div>
+                            `;
+                            logList.innerHTML += logItem;
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching logs:', error);
+                });
+        }
+
+        // Event listeners for filter
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLogs();  // Default fetch all logs
+
+            // Filter select change event listener
+            document.getElementById('log-type').addEventListener('change', (event) => {
+                const logType = event.target.value;
+                fetchLogs(logType);
+            });
+        });
+    </script>
+</body>
+</html>

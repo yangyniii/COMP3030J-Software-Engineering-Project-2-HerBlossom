@@ -1,0 +1,1018 @@
+from flask import Flask, request, jsonify, session, render_template
+from mysql import Mysql
+from werkzeug.utils import secure_filename
+import os
+import time
+from datetime import datetime, timedelta
+
+from flask import Flask, request, jsonify, session, render_template, redirect  # 导入 redirect
+import bcrypt
+import logging
+from datetime import datetime
+
+# Configure logging
+logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Initialize the Flask application
+app = Flask(__name__)
+app.secret_key = '1'  # Set a random secret key
+
+# Record the last heartbeat time
+last_heartbeat_time = time.time()
+
+
+@app.route('/heartbeat', methods=['POST'])
+def heartbeat():
+    global last_heartbeat_time
+    last_heartbeat_time = time.time()
+    return jsonify({'message': 'Heartbeat received'})
+
+
+# Check heartbeat time before each request
+@app.before_request
+def check_heartbeat():
+    global last_heartbeat_time
+    if time.time() - last_heartbeat_time > 1200:  # If no heartbeat for more than 5 minutes
+        session.clear()  # Clear the session
+        # print("User may have closed the page")
+
+
+# Login route
+@app.route('/signin', methods=['POST'])
+def sign_in():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'message': 'Invalid data format'}), 400
+
+        email = data.get('email')
+        password = data.get('password')
+        identification = data.get('identification')
+
+        if not email or not password or not identification:
+            return jsonify({'message': 'All fields are required'}), 400
+
+        db = Mysql()
+        user = db.signin_user(identification, email, password)
+
+        if not user:
+            return jsonify({'message': 'Invalid email, password, or identification'}), 401
+
+        if user['id'] in session:
+            return jsonify({'message': 'Already logged in'}), 400
+
+        if user and user.get('is_banned'):
+            remaining_time = (user.get('ban_end_time') - datetime.now()).total_seconds()
+            if remaining_time > 0:
+                return jsonify({
+                    'message': 'Login failed. Your account is temporarily banned.',
+                    'ban_reason': user.get('ban_reason'),
+                    'time_left': remaining_time
+                }), 403
+
+        # Store user information in the session
+        session['identification'] = user['identification']
+        session['email'] = user['email']
+        session['user_id'] = user['id']
+        # print("Session data:", session)  # Debugging session data
+
+        # Redirect to main route based on identification
+        return redirect('/')
+
+    except Exception as e:
+        print("An error occurred:", str(e))  # Debug message
+        return jsonify({'message': 'An error occurred during login'}), 500
+
+
+# Route for the registration form
+@app.route('/register', methods=['GET'])
+def show_register_form():
+    return render_template('register.html')
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()  # Clear all session data
+    return jsonify({'message': 'Logged out successfully'})
+
+
+# Main page route
+@app.route('/', methods=['GET'])
+def enter_main():
+    identification = session.get('identification')
+    db = Mysql()
+
+    if identification == 'Administrator':
+        accounts = db.get_all_users()
+        return render_template('admin_account_management.html', accounts=accounts)
+    elif identification == 'Staff':
+        return render_template('staff_book_management.html')
+    elif identification == 'Student':
+        return render_template('student_book_lending.html')
+    else:
+        return redirect('/signin')
+
+
+
+@app.route('/messageBoard', methods=['GET'])
+def show_message_board():
+    db = Mysql()
+    identification = session.get('identification')
+    # 查询 replied == 0 的消息
+    sql = """
+        SELECT m.id AS message_id, m.sender_name, m.message, m.send_date, u.avatar
+        FROM message m
+        JOIN users u ON m.sender_id = u.id
+        WHERE m.replied = 0 AND m.message IS NOT NULL AND m.message != ''
+        ORDER BY m.send_date DESC
+    """
+
+    db.cursor.execute(sql)
+    raw_messages = db.cursor.fetchall()
+
+    # 转换为字典列表
+    messages = [
+        {'id': msg[0], 'sender_name': msg[1], 'message': msg[2], 'send_date': msg[3].strftime("%Y-%m-%d %H:%M:%S"),
+         'avatar': msg[4] or '../static/photo/default_avatar.png'}
+        for msg in raw_messages
+    ]
+
+    # 渲染 message_board 页面
+    return render_template('messages_board.html', messages=messages, identification=identification)
+
+
+@app.route('/lostFound', methods=['GET'])
+def lost_found():
+    identification = session.get('identification')
+    if identification == 'Staff':
+        return render_template('staff_lost_and_found.html')
+    elif identification == 'Student':
+        return render_template('student_lost_and_found.html')
+    else:
+        return redirect('/signin')  # 如果没有角色信息或未知角色，则重定向到登录页面
+
+
+"""
+    Retrieve and display books ranked by their reading volume.
+
+    Returns:
+        Rendered HTML page with the reading volume ranking.
+    """
+
+
+@app.route('/reading_ranking', methods=['GET'])
+def reading_ranking():
+    db = Mysql()
+    ranked_books = db.get_reading_ranking()
+    return render_template('reading_ranking.html', books=ranked_books, active_tab='books')
+
+
+"""
+    Retrieve and display users ranked by their borrowing volume.
+
+    Returns:
+        Rendered HTML page with the borrowing volume ranking.
+    """
+
+
+@app.route('/user_ranking')
+def user_ranking():
+    """
+    Retrieve and display users ranked by their reading volume for the month.
+
+    Returns:
+        Rendered HTML page with the user reading volume ranking.
+    """
+    db = Mysql()
+    ranked_users = db.get_user_reading_ranking()
+    return jsonify(users=ranked_users)
+
+
+# Route for the registration form submission
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json  # Get JSON data from the request
+    identification = data.get('identification')
+    # print(identification)
+    name = data.get('name')
+    # print(name)
+    email = data.get('email')
+    # print(email)
+    password = data.get('password')
+    # print(password)
+    # Set the default avatar
+    avatar = "static/photo/default_avatar.png"
+    is_banned =0
+    read_count = 0
+
+    db = Mysql()
+    if db.exist_log_user(email):
+        return jsonify({'message': 'Email already exists'}), 400
+
+    db.register_user(name, password, identification, email, avatar, is_banned, read_count)
+
+    return jsonify({'message': 'Registration successful'})
+
+
+# Route for the login form
+@app.route('/signin', methods=['GET'])
+def show_signin_form():
+    return render_template('signin.html')
+
+
+# Route for the form submission
+@app.route('/signin', methods=['POST'])
+def signin():
+    data = request.json  # Get JSON data from the request
+    identification = data.get('identification')
+    email = data.get('email')
+    password = data.get('password')
+
+    db = Mysql()
+    user = db.signin_user(identification, email, password)
+    print("user", user)
+
+    if user and user.get('is_banned'):
+        remaining_time = (user.get('ban_end_time') - datetime.now()).total_seconds()
+        if remaining_time > 0:
+            return jsonify({
+                'message': 'Login failed. Your account is temporarily banned.',
+                'ban_reason': user.get('ban_reason'),
+                'time_left': remaining_time
+            }), 403
+
+    avatar = db.get_avatar(email)
+    user_id = db.get_user_id(email)
+
+    if user:
+        session['email'] = email
+        session['avatar_url'] = avatar
+        session['identification'] = user.get('identification')  # 从 user 字典中获取 identification
+        session['user_id'] = user_id  # 假设 user_id 是一个元组，取第一个元素
+        print("userid+",user_id)
+        # print("login success")
+        # print(avatar)
+        return jsonify({'message': 'Login successful', 'redirect': '/profile'})
+    else:
+        # print("login failed")
+        return jsonify({'message': 'Login failed. Please check your credentials.'})
+
+
+
+# Avatar-related methods
+
+# Configure upload folder
+UPLOAD_FOLDER = 'static/photo/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Add allowed extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+# Function to check allowed extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Show the user's profile
+@app.route('/profile', methods=['GET'])
+def profile():
+    # Check if the user is logged in
+    if 'email' not in session:
+        # If not logged in, return 401 error
+        return render_template('signin.html')
+
+    # print("email", session)
+    # Render the Profile page
+    return render_template('profile.html')
+
+
+@app.route('/get_user_info', methods=['GET'])
+def get_user_info():
+    db = Mysql()  # Instantiate the database object
+    user_email = session.get('email')  # Get the current user's email from the session
+    user_info = db.get_user_info(user_email)  # Query user information from the database
+
+    if user_info:
+        # print("Fetched user info:", user_info)
+        # Return user information as JSON
+        return jsonify({
+            'name': user_info['name'],
+            'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
+            'identification': user_info['identification'],  # User identity (Student/Administrator/Staff)
+            'email': user_info['email'],
+            'avatar': user_info.get('avatar')
+        })
+    else:
+        # If user is not found, return 404
+        return jsonify({'message': 'User not found'}), 404
+
+
+# Handle avatar upload
+@app.route('/upload_avatar', methods=['POST'])
+def upload_avatar():
+    # Check if the 'file' field exists in the request.files dictionary
+    # If it doesn't, return a 400 Bad Request error message
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file part'})
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'})
+
+    if file and allowed_file(file.filename):
+        # Generate the filename
+        filename = secure_filename(file.filename)
+        # Save into the database
+        relative_path = f'static/photo/{filename}'
+        # Save the uploaded file in the photo directory
+        absolute_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        # Ensure the directory exists
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+
+        # Save the file
+        file.save(absolute_path)
+
+        # Get the user's email from the session
+        user_email = session.get('email')
+        if not user_email:
+            return jsonify({'message': 'Please sign in first'}), 403
+
+        # Update the profile picture path (relative path) in the database
+        db = Mysql()
+        db.update_user_avatar(user_email, relative_path)
+
+        session['avatar_url'] = absolute_path  # Save the updated avatar in the session
+
+        # Return success message and profile picture path (for direct use by the frontend)
+        return jsonify({'message': 'Avatar uploaded successfully', 'avatar_url': f'/{relative_path}'}), 200
+
+    return jsonify({'message': 'File not allowed'}), 400
+
+
+# Update password
+@app.route('/profile', methods=['POST'])
+def update_password():
+    new_password = request.json.get('password')
+    email = session.get('email')  # Get the email from the session
+    db = Mysql()
+    db.update_password(email, new_password)
+    return jsonify({'message': 'Password updated successfully'})
+
+
+@app.route('/lost_detail', methods=['GET'])
+def lost_detail():
+    lost_id = request.args.get('lost_id')
+    if lost_id:
+        db = Mysql()
+        lost = db.get_lost_by_id(lost_id)
+        if lost:
+            return render_template('lost_detail.html', lost=lost, identification=session.get('identification'))
+        else:
+            return jsonify({'message': 'Lost not found'}), 404
+    else:
+        return jsonify({'message': 'Lost ID is required'}), 400
+
+@app.route('/post_lost', methods=['GET'])
+def post_lost():
+    db = Mysql()
+    lost_list = db.get_losts()
+    if lost_list:
+        return jsonify({'losts': lost_list})
+    else:
+        return jsonify({'message': 'No books found'}), 404
+
+@app.route('/post_book', methods=['GET'])
+def post_book():
+    db = Mysql()
+    book_list = db.get_books()
+    if book_list:
+        return jsonify({'books': book_list})
+    else:
+        return jsonify({'message': 'No books found'}), 404
+
+
+@app.route('/book_detail', methods=['GET'])
+def book_detail():
+    book_id = request.args.get('book_id')
+    if book_id:
+        db = Mysql()
+        book = db.get_book_by_id(book_id)
+        if book:
+            return render_template('book_detail.html', book=book, identification=session.get('identification'))
+        else:
+            return jsonify({'message': 'Book not found'}), 404
+    else:
+        return jsonify({'message': 'Book ID is required'}), 400
+
+
+UPLOAD_FOLDER = 'static/photo/'  # 上传文件的存储路径
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 允许的文件类型
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # 确保目录存在
+
+def allowed_file(filename):
+    """验证文件类型"""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/add_book', methods=['GET', 'POST'])
+def add_book_route():
+    if request.method == 'POST':
+        # 获取缩略图文件
+        file = request.files['thumbnail_url']
+        if file.filename == '':
+            return jsonify({'success': False, 'message': 'No selected file.'}), 400
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.static_folder, 'photo', filename)  # 保存文件路径
+
+            try:
+                file.save(file_path)
+
+                book_data = {
+                    'title': request.form.get('title'),
+                    'author': request.form.get('author'),
+                    'publisher': request.form.get('publisher'),
+                    'edition': request.form.get('edition'),
+                    'isbn': request.form.get('isbn'),
+                    'tag': request.form.get('tag'),
+                    'description': request.form.get('description'),
+                    'collections': request.form.get('collections'),
+                    'borrowed': 0,
+                    'thumbnail_url': f'/static/photo/{filename}',  # 图片相对URL路径
+                    'read_count': 0,
+                }
+
+                db = Mysql()
+                success = db.add_book(book_data)
+
+                if success:
+                    return jsonify({'success': True})
+                else:
+                    return jsonify({'success': False, 'message': 'Failed to add book'})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+        else:
+            return jsonify({'success': False, 'message': 'Invalid file type.'}), 400
+
+    return render_template('add_book.html')
+
+
+@app.route('/add_lost', methods=['GET', 'POST'])
+def add_lost_route():
+    if request.method == 'POST':
+        # 获取缩略图文件
+        file = request.files['thumbnail_url']
+        if not file or not allowed_file(file.filename):
+            return jsonify({'success': False, 'message': 'Invalid or missing thumbnail file.'}), 400
+
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.static_folder, 'photo', filename)
+
+        try:
+            file.save(file_path)
+
+            lost_data = {
+                'name': request.form.get('name'),
+                'date': request.form.get('date'),
+                'location': request.form.get('location'),
+                'description': request.form.get('description'),
+                'thumbnail_url': f'/static/photo/{filename}'
+            }
+
+            db = Mysql()
+            success = db.add_lost(lost_data)
+
+            if success:
+                return jsonify({'success': True})
+            else:
+                return jsonify({'success': False, 'message': 'Failed to add lost'})
+        except Exception as e:
+            return jsonify({'success': False, 'message': str(e)}), 500
+
+    return render_template('add_lost.html')
+
+
+@app.route('/update_book', methods=['POST'])
+def update_book():
+    data = request.get_json()
+    book_id = data.get('book_id')
+    updated_info = {key: value for key, value in data.items() if key != 'book_id'}
+
+    db = Mysql()
+    result = db.update_book(book_id, updated_info)
+    # 输入验证
+    if not book_id:
+        print("Invalid input data: book_id is missing.")
+        return jsonify({'success': False, 'message': 'Invalid input data: book_id is missing'})
+
+    if not updated_info or all(value is None for value in updated_info.values()):
+        print("Invalid input data: updated_info is missing or all values are None.")
+        return jsonify(
+            {'success': False, 'message': 'Invalid input data: updated_info is missing or all values are None'})
+
+    return jsonify(result)
+
+@app.route('/update_lost', methods=['POST'])
+def update_lost():
+    data = request.get_json()
+    lost_id = data.get('lost_id')
+    updated_info = {key: value for key, value in data.items() if key != 'lost_id'}
+
+    db = Mysql()
+    result = db.update_lost(lost_id, updated_info)
+
+    if not lost_id:
+        print("Invalid input data: book_id is missing.")
+        return jsonify({'success': False, 'message': 'Invalid input data: lost_id is missing'})
+
+    if not updated_info or all(value is None for value in updated_info.values()):
+        print("Invalid input data: updated_info is missing or all values are None.")
+        return jsonify(
+            {'success': False, 'message': 'Invalid input data: updated_info is missing or all values are None'})
+
+    return jsonify(result)
+
+@app.route('/upload_book_thumbnail', methods=['POST'])
+def upload_book_thumbnail():
+    book_id = request.form.get('book_id')
+    file = request.files.get('thumbnail')
+
+    if not book_id or not file:
+        return jsonify({
+            'success': False,
+            'message': 'Book ID or thumbnail file is missing.'
+        })
+
+    try:
+        # 保存上传的文件
+        upload_folder = os.path.join(app.static_folder, 'photo')
+        os.makedirs(upload_folder, exist_ok=True)
+
+        file_path = os.path.join(upload_folder, file.filename)
+        file.save(file_path)
+
+        # 更新数据库
+        thumbnail_url = f'/static/photo/{file.filename}'
+        db = Mysql()
+        result = db.update_book_thumbnail(book_id, thumbnail_url)
+
+        return jsonify(result)
+    except Exception as e:
+        print(f"Error uploading thumbnail: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        })
+    return jsonify(result)
+
+@app.route('/upload_lost_thumbnail', methods=['POST'])
+def upload_lost_thumbnail():
+    lost_id = request.form.get('lost_id')
+    file = request.files.get('thumbnail')
+
+    if not lost_id or not file:
+        return jsonify({
+            'success': False,
+            'message': 'Lost ID or thumbnail file is missing.'
+        })
+
+    try:
+        # 保存上传的文件
+        upload_folder = os.path.join(app.static_folder, 'photo')
+        os.makedirs(upload_folder, exist_ok=True)
+
+        file_path = os.path.join(upload_folder, file.filename)
+        file.save(file_path)
+
+        # 更新数据库
+        thumbnail_url = f'/static/photo/{file.filename}'
+        db = Mysql()
+        result = db.update_lost_thumbnail(lost_id, thumbnail_url)
+
+        return jsonify(result)
+    except Exception as e:
+        print(f"Error uploading thumbnail: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        })
+    return jsonify(result)
+
+@app.route('/delete_lost', methods=['DELETE'])
+def delete_lost():
+    lost_id = request.args.get('lost_id', '')
+    db = Mysql()
+    try:
+        success = db.delete_lost(lost_id)
+        if success:
+            return jsonify({'success': True})
+        else:
+            return jsonify({'success': False, 'message': 'Failed to delete lost information'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+@app.route('/lend_book', methods=['POST'])
+def lend_book():
+    data = request.json
+    book_id = data.get('book_id')
+    borrower_id = data.get('borrower_id')
+    time_till_return = data.get('time_till_return')
+    db = Mysql()
+    result = db.lend_book(book_id, borrower_id, time_till_return)
+    db.cursor.close()
+
+    return jsonify(result)
+
+
+@app.route('/return_book', methods=['POST'])
+def return_book():
+    data = request.json
+    book_id = data.get('book_id')
+
+
+    if not book_id:
+        return jsonify({'success': False, 'message': 'Book ID is required'}), 400
+
+    db = Mysql()
+    result = db.return_book(book_id)
+    db.cursor.close()
+
+    return jsonify(result)
+
+@app.route('/search_books', methods=['GET'])
+def search_books():
+    title = request.args.get('title', '')
+    db = Mysql()
+    try:
+        books = db.search_books_by_title(title)
+        return jsonify({'books': books})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/search_losts', methods=['GET'])
+def search_losts():
+    name = request.args.get('name', '')
+    db = Mysql()
+    try:
+        losts = db.search_losts_by_name(name)
+        return jsonify({'losts': losts})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/search_losts_by_date', methods=['GET'])
+def search_losts_by_date():
+    date = request.args.get('date', '')
+    db = Mysql()
+    try:
+        losts = db.search_losts_by_date(date)
+        return jsonify({'losts': losts})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/search_books_by_tag', methods=['GET'])
+def search_books_by_tag():
+    tag = request.args.get('tag', '')
+    db = Mysql()
+    try:
+        books = db.search_books_by_tag(tag)
+        return jsonify({'books': books})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/messages_detail', methods=['GET'])
+def messages_detail():
+    message_id = request.args.get('message_id')
+    identification = session.get('identification')
+    db = Mysql()
+
+    # 查询主消息
+    sql_main_message = """
+        SELECT m.id, m.sender_name, m.message, m.send_date, u.avatar 
+        FROM message m 
+        JOIN users u ON m.sender_id = u.id 
+        WHERE m.id = %s
+        """
+    db.cursor.execute(sql_main_message, (message_id,))
+    main_message = db.cursor.fetchone()
+
+    if not main_message:
+        return jsonify({'message': 'Message not found.'}), 404
+
+    # 查询与主消息相关的回复
+    sql_replies = """
+        SELECT m.sender_name, m.reply, m.send_date, u.avatar 
+        FROM message m 
+        JOIN users u ON m.sender_id = u.id 
+        WHERE m.parent_id = %s 
+        ORDER BY m.send_date ASC
+        """
+    db.cursor.execute(sql_replies, (message_id,))
+    replies = db.cursor.fetchall()
+
+    # 返回数据
+    return render_template('messages_detail.html', identification=identification,
+                           main_message={
+                               'id': main_message[0],
+                               'sender_name': main_message[1],
+                               'content': main_message[2],
+                               'send_date': main_message[3].strftime("%Y-%m-%d %H:%M:%S"),
+                               'avatar': main_message[4] or '../static/photo/default_avatar.png'
+                           },
+                           messages=[
+                               {
+                                   'sender_name': reply[0],
+                                   'content': reply[1],
+                                   'send_date': reply[2].strftime("%Y-%m-%d %H:%M:%S"),
+                                   'avatar': reply[3] or '../static/photo/default_avatar.png'
+                               } for reply in replies
+                           ])
+
+
+@app.route('/post_reply', methods=['POST'])
+def post_reply():
+    try:
+        data = request.get_json()
+        app.logger.info(f"Received data: {data}")  # Log incoming data
+
+        message_id = data.get('message_id')
+        reply = data.get('reply')
+
+        if not message_id or not reply:
+            return jsonify({'success': False, 'message': 'Invalid input'})
+
+        email = session.get('email')
+        if not email:
+            return jsonify({'success': False, 'message': 'User not logged in'})
+
+        db = Mysql()
+        user_info = db.get_user_info(email)
+        app.logger.info(f"User info: {user_info}")  # Log user info
+
+        if not user_info:
+            return jsonify({'success': False, 'message': 'User not found'})
+
+        sender_id = user_info['id']
+        sender_name = user_info['name']
+
+        sql = """
+        INSERT INTO message (sender_id, sender_name, reply, send_date, parent_id, replied)
+        VALUES (%s, %s, %s, NOW(), %s, 1)
+        """
+        db.cursor.execute(sql, (sender_id, sender_name, reply, message_id))
+
+        db.conn.commit()
+
+        return jsonify({'success': True, 'message': 'Reply posted successfully'})
+    except Exception as e:
+        app.logger.error(f"Error in post_reply: {str(e)}")
+        return jsonify({'success': False, 'message': 'Internal server error'})
+
+
+# Admin create accounts
+@app.route('/addAccount', methods=['GET'])
+def show_add_account_form():
+    return render_template('admin_account_add.html')
+
+
+@app.route('/addAccount', methods=['POST'])
+def add_account():
+    data = request.json  # Get JSON data from the request
+    identification = data.get('identification')
+    # print(identification)
+    name = data.get('name')
+    # print(name)
+    email = data.get('email')
+    # print(email)
+    password = data.get('password')
+    # print(password)
+    # Set the default avatar
+    avatar = "static/photo/default_avatar.png"
+
+    db = Mysql()
+
+    db.register_user(name, password, identification, email, avatar)  # Modify parameter order
+
+    return redirect('/')
+
+
+# View all accounts
+@app.route('/get_all_users', methods=['GET'])
+def get_all_users_route():
+    db = Mysql()
+    users = db.get_all_users()
+    return jsonify(users)
+
+
+@app.route('/account_detail', methods=['GET'])
+def account_detail():
+    email = request.args.get('email')
+    if not email:
+        return "Email parameter is required", 400
+
+    db = Mysql()
+    user_info = db.get_user_info(email)
+
+    if not user_info:
+        return "Account not found", 404
+
+    return render_template('account_detail.html', account=user_info)
+
+
+@app.route('/get_users_by_role')
+def get_users_by_role():
+    role = request.args.get('role')
+    db = Mysql()
+    users = db.get_users_by_role_from_db(role)  # 根据角色从数据库中获取用户
+    return jsonify(users)
+
+
+@app.route('/delete_account', methods=['POST', 'DELETE'])
+def delete_account():
+    data = request.json or request.args
+    email = data.get('email')
+    if not email:
+        return jsonify({'message': 'Email parameter is required'}), 400
+
+    db = Mysql()
+    if db.delete_account(email):
+        return redirect('/')  # 重定向到首页
+    else:
+        return jsonify({'message': 'Failed to delete account'}), 500
+
+
+@app.route('/update_account', methods=['POST'])
+def update_account():
+    data = request.json  # Get JSON data from the request
+    email = data.get('email')
+    name = data.get('name')
+    new_email = data.get('newEmail')
+    password = data.get('password')
+
+    db = Mysql()
+    if db.update_user_info(email, name, new_email, password):
+        return jsonify({'message': 'Account updated successfully'})
+    else:
+        return jsonify({'message': 'Failed to update account'}), 500
+
+
+# app.py
+@app.route('/get_users_by_name')
+def get_users_by_name():
+    name = request.args.get('name')
+    if not name:
+        return jsonify({'message': 'Name parameter is required'}), 400
+
+    db = Mysql()
+    users = db.get_users_by_name(name)
+    if not users:
+        return jsonify({'message': 'No users found'}), 404
+
+    return jsonify(users)
+
+
+@app.route('/post_message', methods=['POST'])
+def post_message():
+    if 'email' not in session or 'identification' not in session:
+        return jsonify({'message': 'Unauthorized. Please log in.'}), 401
+
+    data = request.json
+    message_content = data.get('message')
+
+    if not message_content:
+        return jsonify({'message': 'Message content is required.'}), 400
+
+    email = session['email']
+    db = Mysql()
+    user_info = db.get_user_info(email)
+    if not user_info:
+        return jsonify({'message': 'User not found.'}), 404
+
+    sender_name = user_info['name']
+    sender_id = user_info.get('id')
+    sender_identification = user_info['identification']  # 获取用户身份（Student 或 Staff）
+
+    # 插入消息到数据库
+    sql = """
+        INSERT INTO message (sender_id, sender_name, message, replied, send_date)
+        VALUES (%s, %s, %s, %s, %s)
+    """
+    send_date = datetime.now()
+    db.cursor.execute(sql, (sender_id, sender_name, message_content, 0, send_date))
+    db.conn.commit()
+
+    print(f"Message received: {message_content}")
+    print(f"Sender: {sender_name} (ID: {sender_id}, Identification: {sender_identification})")
+
+    # 如果是学生发布的消息，才显示在消息板上
+    if sender_identification == 'Student' and message_content:
+        sql = """
+            SELECT id, sender_name, message, send_date
+            FROM message
+            WHERE sender_id = %s AND replied = 0 AND message IS NOT NULL AND message != ''
+            ORDER BY send_date DESC
+        """
+        db.cursor.execute(sql, (sender_id,))
+        raw_messages = db.cursor.fetchall()
+
+        # 将消息转为字典列表
+        messages = [
+            {'id': msg[0], 'sender_name': msg[1], 'message': msg[2], 'send_date': msg[3].strftime("%Y-%m-%d %H:%M:%S")}
+            for msg in raw_messages
+        ]
+
+        return jsonify({
+            'message': 'Message posted successfully.',
+            'data': {
+                'id': db.cursor.lastrowid,
+                'sender_name': sender_name,
+                'message': message_content
+            },
+            'messages': messages
+        })
+    else:
+        # 如果是 Staff 发布的消息，或者消息为空，直接返回
+        return jsonify({
+                           'message': 'Message posted successfully. Staff messages or empty messages are not shown on the message board.'}), 200
+
+
+# Route for fetching logs
+@app.route('/get_logs', methods=['GET'])
+def get_logs():
+    log_type = request.args.get('type', 'all').lower()
+    logs = []
+
+    try:
+        with open('app.log', 'r') as file:
+            for line in file:
+                parts = line.strip().split(' - ')
+                if len(parts) >= 3:
+                    date, level, message = parts[0], parts[1], ' - '.join(parts[2:])
+                    if log_type == 'all' or log_type == level.lower():
+                        logs.append({
+                            'date': date,
+                            'type': level.lower(),
+                            'message': message
+                        })
+    except FileNotFoundError:
+        return jsonify({'message': 'Log file not found'}), 404
+
+    return jsonify(logs)
+
+
+@app.route('/check_email', methods=['POST'])
+def check_email():
+    data = request.json
+    email = data.get('email')
+
+    db = Mysql()
+    exists = db.exist_log_user(email)
+
+    return jsonify({'exists': exists})
+
+
+@app.route('/log-file', methods=['GET'])
+def log_file():
+    identification = session.get('identification')
+    if identification == 'Administrator':
+        return render_template('admin_log_file.html')
+    else:
+        return redirect('/signin')
+
+
+@app.route('/ban_user', methods=['POST'])
+def ban_user():
+    data = request.json  # Get JSON data from the request
+    email = data.get('email')
+    reason = data.get('reason')
+    duration_minutes_str = data.get('duration_minutes')
+
+    if not duration_minutes_str:
+        return jsonify({'success': False, 'message': 'Missing duration_minutes parameter'}), 400
+
+    try:
+        duration_minutes = int(duration_minutes_str)  # 获取ban的时长，单位为分钟
+    except ValueError as e:
+        return jsonify({'success': False, 'message': f'Invalid duration_minutes format: {e}'}), 400
+
+    try:
+        utc_now = datetime.now()
+        end_time = utc_now + timedelta(minutes=duration_minutes)
+        end_time_mysql_format = end_time.strftime('%Y-%m-%d %H:%M:%S')
+    except ValueError as e:
+        return jsonify({'success': False, 'message': f'Invalid date format: {e}'}), 400
+
+    db = Mysql()
+    success = db.ban_user(email, reason, end_time_mysql_format)
+
+    if success:
+        return jsonify({'success': True, 'message': f'User {email} banned successfully until {end_time_mysql_format}'})
+    else:
+        return jsonify({'success': False, 'message': 'Failed to ban user'})
+
+
+# Set up the basic port for the pages
+if __name__ == '__main__':
+    app.run(debug=True, port=5222, host='127.0.0.1')

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Detail</title>
+    <link rel="stylesheet" href="../static/css/detail.css">
+        <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <div class="lost-found-container">
+        <button class="return-button" onclick="location.href='/'" >Return</button>
+
+        <div class="book-detail">
+            <div class="book-image">
+                <img src="{{ book.thumbnail_url }}" alt="Book Thumbnail" id="book-thumbnail" style="max-width: 200px; max-height: 200px;">
+                <input type="file" id="upload-thumbnail" style="display: none;" accept="image/*">
+                <button class="action-button" id="change-thumbnail-button">Change Thumbnail</button>
+            </div>
+
+            <div class="book-info">
+                <p><strong>Book Name:</strong> <span id="title">{{ book.title }}</span></p>
+                <p><strong>Author:</strong> <span id="author">{{ book.author }}</span></p>
+                <p><strong>Publisher:</strong> <span id="publisher">{{ book.publisher }}</span></p>
+                <p><strong>Edition:</strong> <span id="edition">{{ book.edition }}</span></p>
+                <p><strong>ISBN:</strong> <span id="isbn">{{ book.isbn }}</span></p>
+                <p><strong>Tag:</strong> <span class="tag" id="tag">{{ book.tag }}</span></p>
+                <p><strong>Description:</strong> <span id="description">{{ book.description }}</span></p>
+                <p><strong>Collections:</strong> <span id="collections">{{ book.collections }}</span></p>
+                <p><strong>Borrowed:</strong> <span id="borrowed">{{ book.borrowed }}</span></p>
+            </div>
+        </div>
+
+         <div class="action-buttons">
+            <button class="action-button" id="first-button"></button>
+            <button class="action-button" id="second-button"></button>
+        </div>
+    </div>
+
+    <script>
+        // Role information passed from the back end is dynamically set to the front end
+        const identification = "{{ identification }}";
+        console.log(identification);
+
+        // Get button element
+        const firstButton = document.getElementById('first-button');
+        const secondButton = document.getElementById('second-button');
+
+        // Set the button text according to the role
+        if (identification === 'Staff') {
+            firstButton.textContent = 'Change';
+            secondButton.textContent = 'Save';
+        } else if (identification === 'Administrator') {
+            firstButton.textContent = 'Change';
+            secondButton.textContent = 'Save';
+        }else {
+            firstButton.textContent = 'Lend';
+            secondButton.textContent = 'Return';
+        }
+
+        // Add event listener to the "Lend" button
+        firstButton.addEventListener('click', function() {
+            if (identification === 'Staff' || identification === 'Administrator') {
+                enableEditMode();
+            }else {
+                lendBook();
+            }
+        });
+
+        // Add event listener to the "Save" button
+        secondButton.addEventListener('click', function() {
+            if (identification === 'Staff' || identification === 'Administrator') {
+                saveChanges();
+            }else {
+                returnBook();
+            }
+        });
+
+
+        function saveChanges() {
+            const bookInfoElements = document.querySelectorAll('.book-info input');
+            const updatedBookInfo = {
+                book_id: "{{ book.id }}" // 确保 book_id 包含在请求中
+            };
+
+            bookInfoElements.forEach(input => {
+                const fieldName = input.parentElement.id;
+                updatedBookInfo[fieldName] = input.value;
+            });
+
+            fetch('/update_book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedBookInfo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Book information updated successfully!');
+                    // Revert back to display mode
+                    disableEditMode();
+                } else {
+                    alert('Failed to update book information: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        }
+
+        function disableEditMode() {
+            const bookInfoElements = document.querySelectorAll('.book-info input');
+            bookInfoElements.forEach(input => {
+                input.parentElement.textContent = input.value;
+            });
+        }
+
+        function enableEditMode() {
+            const bookInfoElements = document.querySelectorAll('.book-info span');
+            bookInfoElements.forEach(element => {
+                const currentText = element.textContent;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                element.innerHTML = '';
+                element.appendChild(input);
+            });
+        }
+
+        function lendBook() {
+            const bookId = "{{ book.id }}";
+            const borrowerId = "{{ session.user_id }}"; // 确保这是一个有效的字符串
+            console.log('borrowerId:', borrowerId); // 调试输出
+            const parsedBorrowerId = parseInt(borrowerId, 10); // 解析为整数
+            console.log('parsedBorrowerId:', parsedBorrowerId); // 检查解析结果
+            const timeTillReturn = new Date();
+            timeTillReturn.setDate(timeTillReturn.getDate() + 14); // Set return date to 14 days from now
+            const formattedTimeTillReturn = timeTillReturn.toISOString().split('T')[0] + ' ' + timeTillReturn.toTimeString().split(' ')[0];
+            fetch('/lend_book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    book_id: bookId,
+                    borrower_id: borrowerId,
+                    time_till_return: formattedTimeTillReturn
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Book successfully lent!');
+                    // Update the borrowed count on the frontend
+                    document.getElementById('borrowed').textContent = data.new_borrowed_count;
+                } else {
+                    alert('Failed to lend book: ' +borrowerId+'//'+ data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        }
+        function returnBook() {
+        const bookId = "{{ book.id }}";
+        fetch('/return_book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                book_id: bookId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Book successfully returned!');
+                // Update the borrowed count on the frontend
+                document.getElementById('borrowed').textContent = data.new_borrowed_count;
+            } else {
+                alert('Failed to return book: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing your request.');
+        });
+    }
+
+        // 获取 change-thumbnail-button 元素
+        const changeThumbnailButton = document.getElementById('change-thumbnail-button');
+
+        // 根据用户身份决定按钮可见性
+        if (identification === 'Staff' || identification === 'Administrator') {
+            // 如果是 staff 或 admin，则显示按钮
+            changeThumbnailButton.style.display = 'block';
+        } else {
+            // 否则隐藏按钮
+            changeThumbnailButton.style.display = 'none';
+        }
+
+        // 添加事件监听器，点击按钮触发上传文件操作
+        changeThumbnailButton.addEventListener('click', function() {
+            document.getElementById('upload-thumbnail').click();
+        });
+
+
+document.getElementById('upload-thumbnail').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // 实时预览图片
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('book-thumbnail').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // 上传图片到后端
+        const formData = new FormData();
+        formData.append('book_id', "{{ book.id }}");
+        formData.append('thumbnail', file);
+
+        fetch('/upload_book_thumbnail', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Thumbnail updated successfully!');
+            } else {
+                alert('Failed to update thumbnail: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while uploading the thumbnail.');
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+/* main_style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    background-color: #e6f2ff; /* Container background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 800px; /* Container width */
+    height: auto; /* Adaptive height */
+    text-align: left;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.book-image {
+    margin-right: 20px; /* 设置图片与文本之间的间距 */
+}
+
+.book-item-link {
+    text-decoration: none;
+    color: inherit; /* 默认没有颜色，继承父元素的字体颜色 */
+}
+
+.book-item-link:active {
+    color: #357ab7; /* 点击时显示蓝色（你可以根据需求修改颜色） */
+}
+
+.navbar {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e6f2ff;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar a.active {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #e6f2ff;
+    background-color: #357ab7;
+}
+
+.divider {
+    height: 2px;
+    background-color: #254f6b;
+    margin: 10px 0;
+}
+
+/* Ensure all elements within the search bar are centered */
+.search-bar {
+    display: flex;
+    justify-content: center; /* Horizontally center-align */
+    align-items: center; /* Vertically center-align */
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Style for the search input box */
+.search-bar input[type="text"] {
+    width: 450px; /* Set the width of the search box */
+    height: 50px; /* Set the height of the search box */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 40px; /* Set rounded corners */
+    margin-right: 10px; /* Set the margin between the input box and button */
+    margin-left: 10px; /* Set the margin between the input box and button */
+    box-sizing: border-box;
+}
+
+/* Style for the message input box, larger text area */
+.search-bar input[type="text"].message_search {
+    width: 550px;
+    height: 50px;
+}
+
+/* Button style */
+.search-bar button {
+    width: 80px;
+    height: 40px;
+    background-color: #357ab7;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px; /* Set the margin between the button and input box */
+}
+
+.tags {
+    margin-bottom: 20px;
+}
+
+.tags span {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #07334e;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #def3f6;
+}
+
+.book-list {
+    max-height: 450px; /* Set the maximum height of the book list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 20px;
+    padding: 10px; /* Add padding to prevent content from sticking to the edges */
+    border: 1px solid #ccc; /* Add a border around the book list */
+    border-radius: 10px; /* Set rounded corners */
+    background-color: #f3fbff; /* Background color */
+}
+
+.book-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    background-color: #fff; /* Book item background color */
+    border-radius: 10px; /* Set rounded corners */
+}
+
+.book-item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    background-color: #eee;
+}
+
+.book-info {
+    flex-grow: 1;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.message-list {
+    max-height: 450px; /* Set the maximum height of the message list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 20px;
+    padding: 10px; /* Add padding to prevent content from sticking to the edges */
+    border: 1px solid #ccc; /* Add a border around the message list */
+    border-radius: 10px; /* Set rounded corners */
+    background-color: #f3fbff; /* Background color */
+}
+
+.message-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    background-color: #fff; /* Message item background color */
+    border-radius: 10px; /* Set rounded corners */
+}
+
+.message-item-link {
+    text-decoration: none;
+    color: inherit; /* 默认没有颜色，继承父元素的字体颜色 */
+}
+
+.message-link:active {
+    color: #357ab7; /* 点击时显示蓝色（你可以根据需求修改颜色） */
+}
+
+.message-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    background-color: #eee;
+}
+
+.message-info {
+    flex-grow: 1;
+}
+
+.lost-found-list {
+    display: flex; /* Use flexbox for horizontal scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 20px; /* Space between cards */
+    padding: 20px; /* Padding around the list */
+    scroll-snap-type: x mandatory; /* Enable snap scrolling */
+}
+
+.lost-item {
+    flex: 0 0 auto; /* Prevent flex items from shrinking */
+    border: 1px solid #ccc; /* Border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding inside the card */
+    text-align: left; /* Align text to the left */
+    background-color: #fff; /* White background */
+    scroll-snap-align: start; /* Snap alignment */
+    width: 200px; /* Fixed width for cards */
+}
+
+.lost-item-link {
+    text-decoration: none;
+    color: inherit; /* 默认没有颜色，继承父元素的字体颜色 */
+}
+
+.lost-item-link:active {
+    color: #357ab7; /* 点击时显示蓝色 */
+}
+
+.lost-item img {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.date-filter {
+    margin: 20px; /* Margin for the date filter */
+}
+
+/* 样式应用于 dateLost 输入框 */
+.date-filter input[type="date"] {
+    width: 150px; /* 设置宽度 */
+    height: 30px; /* 设置高度 */
+    padding: 5px 10px; /* 设置内边距 */
+    border: 1px solid #ccc; /* 设置边框 */
+    border-radius: 8px; /* 设置圆角 */
+    box-sizing: border-box; /* 确保内边距和边框包含在宽度内 */
+    font-size: 16px; /* 设置字体大小 */
+    background-color: #f0f5ff;
+}
+
+/* Admin-only All Users Section */
+.all-users {
+    display: none; /* Default: hidden */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f3fbff;
+    border-radius: 10px;
+    text-align: center;
+}
+
+body.admin .all-users {
+    display: block; /* Visible only for admin users */
+}
+
+.all-users a {
+    text-decoration: none;
+    color: #357ab7;
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #357ab7;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #e6f2ff;
+    cursor: pointer;
+}
+
+.all-users a:hover {
+    background-color: #d6eaff;
+    border-color: #254f6b;
+}
+
+/* 深色模式样式/////////////////////////////////////// */
+body.dark-mode {
+    background-color: #121212; /* 背景色变为深色 */
+    color: #e0e0e0; /* 文字颜色变为浅色 */
+}
+
+/* 容器背景色 */
+body.dark-mode .container {
+    background-color: #1e2a33; /* 容器背景色 */
+}
+
+/* 导航栏 */
+body.dark-mode .navbar {
+    background-color: #1f3c53; /* 深色导航栏背景 */
+}
+
+body.dark-mode .navbar a {
+    color: #e0e0e0; /* 浅色文字 */
+}
+
+body.dark-mode .navbar a.active {
+    color: #64b5f6; /* 激活状态下的链接颜色 */
+}
+
+body.dark-mode .divider {
+    background-color: #3b4f64; /* 深色分隔线 */
+}
+
+/* 搜索栏 */
+body.dark-mode .search-bar input[type="text"] {
+    background-color: #333; /* 深色输入框 */
+    color: #e0e0e0; /* 浅色文字 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .search-bar button {
+    background-color: #64b5f6; /* 按钮背景色 */
+    color: #fff; /* 按钮文字颜色 */
+}
+
+/* 标签样式 */
+body.dark-mode .tags span {
+    background-color: #333; /* 标签背景色 */
+    border: 1px solid #444; /* 深色边框 */
+    color: #e0e0e0; /* 浅色文字 */
+}
+
+/* 书单 */
+body.dark-mode .book-list {
+    background-color: #333; /* 深色背景 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .book-item {
+    background-color: #2a2a2a; /* 深色背景 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .book-item img {
+    background-color: #555; /* 深色背景图片 */
+}
+
+/* 消息列表 */
+body.dark-mode .message-list {
+    background-color: #333; /* 深色背景 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .message-item {
+    background-color: #2a2a2a; /* 深色背景 */
+    border: 1px solid #444; /* 深色边框 */
+}
+
+body.dark-mode .message-item img {
+    background-color: #555; /* 深色背景图片 */
+}
+
+/* 配置深色模式时，个人资料区域 */
+body.dark-mode .profile img {
+    border: 2px solid #64b5f6; /* 边框颜色 */
+}
+.reply-list {
+    max-height: 450px; /* Set the maximum height of the message list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 20px;
+    padding: 10px; /* Add padding to prevent content from sticking to the edges */
+    border: 1px solid #ccc; /* Add a border around the message list */
+    border-radius: 10px; /* Set rounded corners */
+    background-color: #f3fbff; /* Background color */
+}
+
+.reply-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    background-color: #a1c9e7; /* Blue background for reply message */
+    border-radius: 10px; /* Set rounded corners */
+}
+
+.reply-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    background-color: #eee;
+}
+
+.reply-item .message-info {
+    flex-grow: 1;
+}
+
+.return-button {
+    display: block;
+    margin: 15px 0;  /* Margin to position it correctly between the divider and the message section */
+    background-color: #357ab7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.check-btn {
+    display: block;
+    margin: 15px auto;  /* Centers the button horizontally */
+    background-color: #357ab7;  /* The same color as .return-button */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+}
+
+body.dark-mode .lost-found-list {
+    display: flex; /* Use flexbox for horizontal scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 20px; /* Space between cards */
+    padding: 20px; /* Padding around the list */
+    scroll-snap-type: x mandatory; /* Enable snap scrolling */
+}
+
+body.dark-mode .lost-item {
+    flex: 0 0 auto; /* Prevent flex items from shrinking */
+    border: 1px solid #ccc; /* Border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding inside the card */
+    text-align: left; /* Align text to the left */
+    background-color: #1f3c53; /* 深色导航栏背景 */
+    scroll-snap-align: start; /* Snap alignment */
+    width: 200px; /* Fixed width for cards */
+}
+
+body.dark-mode .lost-item img {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+body.dark-mode .date-filter {
+    margin: 20px; /* Margin for the date filter */
+}
+
+/* Filter Bar Styles */
+.filter-bar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #fff; /* Light mode background */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.filter-bar select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Dark mode styles for filter bar */
+body.dark-mode .filter-bar {
+    background-color: #333; /* Dark mode background */
+    color: #e0e0e0; /* Text color */
+}
+
+body.dark-mode .filter-bar select {
+    background-color: #444; /* Darker background for select */
+    color: #e0e0e0; /* Text color */
+    border-color: #555; /* Border color */
+}

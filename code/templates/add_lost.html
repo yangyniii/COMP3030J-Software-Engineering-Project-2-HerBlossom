@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Lost</title>
+    <link rel="stylesheet" href="../static/css/style1.css"> <!-- Link to external stylesheet -->
+</head>
+<body>
+    <div class="container">
+        <h2>Add a New Lost</h2>
+        <form id="add-lost-form" method="POST" action="/add_lost" enctype="multipart/form-data">
+    <div class="profile-photo">
+        <img id="cover" src="../static/photo/book.png" alt="Lost Cover" style="max-width: 200px; max-height: 200px;">
+        <input type="file" name="thumbnail_url" accept="image/*" required>
+    </div>
+            <p><strong>Lost Name:</strong>
+                <label for="name"></label><input type="text" id="name" name="name" required><br><br>
+
+            <p><strong>Date:</strong>
+                <label for="date"></label><input type="date" id="date" name="date" required><br><br>
+
+            <p><strong>Location:</strong>
+                <label for="location"></label><input type="text" id="location" name="location" required><br><br>
+
+            <p><strong>Description:</strong>
+                <label for="description"></label><textarea id="description" name="description" required></textarea><br><br>
+
+            <button type="submit">Add Lost</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('input[name="thumbnail_url"]').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('cover').src = e.target.result; // 动态更新图片预览
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('add-lost-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target); // FormData for multipart/form-data
+
+            fetch('/add_lost', {
+                method: 'POST',
+                body: formData // Send formData directly
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Lost added successfully!');
+                    window.location.href = '/lostFound'; // Redirect to home page
+                } else {
+                    alert('Failed to add lost: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        });
+    </script>
+</body>
+</html>
