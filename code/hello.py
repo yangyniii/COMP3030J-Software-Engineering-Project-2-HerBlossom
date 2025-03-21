@@ -1,11 +1,22 @@
 # hello.py
+from flask import Flask, request, jsonify, session, render_template
+from mysql import Mysql
+from werkzeug.utils import secure_filename
+import os
+import time
+from datetime import datetime, timedelta
+
+from flask import Flask, request, jsonify, session, render_template, redirect  # 导入 redirect
+import bcrypt
+import logging
 from datetime import datetime
 
-from flask import Flask, request, jsonify, render_template, session, redirect
-
-from mysql import Mysql
+# Configure logging
+logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
+app.secret_key = '1'  # Set a random secret key
+
 
 # Main page route
 @app.route('/', methods=['GET'])
@@ -15,11 +26,16 @@ def enter_main():
 
     if identification == 'A':
         accounts = db.get_all_users()
-        return render_template('admin_account_management.html', accounts=accounts)
+        return render_template('index.html', accounts=accounts)
     elif identification == 'B':
-        return render_template('staff_book_management.html')
+        return render_template('index.html')
     else:
         return redirect('/signin')
+
+# Route for the login form
+@app.route('/signin', methods=['GET'])
+def show_signin_form():
+    return render_template('signin.html')
 
 # Login route
 @app.route('/signin', methods=['POST'])
@@ -45,7 +61,6 @@ def sign_in():
         if user['id'] in session:
             return jsonify({'message': 'Already logged in'}), 400
 
-
         # Store user information in the session
         session['identification'] = user['identification']
         session['email'] = user['email']
@@ -59,10 +74,9 @@ def sign_in():
         print("An error occurred:", str(e))  # Debug message
         return jsonify({'message': 'An error occurred during login'}), 500
 
-# Route for the login form
-@app.route('/signin', methods=['GET'])
-def show_signin_form():
-    return render_template('signin.html')
+
+
+
 
 # Route for the form submission
 @app.route('/signin', methods=['POST'])
@@ -93,7 +107,7 @@ def signin():
         session['avatar_url'] = avatar
         session['identification'] = user.get('identification')  # 从 user 字典中获取 identification
         session['user_id'] = user_id  # 假设 user_id 是一个元组，取第一个元素
-        print("userid+",user_id)
+        print("userid+", user_id)
         # print("login success")
         # print(avatar)
         return jsonify({'message': 'Login successful', 'redirect': '/profile'})
@@ -101,15 +115,18 @@ def signin():
         # print("login failed")
         return jsonify({'message': 'Login failed. Please check your credentials.'})
 
+
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()  # Clear all session data
     return jsonify({'message': 'Logged out successfully'})
 
+
 # Route for the registration form
 @app.route('/register', methods=['GET'])
 def show_register_form():
     return render_template('register.html')
+
 
 # Route for the registration form submission
 @app.route('/register', methods=['POST'])
@@ -133,3 +150,8 @@ def register():
     db.register_user(name, password, identification, email, avatar)
 
     return jsonify({'message': 'Registration successful'})
+
+
+# Set up the basic port for the pages
+if __name__ == '__main__':
+    app.run(debug=True, port=5222, host='127.0.0.1')

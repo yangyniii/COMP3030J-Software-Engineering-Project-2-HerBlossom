@@ -6,24 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign in</title> <!-- Title of the page -->
   <!-- Bootstrap CSS for styling -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../static/css/style1.css"> <!-- Link to additional custom CSS -->
-  <base href="http://127.0.0.1:5222/"> <!-- Base URL for relative links -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Pacifico&family=Parisienne&family=Lobster&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../static/css_new/main.css"> <!-- Link to additional custom CSS -->
     <script src="../static/js/theme-toggle.js" defer></script>
 </head>
 <body>
+    <h1>Empower HerBlossom</h1>
+<div class="marquee-container">
+    <div class="marquee-content">
+        ❥&nbsp;&nbsp;&nbsp;QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥
+    </div>
+</div>
     <div class="container">
         <!-- Sign In Form -->
         <form id="signInForm">
-            <img src="../static/photo/logo.png" alt="Logo" style="display: block; margin: 0 auto 10px;width: 250px; height: auto;"> <!-- Logo Image -->
-
             <!-- Identification Dropdown -->
             <label for="identification">Identification:</label>
             <select id="identification" name="identification" required>
                 <option value="">Select an option</option> <!-- Default placeholder -->
-                <option value="Student">Student</option> <!-- Option for Student -->
-                <option value="Staff">Staff</option> <!-- Option for Staff -->
-                <option value="Administrator">Administrator</option> <!-- Option for Administrator -->
+                <option value="A">A</option> <!-- Option for A -->
+                <option value="B">B</option> <!-- Option for B -->
             </select>
 
             <!-- Email input field -->
@@ -60,19 +69,11 @@
                 <button type="button" class="ban-button" onclick="clearForm()">Clear</button> <!-- Clear button -->
             </div>
 
-
-                <!-- Feedback Area for Ban -->
-<div id="banFeedback" style="display: none; background-color: #f8d7da; border-color: #f5c6cb; padding: 15px; margin-bottom: 20px;">
-    <div id="banMessage" style="font-weight: bold; color: #721c24;"></div>
-    <div id="banDetails" style="color: #721c24;"></div>
-</div>
-
-
         </form>
     </div>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JavaScript -->
+<script src="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Pacifico&family=Parisienne&family=Lobster&display=swap"></script> <!-- Bootstrap JavaScript -->
 <script>
     function checkEmailExists() {
       const emailInput = document.getElementById("email");
@@ -122,12 +123,7 @@
             body: JSON.stringify({ identification, email, password })
         })
             .then((response) => {
-                if (response.status === 403) {
-                // Handle ban response
-                response.json().then(data => {
-                displayBanMessage(data.message, data.ban_reason, data.time_left);
-            });
-            } else if (response.redirected) {
+                if (response.redirected) {
                 window.location.href = "/";
             } else {
                 displayGeneralMessage( "An error occurred.");
@@ -159,8 +155,6 @@
        banDetails.innerHTML = `<strong>Reason:</strong> ${banReason}<br><strong>Time Remaining:</strong> ${timeString}`;
        banFeedback.style.display = "block";
    }
-
-
 
     // Clear Form Inputs
     function clearForm() {
