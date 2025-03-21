@@ -2,9 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In Form</title> <!-- Title of the page -->
+    <link rel="stylesheet" href="../static/css_new/main.css"> <!-- Link to external stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Pacifico&family=Parisienne&family=Lobster&display=swap" rel="stylesheet">
+
+    <script src="../static/js/theme-toggle.js" defer></script>
 </head>
 <body>
+    <h1>Empower HerBlossom</h1>
+<div class="marquee-container">
+    <div class="marquee-content">
+        ❥&nbsp;&nbsp;&nbsp;QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥
+    </div>
+</div>
+    <div class="container">
+        <!-- Button to return to the homepage -->
+        <button class="return-button" onclick="location.href='../'">Return</button>
 
+        <!-- Sign-in form -->
+        <form>
+            <!-- Logo Image -->
+            <!--<img src="../static/photo/logo.png" alt="Logo" style="display: block; margin: 0 auto 10px;width: 250px; height: auto;">
+-->
+            <!-- Identification Dropdown -->
+            <label for="identification">Identification:</label>
+            <select id="identification" name="identification">
+                <option value="">Select an option</option> <!-- Default placeholder option -->
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+
+            <!-- Name input field -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Please enter your name" required>
+
+            <label for="email">Email:</label>
+            <div style="position: relative;">
+                <input type="email" id="email" name="email" placeholder="Please enter your email" required oninput="checkEmail()" style="width: 100%; padding-right: 130px;">
+                <span id="email-error" style="color: red; font-size: small; position: absolute; top: 50%; right: 10px; transform: translateY(-50%); display: none;">
+                    Email already exists
+                </span>
+            </div>
+            <!-- Password input field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Please enter your password" required>
+
+            <!-- Verify Password input field -->
+            <label for="verify-password">Verify Password:</label>
+            <input type="password" id="verify-password" name="verify-password" placeholder="Please verify your password" required>
+
+            <!-- Buttons for submission or cancellation -->
+            <div class="button-group">
+                <button type="button" onclick="validateForm()">Sign in</button> <!-- Sign in button -->
+                <button type="button">Cancel</button> <!-- Cancel button -->
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function checkEmail() {
+        const email = document.getElementById('email').value.trim();
+        const emailError = document.getElementById('email-error');
+
+        // 如果邮箱为空，不发送请求
+        if (!email) {
+            emailError.style.display = 'none';
+            return;
+        }
+
+        // 调用后端验证邮箱是否存在
+        fetch('/check_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    emailError.style.display = 'none';
+                } else if (response.status === 400) {
+                    emailError.style.display = 'inline';
+                }
+            })
+            .catch(error => {
+                console.error('Error checking email:', error);
+            });
+    }
+        // Function to validate form input
+        function validateForm() {
+            // Get values from form fields
+            const identification = document.getElementById("identification").value;
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const verifyPassword = document.getElementById("verify-password").value;
+            const emailError = document.getElementById("email-error");
+
+            // Reset email error message
+            emailError.style.display = "none";
+
+            // Check if all fields are filled out
+            if (!identification || !name || !email || !password || !verifyPassword) {
+                alert("Your information is not completely filled in");
+                return;
+            }
+
+            // Check if password and verify password match
+            if (password !== verifyPassword) {
+                alert("Password does not match, please enter again");
+                return;
+            }
+
+            // Check if password meets the required pattern
+            const pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!pattern.test(password)) {
+                alert("Password must be at least 8 characters long and contain at least one letter, one number, and one special character (@$!%*?&).");
+                return;
+            }
+
+            // Validate email format
+            const patternEmail = /.*@.*$/;
+            if (!patternEmail.test(email)) {
+                alert("Email must be in a valid email format (e.g., name@domain.com).");
+                return;
+            }
+
+            // Send POST request to the server for registration
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    identification: identification,
+                    name: name,
+                    email: email,
+                    password: password,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/'; // Redirect to homepage if registration is successful
+                } else if (response.status === 400) {
+                    emailError.style.display = "inline";
+                } else {
+                    alert('Failed to sign up. Please try again.'); // Alert in case of failure
+                }
+            });
+        }
+    </script>
 </body>
 </html>
