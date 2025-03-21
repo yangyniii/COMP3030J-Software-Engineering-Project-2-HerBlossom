@@ -427,7 +427,7 @@ class Mysql(object):
         books = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 将元组转换为包含键值对的列表
         return books
 
-    def register_user(self, name, password, identification, email, avatar ,is_banned, read_count):
+    def register_user(self, name, password, identification, email, avatar):
         """
         Registers a new user in the database.
 
@@ -450,8 +450,8 @@ class Mysql(object):
         # Hash the password before storing it in the database
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        sql = "INSERT INTO users(name, password, identification, email, avatar,is_banned, read_count) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        self.cursor.execute(sql, (name, hashed_password, identification, email, avatar, is_banned, read_count))
+        sql = "INSERT INTO users(name, password, identification, email, avatar) VALUES (%s, %s, %s, %s, %s)"
+        self.cursor.execute(sql, (name, hashed_password, identification, email, avatar))
         self.conn.commit()
         return "User registered successfully"
 
