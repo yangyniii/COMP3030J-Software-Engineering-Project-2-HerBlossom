@@ -127,6 +127,10 @@ def logout():
 def show_register_form():
     return render_template('register.html')
 
+# Route for guest access to the main page
+@app.route('/guest', methods=['GET'])
+def guest_access():
+    return render_template('main.html')
 
 # Route for the registration form submission
 @app.route('/register', methods=['POST'])
