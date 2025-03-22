@@ -45,52 +45,52 @@ jobs:
             # 安装和配置Gunicorn
             pip install gunicorn
             echo "import multiprocessing
-bind = '127.0.0.1:5000'
-workers = multiprocessing.cpu_count() * 2 + 1" > gunicorn.conf.py
+            bind = '127.0.0.1:5000'
+            workers = multiprocessing.cpu_count() * 2 + 1" > gunicorn.conf.py
 
             # 创建Gunicorn服务
             sudo tee /etc/systemd/system/gunicorn.service > /dev/null <<EOT
-[Unit]
-Description=gunicorn daemon for Flask app
-Requires=gunicorn.socket
-After=network.target
+            [Unit]
+            Description=gunicorn daemon for Flask app
+            Requires=gunicorn.socket
+            After=network.target
 
-[Service]
-Type=notify
-User=student
-Group=student
-RuntimeDirectory=gunicorn
-WorkingDirectory=/home/student/website
-ExecStart=/home/student/website/venv/bin/gunicorn hello:app
-ExecReload=/bin/kill -s HUP \$MAINPID
-KillMode=mixed
-TimeoutStopSec=5
-PrivateTmp=true
+            [Service]
+            Type=notify
+            User=student
+            Group=student
+            RuntimeDirectory=gunicorn
+            WorkingDirectory=/home/student/website
+            ExecStart=/home/student/website/venv/bin/gunicorn hello:app
+            ExecReload=/bin/kill -s HUP \$MAINPID
+            KillMode=mixed
+            TimeoutStopSec=5
+            PrivateTmp=true
 
-[Install]
-WantedBy=multi-user.target
-EOT
+            [Install]
+            WantedBy=multi-user.target
+            EOT
 
             sudo systemctl daemon-reload
             sudo systemctl enable --now gunicorn
 
             # 配置Nginx
             sudo tee /etc/nginx/sites-available/${{ secrets.VM_NAME }} > /dev/null <<EOT
-upstream app_server {
-    server unix:/run/gunicorn.sock;
-}
+            upstream app_server {
+                server unix:/run/gunicorn.sock;
+            }
 
-server {
-    listen 80;
-    server_name ${{ secrets.VM_NAME }};
+            server {
+                listen 80;
+                server_name ${{ secrets.VM_NAME }};
 
-    location / {
-        proxy_pass http://app_server;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-    }
-}
-EOT
+                location / {
+                    proxy_pass http://app_server;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                }
+            }
+            EOT
             sudo ln -s /etc/nginx/sites-available/${{ secrets.VM_NAME }} /etc/nginx/sites-enabled/
             sudo nginx -t
             sudo systemctl restart nginx
