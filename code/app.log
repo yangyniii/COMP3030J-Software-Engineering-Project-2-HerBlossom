@@ -364,3 +364,27 @@
 2025-03-21 15:39:20,255 - INFO - 127.0.0.1 - - [21/Mar/2025 15:39:20] "GET /signin HTTP/1.1" 200 -
 2025-03-21 15:39:20,278 - INFO - 127.0.0.1 - - [21/Mar/2025 15:39:20] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
 2025-03-21 15:39:20,279 - INFO - 127.0.0.1 - - [21/Mar/2025 15:39:20] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-21 16:44:20,365 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5222
+2025-03-21 16:44:20,366 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 16:44:20,366 - INFO -  * Restarting with stat
+2025-03-21 16:44:20,452 - WARNING -  * Debugger is active!
+2025-03-21 16:44:20,460 - INFO -  * Debugger PIN: 420-112-610
+2025-03-21 16:44:32,679 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:32] "[32mGET / HTTP/1.1[0m" 302 -
+2025-03-21 16:44:32,686 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:32] "GET /signin HTTP/1.1" 200 -
+2025-03-21 16:44:32,700 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:32] "GET /static/css_new/main.css HTTP/1.1" 200 -
+2025-03-21 16:44:32,703 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:32] "GET /static/js/theme-toggle.js HTTP/1.1" 200 -
+2025-03-21 16:44:33,584 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:33] "GET /static/images/background.jpg HTTP/1.1" 200 -
+2025-03-21 16:44:34,533 - INFO - 127.0.0.1 - - [21/Mar/2025 16:44:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-21 16:58:46,625 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:46] "GET /register HTTP/1.1" 200 -
+2025-03-21 16:58:46,636 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:46] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
+2025-03-21 16:58:46,639 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:46] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-21 16:58:47,655 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:47] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
+2025-03-21 16:58:52,559 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:52] "[32mGET / HTTP/1.1[0m" 302 -
+2025-03-21 16:58:52,562 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:52] "GET /signin HTTP/1.1" 200 -
+2025-03-21 16:58:52,576 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:52] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
+2025-03-21 16:58:52,578 - INFO - 127.0.0.1 - - [21/Mar/2025 16:58:52] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-21 16:59:27,507 - INFO - 127.0.0.1 - - [21/Mar/2025 16:59:27] "[32mGET / HTTP/1.1[0m" 302 -
+2025-03-21 16:59:27,510 - INFO - 127.0.0.1 - - [21/Mar/2025 16:59:27] "GET /signin HTTP/1.1" 200 -
+2025-03-21 16:59:27,522 - INFO - 127.0.0.1 - - [21/Mar/2025 16:59:27] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
+2025-03-21 16:59:27,522 - INFO - 127.0.0.1 - - [21/Mar/2025 16:59:27] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
