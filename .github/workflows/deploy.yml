@@ -19,38 +19,47 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VM_NAME }} >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa student@${{ secrets.VM_NAME }} << 'EOF'
 
-      - name: Deploy Application to Server
+      - name: Deploy Application
         run: |
-          ssh student@${{ secrets.VM_NAME }} << 'EOF'
+          ssh -tt -i ~/.ssh/id_rsa student@${{ secrets.VM_NAME }} << 'EOSSH'
+            # 配置免密码 sudo (需提前在服务器配置)
+            # echo 'student ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/student
+
             # 更新系统
             sudo apt update && sudo apt upgrade -y
 
+            # 配置 Git 凭据（如果使用 HTTPS）
+            # git config --global credential.helper 'store --file ~/.git-credentials'
+            # echo "https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+
             # 克隆或更新项目
             if [ ! -d "website" ]; then
-              git clone https://github.com/yangyniii/COMP3030J-Software-Engineering-Project-2.git website
+              git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/yangyniii/COMP3030J-Software-Engineering-Project-2.git website
             else
               cd website
-              git pull
+              git pull origin main
+              cd ..
             fi
 
             # 创建并激活虚拟环境
-            cd website
+            cd website || exit 1
             python3 -m venv venv
             source venv/bin/activate
 
             # 安装依赖
             pip install -r requirements.txt
 
-            # 安装和配置Gunicorn
+            # 安装和配置 Gunicorn
             pip install gunicorn
-            echo "import multiprocessing
+            cat << 'EOCONFIG' > gunicorn.conf.py
+            import multiprocessing
             bind = '127.0.0.1:5000'
-            workers = multiprocessing.cpu_count() * 2 + 1" > gunicorn.conf.py
+            workers = multiprocessing.cpu_count() * 2 + 1
+            EOCONFIG
 
-            # 创建Gunicorn服务
-            sudo tee /etc/systemd/system/gunicorn.service > /dev/null <<EOT
+            # 创建 Gunicorn 服务
+            sudo tee /etc/systemd/system/gunicorn.service > /dev/null << 'EOSERVICE'
             [Unit]
             Description=gunicorn daemon for Flask app
             Requires=gunicorn.socket
@@ -70,13 +79,13 @@ jobs:
 
             [Install]
             WantedBy=multi-user.target
-            EOT
+            EOSERVICE
 
             sudo systemctl daemon-reload
             sudo systemctl enable --now gunicorn
 
-            # 配置Nginx
-            sudo tee /etc/nginx/sites-available/${{ secrets.VM_NAME }} > /dev/null <<EOT
+            # 配置 Nginx
+            sudo tee /etc/nginx/sites-available/${{ secrets.VM_NAME }} > /dev/null << 'EONGINX'
             upstream app_server {
                 server unix:/run/gunicorn.sock;
             }
@@ -91,8 +100,8 @@ jobs:
                     proxy_set_header X-Real-IP \$remote_addr;
                 }
             }
-            EOT
-            sudo ln -s /etc/nginx/sites-available/${{ secrets.VM_NAME }} /etc/nginx/sites-enabled/
-            sudo nginx -t
-            sudo systemctl restart nginx
-          EOF
+            EONGINX
+
+            sudo ln -sf /etc/nginx/sites-available/${{ secrets.VM_NAME }} /etc/nginx/sites-enabled/
+            sudo nginx -t && sudo systemctl restart nginx
+          EOSSH
