@@ -19,6 +19,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VM_NAME }} >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_rsa student@${{ secrets.VM_NAME }} << 'EOF'
 
       - name: Deploy Application to Server
         run: |
