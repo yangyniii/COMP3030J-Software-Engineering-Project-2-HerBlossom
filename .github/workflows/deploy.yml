@@ -1,4 +1,4 @@
-name: Server Configuration and Deployment
+name: Deploy to Remote Server
 
 on:
   push:
@@ -10,80 +10,88 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Setup SSH and Configure Server
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 137.43.49.54 >> ~/.ssh/known_hosts
-        
-        ssh student@csi420-02-vm5.ucd.ie << 'EOF'
-          # Clone Repository
-          git clone https://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@github.com/username/repository.git website || true
-          cd website
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VM_NAME }} >> ~/.ssh/known_hosts
 
-          # Setup Virtual Environment and Install Requirements
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+      - name: Deploy Application to Server
+        run: |
+          ssh student@${{ secrets.VM_NAME }} << 'EOF'
+            # 更新系统
+            sudo apt update && sudo apt upgrade -y
 
-          # Install Gunicorn
-          pip install gunicorn
+            # 克隆或更新项目
+            if [ ! -d "website" ]; then
+              git clone https://github.com/yangyniii/COMP3030J-Software-Engineering-Project-2.git website
+            else
+              cd website
+              git pull
+            fi
 
-          # Install and Configure Nginx
-          sudo apt update
-          sudo apt install -y nginx
+            # 创建并激活虚拟环境
+            cd website
+            python3 -m venv venv
+            source venv/bin/activate
 
-          sudo bash -c 'cat > /etc/nginx/sites-available/csi420-02-vm5.ucd.ie << "NGINX_CONF"
-          upstream app_server {
-              server unix:/run/gunicorn.sock;
-          }
-          
-          server {
-              listen 80;
-              server_name csi420-02-vm5.ucd.ie;
+            # 安装依赖
+            pip install -r requirements.txt
 
-              location / {
-                  proxy_pass http://app_server;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              }
-          }
-          NGINX_CONF'
+            # 安装和配置Gunicorn
+            pip install gunicorn
+            echo "import multiprocessing
+bind = '127.0.0.1:5000'
+workers = multiprocessing.cpu_count() * 2 + 1" > gunicorn.conf.py
 
-          sudo ln -s /etc/nginx/sites-available/csi420-02-vm5.ucd.ie /etc/nginx/sites-enabled/
-          sudo nginx -t
-          sudo systemctl restart nginx
+            # 创建Gunicorn服务
+            sudo tee /etc/systemd/system/gunicorn.service > /dev/null <<EOT
+[Unit]
+Description=gunicorn daemon for Flask app
+Requires=gunicorn.socket
+After=network.target
 
-          # Configure Gunicorn and Systemd
-          cat > gunicorn.conf.py << "EOF"
-          import multiprocessing
+[Service]
+Type=notify
+User=student
+Group=student
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/student/website
+ExecStart=/home/student/website/venv/bin/gunicorn hello:app
+ExecReload=/bin/kill -s HUP \$MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
 
-          bind = "127.0.0.1:5000"
-          workers = multiprocessing.cpu_count() * 2 + 1
+[Install]
+WantedBy=multi-user.target
+EOT
+
+            sudo systemctl daemon-reload
+            sudo systemctl enable --now gunicorn
+
+            # 配置Nginx
+            sudo tee /etc/nginx/sites-available/${{ secrets.VM_NAME }} > /dev/null <<EOT
+upstream app_server {
+    server unix:/run/gunicorn.sock;
+}
+
+server {
+    listen 80;
+    server_name ${{ secrets.VM_NAME }};
+
+    location / {
+        proxy_pass http://app_server;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+}
+EOT
+            sudo ln -s /etc/nginx/sites-available/${{ secrets.VM_NAME }} /etc/nginx/sites-enabled/
+            sudo nginx -t
+            sudo systemctl restart nginx
           EOF
-
-          sudo bash -c 'cat > /etc/systemd/system/gunicorn.service << "SYSTEMD_CONF"
-          [Unit]
-          Description=gunicorn daemon
-          After=network.target
-
-          [Service]
-          User=student
-          Group=student
-          WorkingDirectory=/home/student/website
-          ExecStart=/home/student/website/venv/bin/gunicorn --config gunicorn.conf.py hello:app
-
-          [Install]
-          WantedBy=multi-user.target
-          SYSTEMD_CONF'
-
-          sudo systemctl daemon-reload
-          sudo systemctl enable --now gunicorn
-
-          echo "Deployment completed successfully!"
-        EOF
