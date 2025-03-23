@@ -27,7 +27,7 @@ jobs:
           echo "Connected to server."
           cd ~/COMP3030J-Software-Engineering-Project-2
           echo "Pulling latest code from main branch with authentication..."
-          git pull https://\$GITHUB_USERNAME:\$GITHUB_PAT@github.com/\$GITHUB_USERNAME/COMP3030J-Software-Engineering-Project-2.git main
+          git pull origin main
           echo "Activating virtual environment..."
           source ~/venv/bin/activate
           echo "Installing dependencies..."
