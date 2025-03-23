@@ -10,96 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy Application
-        run: |
-          ssh -tt -i ~/.ssh/id_rsa student@${{ secrets.VM_HOST }} << 'EOSSH'
-            # 非交互式系统更新
-            sudo DEBIAN_FRONTEND=noninteractive apt update -y
-            sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
-
-            # 克隆/更新仓库（使用 Token 认证）
-            if [ ! -d "website" ]; then
-              git clone "https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/yangyniii/COMP3030J-Software-Engineering-Project-2.git" website
-            else
-              cd website
-              git pull origin main
-              cd ..
-            fi
-
-            # 严格检查目录
-            cd website || { echo "❌ 网站目录缺失"; exit 1; }
-
-            # 创建 Python 虚拟环境
-            python3 -m venv venv
-            source venv/bin/activate
-
-            # 安装依赖
-            pip install -r requirements.txt
-
-            # 配置 Gunicorn
-            pip install gunicorn
-            cat << 'EOCONFIG' > gunicorn.conf.py
-            import multiprocessing
-            bind = '127.0.0.1:5000'
-            workers = multiprocessing.cpu_count() * 2 + 1
-            EOCONFIG
-
-            # 创建 Systemd 服务
-            sudo tee /etc/systemd/system/gunicorn.service > /dev/null << 'EOSERVICE'
-            [Unit]
-            Description=Gunicorn for Flask App
-            Requires=gunicorn.socket
-            After=network.target
-
-            [Service]
-            Type=notify
-            User=student
-            Group=student
-            RuntimeDirectory=gunicorn
-            WorkingDirectory=/home/student/website
-            ExecStart=/home/student/website/venv/bin/gunicorn hello:app
-            ExecReload=/bin/kill -s HUP \$MAINPID
-            KillMode=mixed
-            TimeoutStopSec=5
-            PrivateTmp=true
-
-            [Install]
-            WantedBy=multi-user.target
-            EOSERVICE
-
-            # 激活服务
-            sudo systemctl daemon-reload
-            sudo systemctl enable --now gunicorn
-
-            # 配置 Nginx
-            sudo tee /etc/nginx/sites-available/${{ secrets.VM_HOST }} > /dev/null << 'EONGINX'
-            upstream app_server {
-                server unix:/run/gunicorn.sock;
-            }
-
-            server {
-                listen 80;
-                server_name ${{ secrets.VM_HOST }};
-
-                location / {
-                    proxy_pass http://app_server;
-                    proxy_set_header Host \$host;
-                    proxy_set_header X-Real-IP \$remote_addr;
-                }
-            }
-            EONGINX
-
-            # 重启 Nginx
-            sudo ln -sf /etc/nginx/sites-available/${{ secrets.VM_HOST }} /etc/nginx/sites-enabled/
-            sudo nginx -t && sudo systemctl restart nginx
-          EOSSH
+    - name: SSH into Remote Server and Deploy
+      env:
+        GIT_PAT: ${{ secrets.MY_GITHUB_PAT }}
+      run: |
+        echo "Starting deployment..."
+        ssh -o StrictHostKeyChecking=no student@csi420-02-vm5.ucd.ie << 'EOF'
+          echo "Connected to server."
+          cd ~/COMP3030J-Software-Engineering-Project-2
+          echo "Pulling latest code from main branch..."
+          git pull https://yangyniii:${{ secrets.MY_GITHUB_PAT }}@github.com/yangyniii/COMP3030J-Software-Engineering-Project-2.git main
+          echo "Activating virtual environment..."
+          source ~/venv/bin/activate
+          echo "Installing dependencies..."
+          pip install -r requirements.txt
+          echo "Reloading Gunicorn..."
+          sudo systemctl daemon-reload
+          sudo systemctl restart gunicorn
+          echo "Deployment complete."
+        EOF
