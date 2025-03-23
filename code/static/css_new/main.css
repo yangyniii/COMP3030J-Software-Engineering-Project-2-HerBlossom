@@ -134,7 +134,7 @@ h1 {
 .button-group {
     display: flex;
     justify-content: center;
-    gap: 200px; /* 按钮之间的间距 */
+    gap: 50px; /* 按钮之间的间距 */
 }
 
 /* Sign In 按钮（浅红色） */
@@ -157,11 +157,12 @@ h1 {
     background-color: #aecbfa; /* 浅蓝色 */
     color: white;
     border: none;
-    padding: 10px 30px;
-    border-radius: 5px;
+    padding: 5px 20px; /* 减少内边距 */
+    border-radius: 10px; /* 增加圆角 */
     cursor: pointer;
     font-size: 16px;
 }
+
 
 .container .ban-button:hover {
     background-color: #87ceeb; /* 深一点的蓝色 */

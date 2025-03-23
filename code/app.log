@@ -434,3 +434,44 @@
 2025-03-22 18:51:39,961 - INFO - 127.0.0.1 - - [22/Mar/2025 18:51:39] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
 2025-03-22 18:51:41,355 - INFO - 127.0.0.1 - - [22/Mar/2025 18:51:41] "GET /guest HTTP/1.1" 200 -
 2025-03-22 18:51:45,163 - INFO - 127.0.0.1 - - [22/Mar/2025 18:51:45] "GET /guest HTTP/1.1" 200 -
+2025-03-23 17:25:24,208 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5222
+2025-03-23 17:25:24,208 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-23 17:25:24,208 - INFO -  * Restarting with stat
+2025-03-23 17:25:24,288 - WARNING -  * Debugger is active!
+2025-03-23 17:25:24,292 - INFO -  * Debugger PIN: 127-587-866
+2025-03-23 17:25:31,260 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:31] "GET /signin HTTP/1.1" 200 -
+2025-03-23 17:25:31,273 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:31] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-23 17:25:31,274 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:31] "GET /static/css_new/main.css HTTP/1.1" 200 -
+2025-03-23 17:25:31,462 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:31] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
+2025-03-23 17:25:31,525 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:31] "[36mGET /static/favicon.png HTTP/1.1[0m" 304 -
+2025-03-23 17:25:36,316 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:36] "GET /signin HTTP/1.1" 200 -
+2025-03-23 17:25:36,328 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:36] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
+2025-03-23 17:25:36,329 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:36] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-23 17:25:36,389 - INFO - 127.0.0.1 - - [23/Mar/2025 17:25:36] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
+2025-03-23 17:42:42,581 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5222
+2025-03-23 17:42:42,581 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-23 17:42:42,582 - INFO -  * Restarting with stat
+2025-03-23 17:42:42,662 - WARNING -  * Debugger is active!
+2025-03-23 17:42:42,666 - INFO -  * Debugger PIN: 127-587-866
+2025-03-23 17:42:47,510 - INFO - 127.0.0.1 - - [23/Mar/2025 17:42:47] "GET /signin HTTP/1.1" 200 -
+2025-03-23 17:42:47,524 - INFO - 127.0.0.1 - - [23/Mar/2025 17:42:47] "GET /static/css_new/main.css HTTP/1.1" 200 -
+2025-03-23 17:42:47,525 - INFO - 127.0.0.1 - - [23/Mar/2025 17:42:47] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-23 17:42:47,785 - INFO - 127.0.0.1 - - [23/Mar/2025 17:42:47] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
+2025-03-23 17:42:47,855 - INFO - 127.0.0.1 - - [23/Mar/2025 17:42:47] "[36mGET /static/favicon.png HTTP/1.1[0m" 304 -
+2025-03-23 17:43:43,836 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5222
+2025-03-23 17:43:43,836 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-23 17:43:43,836 - INFO -  * Restarting with stat
+2025-03-23 17:43:43,918 - WARNING -  * Debugger is active!
+2025-03-23 17:43:43,922 - INFO -  * Debugger PIN: 127-587-866
+2025-03-23 17:43:47,008 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:47] "GET /signin HTTP/1.1" 200 -
+2025-03-23 17:43:47,018 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:47] "GET /static/css_new/main.css HTTP/1.1" 200 -
+2025-03-23 17:43:47,018 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:47] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-23 17:43:47,091 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:47] "[36mGET /static/images/background.jpg HTTP/1.1[0m" 304 -
+2025-03-23 17:43:47,392 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:47] "[36mGET /static/favicon.png HTTP/1.1[0m" 304 -
+2025-03-23 17:43:50,722 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:50] "GET /signin HTTP/1.1" 200 -
+2025-03-23 17:43:50,731 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:50] "[36mGET /static/css_new/main.css HTTP/1.1[0m" 304 -
+2025-03-23 17:43:50,732 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:50] "[36mGET /static/js/theme-toggle.js HTTP/1.1[0m" 304 -
+2025-03-23 17:43:50,890 - INFO - 127.0.0.1 - - [23/Mar/2025 17:43:50] "[36mGET /static/favicon.png HTTP/1.1[0m" 304 -
