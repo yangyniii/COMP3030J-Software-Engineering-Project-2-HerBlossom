@@ -11,9 +11,6 @@ import bcrypt
 import logging
 from datetime import datetime
 
-# Configure logging
-logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 app = Flask(__name__)
 app.secret_key = '1'  # Set a random secret key
 
