@@ -35,6 +35,7 @@ jobs:
           echo "Reloading Gunicorn..."
           sudo systemctl daemon-reload
           sudo systemctl restart gunicorn
+          sudo systemctl reload gunicorn
           echo "Deployment complete."
         EOF
 
