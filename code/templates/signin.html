@@ -69,6 +69,7 @@
             <div class="button-group">
                 <button type="submit" onclick="validateForm()">Sign in</button> <!-- Sign-in button -->
                 <button type="button" class="ban-button" onclick="clearForm()">Clear</button> <!-- Clear button -->
+                <button type="button" onclick="visitMainPage()">Visit Main Page as Guest</button> <!-- Guest button -->
             </div>
 
         </form>
@@ -165,6 +166,12 @@
         document.getElementById("email-error").style.display = "none";
         document.getElementById("banFeedback").style.display = "none";
     }
+
+    // Function to visit the main page as a guest
+    function visitMainPage() {
+        window.location.href = "/guest";
+    }
+
 </script>
 
 </html>
