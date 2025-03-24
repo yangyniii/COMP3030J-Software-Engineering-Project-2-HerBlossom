@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in</title> <!-- Title of the page -->
+  <!-- Bootstrap CSS for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Pacifico&family=Parisienne&family=Lobster&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../static/css_new/signin.css"> <!-- Link to additional custom CSS -->
+<!-- PNG Favicon -->
+    <link rel="icon" href="../static/favicon.png" type="image/png">
+    <script src="../static/js/theme-toggle.js" defer></script>
+</head>
+<body>
+    <h1>Empower HerBlossom</h1>
+<div class="marquee-container">
+    <div class="marquee-content">
+        ❥&nbsp;&nbsp;&nbsp;QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥&nbsp;&nbsp;&nbsp;
+        QUEENs&nbsp;NEVER&nbsp;CRY&nbsp;&nbsp;&nbsp;❥
+    </div>
+</div>
+    <div class="container">
+        <!-- Sign In Form -->
+        <form id="signInForm">
+            <!-- Identification Dropdown -->
+            <label for="identification">Identification:</label>
+            <select id="identification" name="identification" required>
+                <option value="">Select an option</option> <!-- Default placeholder -->
+                <option value="A">A</option> <!-- Option for A -->
+                <option value="B">B</option> <!-- Option for B -->
+            </select>
+
+            <!-- Email input field -->
+                <label for="email">Email:</label>
+            <div style="position: relative;">
+                <input type="email" id="email" name="email" placeholder="Please enter your email" required>
+                <span id="email-error"
+                      style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); color: red; font-size: 16px; display: none;">
+                    Email does not exist
+                </span>
+            </div>
+
+            <!-- Password input field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Please enter your password" required> <!-- Password input field -->
+
+            <!-- Additional links for users without accounts or for viewing -->
+            <div class="text">
+                If you do not have an account, please <a href="/register" class="link-primary">register</a>
+            </div>
+            <div class="text">
+                or you can choose <a href="/" class="link-primary">just view</a>
+            </div>
+
+            <!-- Remember me checkbox -->
+            <div class="remember-container">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember" style="font-size: 16px">Remember the password</label>
+            </div>
+
+            <!-- Buttons for submitting or clearing the form -->
+            <div class="button-group">
+                <button type="submit" onclick="validateForm()">Sign in</button> <!-- Sign-in button -->
+                <button type="button" class="ban-button" onclick="clearForm()">Clear</button> <!-- Clear button -->
+                <button type="button" class="ban-button" onclick="visitMainPage()">Visit Main Page as Guest</button> <!-- Guest button -->
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script src="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Pacifico&family=Parisienne&family=Lobster&display=swap"></script> <!-- Bootstrap JavaScript -->
+<script>
+    function checkEmailExists() {
+      const emailInput = document.getElementById("email");
+      const emailError = document.getElementById("email-error");
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        emailError.style.display = "none";
+        return;
+      }
+
+      fetch("/check_email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.exists) {
+            emailError.style.display = "none";
+          } else {
+            emailError.style.display = "block";
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    // Attach the function to the email input field
+    document.getElementById("email").addEventListener('input', checkEmailExists);
+
+    // Function to validate and submit the form
+    document.getElementById("signInForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const identification = document.getElementById("identification").value;
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!identification || !email || !password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        fetch("/signin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ identification, email, password })
+        })
+            .then((response) => {
+                if (response.redirected) {
+                window.location.href = "/";
+            } else {
+                displayGeneralMessage( "An error occurred.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+
+    // Display General Message
+    function displayGeneralMessage(message) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "alert alert-danger";
+        messageDiv.textContent = message;
+        document.getElementById("signInForm").prepend(messageDiv);
+
+        setTimeout(() => messageDiv.remove(), 5000);
+    }
+
+    function displayBanMessage(message, banReason, timeLeftSeconds) {
+       const banFeedback = document.getElementById("banFeedback");
+       const banMessage = document.getElementById("banMessage");
+       const banDetails = document.getElementById("banDetails");
+
+       const hours = Math.floor(timeLeftSeconds / 3600);
+       const minutes = Math.floor((timeLeftSeconds % 3600) / 60);
+       const timeString = `${hours} hours and ${minutes} minutes`;
+
+       banMessage.textContent = message;
+       banDetails.innerHTML = `<strong>Reason:</strong> ${banReason}<br><strong>Time Remaining:</strong> ${timeString}`;
+       banFeedback.style.display = "block";
+   }
+
+    // Clear Form Inputs
+    function clearForm() {
+        document.getElementById("signInForm").reset();
+        document.getElementById("email-error").style.display = "none";
+        document.getElementById("banFeedback").style.display = "none";
+    }
+
+    // Function to visit the main page as a guest
+    function visitMainPage() {
+        window.location.href = "/guest";
+    }
+
+</script>
+
+</html>
