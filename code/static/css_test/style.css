@@ -3476,7 +3476,8 @@ ul.list-style li:last-child {
 .avatar-name {
     display: flex;
     align-items: center;
-    margin-top: 20px; /* 给文字下面增加一点间距 */
+    margin-top: 180px; /* 给文字下面增加一点间距 */
+
 }
 
 .avatar-name .avatar-img {
@@ -3488,8 +3489,9 @@ ul.list-style li:last-child {
 }
 
 .avatar-name .name {
+
     font-size: 18px;
-    color: #1d2746; /* 您可以根据背景调整颜色 */
+    color: #ffffff; /* 您可以根据背景调整颜色 */
     font-weight: 500;
 }
 
@@ -3499,6 +3501,55 @@ ul.list-style li:last-child {
     background: transparent;
 }
 
+.avatar-name-wenyi {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 让内容靠右对齐 */
+    margin-top: 20px; /* 与上方 Boran 头像间隔 50px */
+    background: transparent; /* 背景透明 */
+}
+
+.avatar-name-wenyi .name {
+    margin-right: 10px; /* 让名字和图片之间有一些间隔 */
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.avatar-name-wenyi .avatar-img {
+    width: 50px; /* 设定合适的头像大小 */
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/* 新增 Yani 头像和名字样式 */
+.avatar-name-yani {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 靠左对齐 */
+    margin-top: 20px; /* 与 Wenyi 间隔 30px */
+    background: transparent; /* 背景透明 */
+    margin-right: 10px;
+
+}
+
+.avatar-name-yani .name {
+    margin-right: 10px; /* 让名字和图片之间有间距 */
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 500;
+
+}
+
+.avatar-name-yani .avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
 
 
 #preloader p {
