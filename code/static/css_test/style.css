@@ -31,6 +31,8 @@ Table of Content:
 /*font Variables*/
 /*=================== fonts ====================*/
 @import url("https://fonts.googleapis.com/css?family=Great+Vibes|Roboto:300,400,500,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
 .col-md-offset-right-1, .col-lg-offset-right-1 {
   margin-right: 8.33333333%;
 }
@@ -8792,7 +8794,7 @@ blockquote .author {
 }
 
 .signup_left {
-  background: #795fee;
+  background: #ffc0cb;
 }
 .signup_left .middle {
   top: 50%;
@@ -8810,10 +8812,39 @@ blockquote .author {
   max-width: 520px;
   margin: 0 auto;
 }
+
 .sign_inner h3 {
-  font-size: 26px;
-  line-height: 34px;
+    font-family: 'Dancing Script', cursive; /* 手写风格字体 */
+    font-size: 36px; /* 字体加大 */
+    font-weight: 700; /* 加粗 */
+    line-height: 44px; /* 适配更大的字体 */
+    color: #FF6699; /* 桃粉色 */
+    text-align: center; /* 居中对齐 */
+    position: absolute;
+    top: calc(10% + 50px);  /* 原位置向下移动 50px */
+    left: calc(50% + 200px);  /* 原位置向右移动 100px */
+    transform: translateX(-50%);  /* 依然保持水平居中 */
+    text-shadow:
+        2px 2px 4px rgba(255, 105, 180, 0.5),  /* 粉色阴影 */
+        4px 4px 6px rgba(255, 20, 147, 0.3);  /* 深粉色阴影 */
+
+    opacity: 0;  /* 初始不可见 */
+    animation: fadeIn 1.5s ease-in-out 0s forwards;  /* 渐入动画 */
 }
+
+/* 复用 fadeIn 动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+
 .sign_inner p {
   font-size: 14px;
 }
@@ -8964,14 +8995,14 @@ blockquote .author {
 /*================ signup_area css_test ==============*/
 /*================ signin_left css_test ==============*/
 .signin_left {
-  background: #10b3d6;
+  background: #ff9a9e;
 }
 .signin_left:before {
   content: "";
   left: 0;
   width: 100%;
   height: 100px;
-  background-image: linear-gradient(180deg, #10b3d6 0%, #1d2746 100%);
+  background-image: linear-gradient(180deg, #ff9a9e 0%, #ff477e 100%);
   position: absolute;
   bottom: 0;
   z-index: 0;
