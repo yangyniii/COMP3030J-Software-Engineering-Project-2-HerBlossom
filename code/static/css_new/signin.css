@@ -1,3 +1,6 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto';
+@import 'https://fonts.googleapis.com/css?family=Great+Vibes';
+
 body {
     font-family: Arial, sans-serif;
     background-image: url('../images/background.jpg'); /* 确保路径正确 */
@@ -130,14 +133,16 @@ h1 {
     margin-right: 10px; /* 复选框和文字的间距 */
 }
 
-/* 按钮组 */
 .button-group {
     display: flex;
-    justify-content: center;
-    gap: 50px; /* 按钮之间的间距 */
+    justify-content: center;  /* 保持按钮居中 */
+    gap: 60px;  /* 设置按钮之间的间距 */
+    width: 100%;
 }
 
-/* Sign In 按钮（浅红色） */
+
+
+/* Sign In 按钮（浅红色 🎀） */
 .container button[type="submit"] {
     background-color: #f28b82; /* 浅红色 */
     color: white;
@@ -149,22 +154,63 @@ h1 {
 }
 
 .container button[type="submit"]:hover {
-    background-color: #ff6666 /* 悬停变深 */
+    background-color: #ff6666;
+    box-shadow: 0 0 0 0.1875rem white,
+                0 0 0 0.375rem #f28b82;
 }
 
-/* Clear 按钮（浅蓝色） */
+.container button[type="submit"]:active {
+    background-color: #e57373;
+    box-shadow: 0 0 0 0.1875rem #f28b82,
+                0 0 0 0.375rem #f28b82;
+    transition-duration: 75ms;
+}
+
+/* Clear 按钮（蓝色 💙） */
 .container button.ban-button {
-    background-color: #aecbfa; /* 浅蓝色 */
+    background-color: #87ceeb; /* 浅蓝色 */
     color: white;
     border: none;
-    padding: 5px 20px; /* 减少内边距 */
-    border-radius: 10px; /* 增加圆角 */
+    padding: 10px 30px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
 }
 
-
 .container .ban-button:hover {
-    background-color: #87ceeb; /* 深一点的蓝色 */
+    background-color: #6495ed;
+    box-shadow: 0 0 0 0.1875rem white,
+                0 0 0 0.375rem #87ceeb;
 }
 
+.container .ban-button:active {
+    background-color: #4682b4;
+    box-shadow: 0 0 0 0.1875rem #87ceeb,
+                0 0 0 0.375rem #87ceeb;
+    transition-duration: 75ms;
+}
+
+/* Guest 按钮（浅绿色 🍃） */
+.container button.guest-button {
+    background-color: #90DFAA; /* 浅绿色 */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.container button.guest-button:hover {
+    background-color: #7AC9A4; /* 悬停时稍深的绿色 */
+    box-shadow: 0 0 0 0.1875rem white,
+                0 0 0 0.375rem #90DFAA;
+}
+
+
+.container button.guest-button:active {
+    background-color: #72C39A; /* 点击时更深的绿色 */
+    box-shadow: 0 0 0 0.1875rem #90DFAA,
+                0 0 0 0.375rem #90DFAA;
+    transition-duration: 75ms;
+}
