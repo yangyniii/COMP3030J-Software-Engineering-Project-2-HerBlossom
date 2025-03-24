@@ -29,6 +29,11 @@ def enter_main():
     else:
         return redirect('/signin')
 
+@app.route('/index', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+
 # Route for the login form
 @app.route('/signin', methods=['GET'])
 def show_signin_form():
