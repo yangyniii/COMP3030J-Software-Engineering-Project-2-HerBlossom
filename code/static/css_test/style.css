@@ -8984,13 +8984,85 @@ blockquote .author {
   font-size: 14px;
   color: #a5a9b4;
 }
+
+
+/* 只影响 .login_form 内的按钮对齐 */
+.login_form .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* 调整按钮间距，避免过大 */
+    width: 100%;
+    margin-top: 20px; /* 避免按钮过于贴近上方 */
+}
+
+/* 统一按钮样式 */
+.login_form .action_btn {
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Sign In 按钮（浅红色 🎀） */
 .login_form .thm_btn {
-  padding: 9px 24px;
-  box-shadow: none;
+    background-color: #f28b82; /* 浅红色 */
+    margin: 0 23px;
 }
+
 .login_form .thm_btn:hover {
-  box-shadow: 0 20px 30px 0 rgba(12, 118, 142, 0.24);
+    background-color: #ff6666;
+    box-shadow: 0 0 0 3px white, /* 外层白色 */
+                0 0 0 6px #f28b82; /* 内层按钮原色 */
 }
+
+.login_form .thm_btn:active {
+    background-color: #e57373;
+    box-shadow: 0 0 0 3px #f28b82,
+                0 0 0 6px #f28b82;
+    transition-duration: 75ms;
+}
+
+/* Clear 按钮（浅蓝色 💙） */
+.login_form .ban-button {
+    background-color: #87ceeb; /* 浅蓝色 */
+    margin: 0 23px;
+}
+
+.login_form .ban-button:hover {
+    background-color: #6495ed;
+    box-shadow: 0 0 0 3px white,
+                0 0 0 6px #87ceeb;
+}
+
+.login_form .ban-button:active {
+    background-color: #4682b4;
+    box-shadow: 0 0 0 3px #87ceeb,
+                0 0 0 6px #87ceeb;
+    transition-duration: 75ms;
+}
+
+/* Guest 按钮（浅绿色 🍃） */
+.login_form .visit-button {
+    background-color: #90DFAA; /* 浅绿色 */
+    margin: 0 23px;
+}
+
+.login_form .visit-button:hover {
+    background-color: #7AC9A4;
+    box-shadow: 0 0 0 3px white,
+                0 0 0 6px #90DFAA;
+}
+
+.login_form .visit-button:active {
+    background-color: #72C39A;
+    box-shadow: 0 0 0 3px #90DFAA,
+                0 0 0 6px #90DFAA;
+    transition-duration: 75ms;
+}
+
 
 /*================ signup_area css_test ==============*/
 /*================ signin_left css_test ==============*/
