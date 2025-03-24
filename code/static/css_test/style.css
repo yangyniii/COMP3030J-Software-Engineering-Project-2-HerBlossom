@@ -3472,6 +3472,34 @@ ul.list-style li:last-child {
   margin: 5% 0 1% 0;
   padding: 0;
 }
+/* 添加头像和名字的样式 */
+.avatar-name {
+    display: flex;
+    align-items: center;
+    margin-top: 20px; /* 给文字下面增加一点间距 */
+}
+
+.avatar-name .avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px; /* 头像和名字之间的间距 */
+}
+
+.avatar-name .name {
+    font-size: 18px;
+    color: #1d2746; /* 您可以根据背景调整颜色 */
+    font-weight: 500;
+}
+
+/* 保持表格透明 */
+.signup_area {
+    position: relative;
+    background: transparent;
+}
+
+
 
 #preloader p {
   color: #6b707f;
@@ -8892,9 +8920,12 @@ blockquote .author {
   position: relative;
 }
 .login_form .form-group .small_text {
-  color: #1d2746;
-  margin-bottom: 5px;
+     color: #e07488;
+    font-size: 20px; /* 字体大小 */
+    font-weight: bold;
 }
+
+
 .login_form .form-group .form-control {
   border-radius: 6px;
   background-color: #fbfcfd;
