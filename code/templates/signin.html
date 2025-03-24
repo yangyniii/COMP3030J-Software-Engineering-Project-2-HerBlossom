@@ -41,8 +41,11 @@
                     <div class="sign_inner signup_inner">
                         <div class="text-center">
                             <h3> HerBlossom</h3>
-                            <p>Don’t have an account yet? <a href="signup.html">Sign up here</a></p>
+                            <div class="text">
+                                If you do not have an account, please <a href="/register"
+                                                                         class="link-primary">register</a>
                             </div>
+                        </div>
                         <div class="divider">
                             <span class="or-text">or</span>
                         </div>
@@ -54,15 +57,16 @@
                             <div class="col-lg-12 form-group">
                                 <div class="small_text">Confirm password</div>
                                 <div class="confirm_password">
-                                    <input id="confirm-password" name="confirm-password" type="password" class="form-control" placeholder="5+ characters required" autocomplete="off">
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="5+ characters required" autocomplete="off">
                                     <a href="#" class="forget_btn">Forgotten password?</a>
                                 </div>
+                                    or you can choose <a href="/index">just view</a>
+
                             </div>
 
                             <div class="col-lg-12 text-center">
-                                <button type="submit" class="btn action_btn thm_btn">Sign in</button>
                                 <button type="button" class="btn action_btn ban-button" onclick="clearForm()">Clear</button> <!-- Clear button -->
-                                <button type="button" class="btn action_btn visit-button" onclick="visitMainPage()">Visit as Guest</button> <!-- Guest button -->
+                                <button type="submit" class="btn action_btn thm_btn" onclick="validateForm()">Sign in</button>
 
                             </div>
                         </form>
@@ -82,6 +86,95 @@
     <script src="../static/js_test/TweenMax.min.js"></script>
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
+<script>
+    function checkEmailExists() {
+      const emailInput = document.getElementById("email");
+      const emailError = document.getElementById("email-error");
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        emailError.style.display = "none";
+        return;
+      }
+
+      fetch("/check_email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.exists) {
+            emailError.style.display = "none";
+          } else {
+            emailError.style.display = "block";
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    // Attach the function to the email input field
+    document.getElementById("email").addEventListener('input', checkEmailExists);
+
+    // Function to validate and submit the form
+    document.getElementById("signInForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        fetch("/signin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ identification, email, password })
+        })
+            .then((response) => {
+                if (response.redirected) {
+                window.location.href = "/";
+            } else {
+                displayGeneralMessage( "An error occurred.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+
+    // Display General Message
+    function displayGeneralMessage(message) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "alert alert-danger";
+        messageDiv.textContent = message;
+        document.getElementById("signInForm").prepend(messageDiv);
+
+        setTimeout(() => messageDiv.remove(), 5000);
+    }
+
+    function displayBanMessage(message, banReason, timeLeftSeconds) {
+       const banFeedback = document.getElementById("banFeedback");
+       const banMessage = document.getElementById("banMessage");
+       const banDetails = document.getElementById("banDetails");
+
+       const hours = Math.floor(timeLeftSeconds / 3600);
+       const minutes = Math.floor((timeLeftSeconds % 3600) / 60);
+       const timeString = `${hours} hours and ${minutes} minutes`;
+
+       banMessage.textContent = message;
+       banDetails.innerHTML = `<strong>Reason:</strong> ${banReason}<br><strong>Time Remaining:</strong> ${timeString}`;
+       banFeedback.style.display = "block";
+   }
+
+    // Clear Form Inputs
+    function clearForm() {
+        document.getElementById("signInForm").reset();
+        document.getElementById("email-error").style.display = "none";
+        document.getElementById("banFeedback").style.display = "none";
+    }
+
+</script>
 </body>
 
 </html>
