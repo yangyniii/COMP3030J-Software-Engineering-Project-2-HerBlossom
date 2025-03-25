@@ -428,7 +428,7 @@ class Mysql(object):
         return books
 
 
-    def register_user(self, name, password, email, avatar, cover):
+    def register_user(self, name, password, email, avatar, cover, follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location):
         """
         Registers a new user in the database.
 
@@ -450,8 +450,8 @@ class Mysql(object):
                 return "User already exists"
 
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            sql = "INSERT INTO users(username, email, avatar, cover, password) VALUES (%s, %s, %s, %s, %s)"
-            self.cursor.execute(sql, (name, email, avatar, cover, hashed_password))
+            sql = "INSERT INTO users(username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location) VALUES (%s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            self.cursor.execute(sql, (name, email, avatar, cover, hashed_password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location))
             self.conn.commit()
             return "User registered successfully"
         except Exception as e:
