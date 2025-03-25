@@ -1,0 +1,111 @@
+/*
+ Navicat Premium Dump SQL
+
+ Source Server         : root
+ Source Server Type    : MySQL
+ Source Server Version : 80040 (8.0.40)
+ Source Host           : localhost:3306
+ Source Schema         : herblossom
+
+ Target Server Type    : MySQL
+ Target Server Version : 80040 (8.0.40)
+ File Encoding         : 65001
+
+ Date: 21/03/2025 21:45:12
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`  (
+  `comment_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回答评论ID',
+  `commentable_id` int UNSIGNED NOT NULL COMMENT '评论目标的ID',
+  `commentable_type` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论目标类型：post、comment',
+  `user_id` int UNSIGNED NOT NULL COMMENT '用户ID',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '原始正文内容',
+  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`comment_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `commentable_id`(`commentable_id` ASC) USING BTREE,
+  INDEX `create_time`(`create_time` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for post
+-- ----------------------------
+DROP TABLE IF EXISTS `post`;
+CREATE TABLE `post`  (
+  `post_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+  `user_id` int UNSIGNED NOT NULL COMMENT '用户ID',
+  `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '正文内容',
+  `comment_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论数量',
+  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`post_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `create_time`(`create_time` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帖子表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of post
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for topic
+-- ----------------------------
+DROP TABLE IF EXISTS `topic`;
+CREATE TABLE `topic`  (
+  `topic_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '话题ID',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '话题名称',
+  `cover` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '封面图片token',
+  `description` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '话题描述',
+  `post_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '帖子数量',
+  `follower_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注者数量',
+  PRIMARY KEY (`topic_id`) USING BTREE,
+  INDEX `name`(`name` ASC) USING BTREE,
+  INDEX `follower_count`(`follower_count` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '话题表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of topic
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
+  `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '邮箱',
+  `avatar` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像token',
+  `cover` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '封面图片token',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
+  `follower_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注我的人数',
+  `followee_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '我关注的人数',
+  `following_topic_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '我关注的话题数',
+  `post_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '我发表的问题数量',
+  `comment_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '我发表的回答数量',
+  `bio` varchar(160) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '个人简介',
+  `company` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司名称',
+  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
+  PRIMARY KEY (`user_id`) USING BTREE,
+  INDEX `user_name`(`username` ASC) USING BTREE,
+  INDEX `email`(`email` ASC) USING BTREE,
+  INDEX `follower_count`(`follower_count` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, '1', '1', 'default.jpg', 'default.jpg', '1', 1, 2, 3, 4, 5, '6', 'ucd', 'Beijing');
+
+SET FOREIGN_KEY_CHECKS = 1;

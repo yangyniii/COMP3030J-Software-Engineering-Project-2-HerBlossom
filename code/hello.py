@@ -49,13 +49,12 @@ def sign_in():
 
         email = data.get('email')
         password = data.get('password')
-        identification = data.get('identification')
 
-        if not email or not password or not identification:
+        if not email or not password:
             return jsonify({'message': 'All fields are required'}), 400
 
         db = Mysql()
-        user = db.signin_user(identification, email, password)
+        user = db.signin_user(email, password)
 
         if not user:
             return jsonify({'message': 'Invalid email, password, or identification'}), 401
@@ -132,28 +131,26 @@ def show_register_form():
 # Route for guest access to the main page
 @app.route('/guest', methods=['GET'])
 def guest_access():
-    return render_template('main.html')
+    return render_template('index.html')
 
 # Route for the registration form submission
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json  # Get JSON data from the request
-    identification = data.get('identification')
-    # print(identification)
     name = data.get('name')
-    # print(name)
     email = data.get('email')
-    # print(email)
     password = data.get('password')
-    # print(password)
-    # Set the default avatar
-    avatar = "static/photo/default_avatar.png"
+    identification = data.get('identification')
+
+    # Set the default values for avatar and cover
+    avatar = 'default.jpg'
+    cover = 'default.jpg'
 
     db = Mysql()
     if db.exist_log_user(email):
         return jsonify({'message': 'Email already exists'}), 400
 
-    db.register_user(name, password, identification, email, avatar)
+    db.register_user(name, password, email, avatar, cover)
 
     return jsonify({'message': 'Registration successful'})
 

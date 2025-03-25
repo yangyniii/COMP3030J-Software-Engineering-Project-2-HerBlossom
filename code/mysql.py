@@ -427,7 +427,7 @@ class Mysql(object):
         books = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 将元组转换为包含键值对的列表
         return books
 
-    def register_user(self, name, password, identification, email, avatar):
+    def register_user(self, name, password, email, avatar, cover):
         """
         Registers a new user in the database.
 
@@ -437,9 +437,10 @@ class Mysql(object):
         Parameters:
         - name (str): The name of the user.
         - password (str): The user's password.
-        - identification (str): A unique identifier for the user.
         - email (str): The user's email address.
         - avatar (str): The path or URL of the user's avatar.
+        - cover (str): The path or URL of the user's cover image.
+        - identification (str): A unique identifier for the user.
 
         Returns:
         - str: A message indicating whether the user was successfully registered or if the email already exists.
@@ -450,8 +451,8 @@ class Mysql(object):
         # Hash the password before storing it in the database
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        sql = "INSERT INTO users(name, password, identification, email, avatar) VALUES (%s, %s, %s, %s, %s)"
-        self.cursor.execute(sql, (name, hashed_password, identification, email, avatar))
+        sql = "INSERT INTO users(username, email, password, avatar, cover) VALUES (%s, %s, %s, %s, %s)"
+        self.cursor.execute(sql, (name, email, hashed_password, avatar, cover))
         self.conn.commit()
         return "User registered successfully"
 
