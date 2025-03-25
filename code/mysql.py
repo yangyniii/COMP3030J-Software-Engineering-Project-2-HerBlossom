@@ -458,11 +458,10 @@ class Mysql(object):
             print(f"Error during registration: {e}")
             return "Error during registration"
 
-    def signin_user(self, identification, email, password):
-        query = "SELECT id, name, password, identification, email, avatar, is_banned, ban_reason, ban_end_time FROM users WHERE identification = %s AND email = %s"
+    def signin_user(self, email, password):
+        query = "SELECT username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE email = %s"
 
-        values = (identification, email)
-        self.cursor.execute(query, values)
+        self.cursor.execute(query, email)
         user_tuple = self.cursor.fetchone()
         if user_tuple:
             column_names = [desc[0] for desc in self.cursor.description]

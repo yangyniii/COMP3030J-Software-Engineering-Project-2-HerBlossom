@@ -70,13 +70,12 @@ def sign_in():
             return jsonify({'message': 'Already logged in'}), 400
 
         # Store user information in the session
-        session['identification'] = user['identification']
         session['email'] = user['email']
         session['user_id'] = user['id']
-        # print("Session data:", session)  # Debugging session data
+        print("Session data:", session)  # Debugging session data
 
-        # Redirect to main route based on identification
-        return redirect('/')
+        # Redirect to main route
+        return redirect('/index')
 
     except Exception as e:
         print("An error occurred:", str(e))  # Debug message
@@ -84,41 +83,28 @@ def sign_in():
 
 
 # Route for the form submission
-@app.route('/signin', methods=['POST'])
-def signin():
-    data = request.json  # Get JSON data from the request
-    identification = data.get('identification')
-    email = data.get('email')
-    password = data.get('password')
-
-    db = Mysql()
-    user = db.signin_user(identification, email, password)
-    print("user", user)
-
-    if user and user.get('is_banned'):
-        remaining_time = (user.get('ban_end_time') - datetime.now()).total_seconds()
-        if remaining_time > 0:
-            return jsonify({
-                'message': 'Login failed. Your account is temporarily banned.',
-                'ban_reason': user.get('ban_reason'),
-                'time_left': remaining_time
-            }), 403
-
-    avatar = db.get_avatar(email)
-    user_id = db.get_user_id(email)
-
-    if user:
-        session['email'] = email
-        session['avatar_url'] = avatar
-        session['identification'] = user.get('identification')  # 从 user 字典中获取 identification
-        session['user_id'] = user_id  # 假设 user_id 是一个元组，取第一个元素
-        print("userid+", user_id)
-        # print("login success")
-        # print(avatar)
-        return jsonify({'message': 'Login successful', 'redirect': '/profile'})
-    else:
-        # print("login failed")
-        return jsonify({'message': 'Login failed. Please check your credentials.'})
+# @app.route('/signin', methods=['POST'])
+# def signin():
+#     data = request.json  # Get JSON data from the request
+#     email = data.get('email')
+#     password = data.get('password')
+#
+#     db = Mysql()
+#     user = db.signin_user(email, password)
+#     print("user", user)
+#
+#     avatar = db.get_avatar(email)
+#     user_id = db.get_user_id(email)
+#
+#     if user:
+#         session['email'] = email
+#         session['avatar_url'] = avatar
+#         session['user_id'] = user_id  # 假设 user_id 是一个元组，取第一个元素
+#         print("userid+", user_id)
+#         return jsonify({'message': 'Login successful', 'redirect': '/profile'})
+#     else:
+#         # print("login failed")
+#         return jsonify({'message': 'Login failed. Please check your credentials.'})
 
 
 @app.route('/logout', methods=['POST'])
@@ -157,7 +143,7 @@ def register():
         return jsonify({'message': 'Email already exists'}), 400
 
     try:
-        db.register_user(name, password, email, 'default.jpg', 'default.jpg',0,0,0,0,0,"null","null","null")
+        db.register_user(name, password, email, 'default.jpg', 'default.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
