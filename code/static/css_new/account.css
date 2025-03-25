@@ -1,0 +1,122 @@
+.account-container{
+    position: relative;
+    background-color: #FFC0CB; /* Set container background color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    width: 600px; /* Set container width */
+    height: auto; /* Set container height */
+    text-align: left;
+}
+
+
+
+.account-container img{
+    display: block;
+    margin: 0 auto 20px; /* Center the image horizontally and add bottom margin */
+    width: auto;
+    height: 100px; /* Set image height */
+}
+
+.account-container button {
+    margin-top: 10px; /* Add margin above the button */
+}
+
+.account-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold; /* Bold the labels */
+    font-size: 20px;
+}
+
+.account-container input, .account-container select {
+    width: 100%; /* Full width for inputs and select elements */
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Border around input and select elements */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in the width/height calculation */
+}
+
+.account-container button {
+    background-color: #96005A; /* Set background color of buttons */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px;
+}
+
+.account-container button:hover {
+    background-color: #B40078; /* Change background color on hover */
+}
+
+.account-photo{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.account-photo img {
+    width: 200px;
+    height: 200px; /* Set profile photo size */
+}
+
+.account-photo button {
+    margin-top: 10px; /* Add margin above the button */
+}
+
+.account-info{
+    display: flex;
+    flex-direction: column; /* Stack profile info vertically */
+    gap: 20px; /* Add gap between profile sections */
+}
+
+.account-info div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add gap between label and value */
+    margin-bottom: 10px;
+}
+
+.account-info label {
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 100px; /* Ensure label width consistency */
+}
+
+/* Control the style of spans in profile info */
+.account-info span {
+    flex: 1;
+    font-size: 18px;
+    color: #333; /* Set color for the text */
+}
+
+.account-info #password {
+    flex: 1;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Add small gap between buttons */
+}
+
+
+
+.ban-button {
+    background-color: #254f6b; /* Set background color of buttons */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px;
+    display: flex; /* Use flexbox for vertical alignment */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+}
+
+
