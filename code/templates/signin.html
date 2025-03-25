@@ -14,6 +14,15 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>KbDoc</title>
+    <style>
+    .sign_right {
+        background-image: url("../static/images/background5.jpg") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+</style>
+
 </head>
 
 <body data-scroll-animation="true">
@@ -36,33 +45,66 @@
                 <div class="sign_left signin_left">
                     <h2>We are design changers do what matters.</h2>
                     <div class="round"></div>
+                    <div class="avatar-name">
+                        <img class="avatar-img" src="../static/images/Boran.jpg" alt="Boran">
+                        <span class="name">Boran Duan</span>
+                    </div>
+                    <div class="avatar-name-wenyi">
+                    <span class="name">Qiyue Zhu</span>
+                    <img class="avatar-img" src="../static/images/Qiyue.jpg" alt="Qiyue">
+                    </div>
+                    <div class="avatar-name-yani">
+                        <img class="avatar-img" src="../static/images/Wenyi.jpg" alt="Wenyi">
+                        <span class="name">Wenyi Liang</span>
+                    </div>
+                    <div class="avatar-name-wenyi">
+                    <span class="name">Yani Yang</span>
+                    <img class="avatar-img" src="../static/images/Yani.jpg" alt="Yani">
+                    </div>
+                    <div class="avatar-name-yani">
+                        <img class="avatar-img" src="../static/images/Zihan.jpg" alt="Zihan">
+                        <span class="name">Zihan Miao</span>
+                    </div>
+
+
                 </div>
+
                 <div class="sign_right signup_right">
                     <div class="sign_inner signup_inner">
                         <div class="text-center">
-                            <h3> HerBlossom</h3>
-                            <div class="text">
-                                If you do not have an account, please <a href="/register"
-                                                                         class="link-primary">register</a>
-                            </div>
+
+                            <h3> &nbsp;&nbsp;&nbsp;HerBlossom</h3>
+                            <br>
                         </div>
+
                         <div class="divider">
-                            <span class="or-text">or</span>
+                            <span class="or-text"></span>
                         </div>
                         <form action="#" class="row login_form">
                             <div class="col-lg-12 form-group">
-                                <div class="small_text">Your email</div>
+                                <div class="small_text">❥ Your email </div>
                                 <input type="email" class="form-control" id="email" placeholder="info@KbDoc.com">
                             </div>
                             <div class="col-lg-12 form-group">
-                                <div class="small_text">Confirm password</div>
+                                <div class="small_text">❥ Confirm password </div>
                                 <div class="confirm_password">
                                     <input id="password" name="password" type="password" class="form-control" placeholder="5+ characters required" autocomplete="off">
                                     <a href="#" class="forget_btn">Forgotten password?</a>
                                 </div>
+                                <br>
                                     or you can choose <a href="/index">just view</a>
 
                             </div>
+                            <br>
+
+                            <div class="text">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you do not have an account, please <a href="/register"
+                                                                         class="link-primary">register</a> at here！
+                            </div>
+                            <div class="divider">
+                            <span class="or-text"></span>
+                        </div>
+
 
                             <div class="col-lg-12 text-center">
                                 <button type="button" class="btn action_btn ban-button" onclick="clearForm()">Clear</button> <!-- Clear button -->
@@ -176,5 +218,11 @@
 
 </script>
 </body>
+<script>
+    // Function to visit the main page as a guest
+    function visitMainPage() {
+        window.location.href = "/index";
+    }
+</script>
 
 </html>

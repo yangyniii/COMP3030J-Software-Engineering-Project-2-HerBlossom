@@ -27,7 +27,7 @@ def enter_main():
     elif identification == 'B':
         return render_template('index.html')
     else:
-        return redirect('/signin')
+        return redirect('/index')
 
 @app.route('/index', methods=['GET'])
 def index():
@@ -38,6 +38,10 @@ def index():
 @app.route('/signin', methods=['GET'])
 def show_signin_form():
     return render_template('signin.html')
+
+@app.route('/index', methods=['GET'])
+def show_index():
+    return render_template('index.html')
 
 # Login route
 @app.route('/signin', methods=['POST'])
