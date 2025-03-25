@@ -7,7 +7,7 @@ class Mysql(object):
         """
         Initializes the database connection and cursor object.
 
-        This method attempts to connect to a specified database (default is 'librarydb'). If the connection is successful,
+        This method attempts to connect to a specified database (default is 'herblossom'). If the connection is successful,
         it creates a cursor object for executing SQL statements. If the connection fails, an error message is printed.
 
         Note:
@@ -15,7 +15,7 @@ class Mysql(object):
             - The character set used is "utf8mb3".
         """
         try:
-            self.conn = pymysql.connect(host='localhost', user='root', password='123456', database='librarydb',
+            self.conn = pymysql.connect(host='localhost', user='root', password='123456', database='herblossom',
                                         charset="utf8mb3")
             self.cursor = self.conn.cursor()
             # print("Connect Successfully")
@@ -427,6 +427,7 @@ class Mysql(object):
         books = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 将元组转换为包含键值对的列表
         return books
 
+
     def register_user(self, name, password, email, avatar, cover):
         """
         Registers a new user in the database.
@@ -444,17 +445,18 @@ class Mysql(object):
         Returns:
         - str: A message indicating whether the user was successfully registered or if the email already exists.
         """
-        if self.exist_user(email):
-            return "User already exists"
+        try:
+            if self.exist_user(email):
+                return "User already exists"
 
-        # Hash the password before storing it in the database
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-        sql = "INSERT INTO users(username, email, password, avatar, cover) VALUES (%s, %s, %s, %s, %s)"
-        self.cursor.execute(sql, (name, email, hashed_password, avatar, cover))
-        self.conn.commit()
-        return "User registered successfully"
-
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            sql = "INSERT INTO users(username, email, avatar, cover, password) VALUES (%s, %s, %s, %s, %s)"
+            self.cursor.execute(sql, (name, email, avatar, cover, hashed_password))
+            self.conn.commit()
+            return "User registered successfully"
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            return "Error during registration"
 
     def signin_user(self, identification, email, password):
         query = "SELECT id, name, password, identification, email, avatar, is_banned, ban_reason, ban_end_time FROM users WHERE identification = %s AND email = %s"
@@ -487,7 +489,7 @@ class Mysql(object):
         Returns:
         - bool: True if the user exists, False otherwise.
         """
-        conn = pymysql.connect(host='localhost', user='root', password='123456', database='librarydb', charset="utf8mb3")
+        conn = pymysql.connect(host='localhost', user='root', password='123456', database='herblossom', charset="utf8mb3")
         cursor = conn.cursor()
         sql = "SELECT * FROM users WHERE email = %s"
         cursor.execute(sql, (email,))

@@ -142,23 +142,25 @@ def guest_access():
 # Route for the registration form submission
 @app.route('/register', methods=['POST'])
 def register():
-    data = request.json  # Get JSON data from the request
+    data = request.json  # 获取请求的 JSON 数据
+    print(f"Received data: {data}")  # 打印接收到的数据
+    # 检查是否包含必需字段
+    if not data.get('name') or not data.get('email') or not data.get('password'):
+        return jsonify({'message': 'Missing required fields'}), 400
+
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    identification = data.get('identification')
-
-    # Set the default values for avatar and cover
-    avatar = 'default.jpg'
-    cover = 'default.jpg'
 
     db = Mysql()
     if db.exist_log_user(email):
         return jsonify({'message': 'Email already exists'}), 400
 
-    db.register_user(name, password, email, avatar, cover)
-
-    return jsonify({'message': 'Registration successful'})
+    try:
+        db.register_user(name, password, email, 'default.jpg', 'default.jpg')
+        return jsonify({'message': 'Registration successful'}), 200
+    except Exception as e:
+        return jsonify({'message': f'Error: {str(e)}'}), 500
 
 
 @app.route('/check_email', methods=['POST'])
