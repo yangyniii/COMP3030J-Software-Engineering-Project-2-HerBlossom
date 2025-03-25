@@ -440,7 +440,6 @@ class Mysql(object):
         - email (str): The user's email address.
         - avatar (str): The path or URL of the user's avatar.
         - cover (str): The path or URL of the user's cover image.
-        - identification (str): A unique identifier for the user.
 
         Returns:
         - str: A message indicating whether the user was successfully registered or if the email already exists.

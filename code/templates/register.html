@@ -53,7 +53,7 @@
                         <form action="#" class="row login_form">
                             <div class="col-sm-6 form-group">
                                 <div class="small_text">First name</div>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Muhammad">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Please enter your name" required>
                             </div>
                             <div class="col-sm-6 form-group">
                                 <div class="small_text">Last name</div>
@@ -61,15 +61,18 @@
                             </div>
                             <div class="col-lg-12 form-group">
                                 <div class="small_text">Your email</div>
-                                <input type="email" class="form-control" id="email" placeholder="info@KbDoc.com">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Please enter your email" required oninput="checkEmail()" style="width: 100%; padding-right: 130px;">
+                                                    <span id="email-error" style="color: red; font-size: small; position: absolute; top: 50%; right: 10px; transform: translateY(-50%); display: none;">
+                                                        Email already exists
+                                                    </span>
                             </div>
                             <div class="col-lg-12 form-group">
                                 <div class="small_text">Password</div>
-                                <input id="signup-password" name="signup-password" type="password" class="form-control" placeholder="5+ characters required" autocomplete="off">
-                            </div>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Please enter your password" required>
+                                   </div>
                             <div class="col-lg-12 form-group">
                                 <div class="small_text">Confirm password</div>
-                                <input id="confirm-password" name="confirm-password" type="password" class="form-control" placeholder="5+ characters required" autocomplete="off">
+                                <input type="password" class="form-control" id="verify-password" name="verify-password" placeholder="Please verify your password" required>
                             </div>
                             <div class="col-lg-12 form-group">
                                 <div class="check_box">
@@ -97,6 +100,98 @@
     <script src="../static/js_test/TweenMax.min.js"></script>
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
+    <script>
+        function checkEmail() {
+            const email = document.getElementById('email').value.trim();
+            const emailError = document.getElementById('email-error');
+
+            // 如果邮箱为空，不发送请求
+            if (!email) {
+                emailError.style.display = 'none';
+                return;
+            }
+
+            // 调用后端验证邮箱是否存在
+            fetch('/check_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email: email}),
+            })
+                    .then(response => {
+                        if (response.ok) {
+                            emailError.style.display = 'none';
+                        } else if (response.status === 400) {
+                            emailError.style.display = 'inline';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking email:', error);
+                    });
+        }
+
+        // Function to validate form input
+        function validateForm() {
+            // Get values from form fields
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const verifyPassword = document.getElementById("verify-password").value;
+            const emailError = document.getElementById("email-error");
+
+            // Reset email error message
+            emailError.style.display = "none";
+
+            // Check if all fields are filled out
+            if (!name || !email || !password || !verifyPassword) {
+                alert("Your information is not completely filled in");
+                return;
+            }
+
+            // Check if password and verify password match
+            if (password !== verifyPassword) {
+                alert("Password does not match, please enter again");
+                return;
+            }
+
+            // Check if password meets the required pattern
+            const pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!pattern.test(password)) {
+                alert("Password must be at least 8 characters long and contain at least one letter, one number, and one special character (@$!%*?&).");
+                return;
+            }
+
+            // Validate email format
+            const patternEmail = /.*@.*$/;
+            if (!patternEmail.test(email)) {
+                alert("Email must be in a valid email format (e.g., name@domain.com).");
+                return;
+            }
+
+            // Send POST request to the server for registration
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                }),
+            })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/'; // Redirect to homepage if registration is successful
+                        } else if (response.status === 400) {
+                            emailError.style.display = "inline";
+                        } else {
+                            alert('Failed to sign up. Please try again.'); // Alert in case of failure
+                        }
+                    });
+        }
+    </script>
 </body>
 
 </html>

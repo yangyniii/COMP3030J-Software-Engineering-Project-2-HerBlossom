@@ -25,9 +25,10 @@ def enter_main():
         accounts = db.get_all_users()
         return render_template('index.html', accounts=accounts)
     elif identification == 'B':
-        return render_template('index.html')
+        return render_template('signin.html')
     else:
-        return redirect('/index')
+        return redirect('/signin')
+
 
 @app.route('/index', methods=['GET'])
 def index():
@@ -39,9 +40,11 @@ def index():
 def show_signin_form():
     return render_template('signin.html')
 
+
 @app.route('/index', methods=['GET'])
 def show_index():
     return render_template('index.html')
+
 
 # Login route
 @app.route('/signin', methods=['POST'])
@@ -78,9 +81,6 @@ def sign_in():
     except Exception as e:
         print("An error occurred:", str(e))  # Debug message
         return jsonify({'message': 'An error occurred during login'}), 500
-
-
-
 
 
 # Route for the form submission
@@ -132,10 +132,12 @@ def logout():
 def show_register_form():
     return render_template('register.html')
 
+
 # Route for guest access to the main page
 @app.route('/guest', methods=['GET'])
 def guest_access():
     return render_template('index.html')
+
 
 # Route for the registration form submission
 @app.route('/register', methods=['POST'])
@@ -157,6 +159,17 @@ def register():
     db.register_user(name, password, email, avatar, cover)
 
     return jsonify({'message': 'Registration successful'})
+
+
+@app.route('/check_email', methods=['POST'])
+def check_email():
+    data = request.json
+    email = data.get('email')
+
+    db = Mysql()
+    exists = db.exist_log_user(email)
+
+    return jsonify({'exists': exists})
 
 
 # Set up the basic port for the pages
