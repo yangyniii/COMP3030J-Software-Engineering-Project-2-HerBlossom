@@ -8938,22 +8938,18 @@ blockquote .author {
     font-weight: 700; /* 加粗 */
     line-height: 44px; /* 适配更大的字体 */
     color: #FF887A; /* 桃粉色 */
-
     text-align: center; /* 居中对齐 */
     position: absolute;
-    top: calc(15% + 5px);  /* 原位置向下移动 50px */
+
     left: calc(50% + 200px);  /* 原位置向右移动 100px */
     transform: translateX(-50%);  /* 依然保持水平居中 */
     font-weight: 600;
     text-shadow:
     4px 4px 6px rgba(255, 20, 147, 0.3),  /* 深粉色阴影 */
     6px 6px 8px rgba(255, 255, 255, 0.5);
-
-
-
     opacity: 0;  /* 初始不可见 */
     animation: fadeIn 1.5s ease-in-out 0s forwards;  /* 渐入动画 */
-
+    margin-top: 0px;
 }
 
 /* 复用 fadeIn 动画 */
@@ -8971,21 +8967,13 @@ blockquote .author {
 
 .sign_inner p {
   font-size: 14px;
+  margin-top: 10px;
 }
 .sign_inner p a {
   color: #1d2746;
   font-weight: 500;
 }
-.sign_inner .btn-google {
-  box-shadow: 0 4px 10px 0 rgba(4, 73, 89, 0.06);
-  border-radius: 6px;
-  border: 1px solid #e6ecee;
-  font-size: 14px;
-  color: #6b707f;
-  padding: 8px 27px;
-  display: inline-block;
-  margin-top: 20px;
-}
+
 .sign_inner .btn-google img {
   vertical-align: inherit;
   padding-right: 8px;
@@ -8996,9 +8984,11 @@ blockquote .author {
 .sign_inner .divider {
   border-bottom: 1px solid #e3e8ea;
   position: relative;
-  margin-bottom: 30px;
-  margin-top: 36px;
+  margin-bottom: 10px;
+  margin-top: 50px;
 }
+
+
 .sign_inner .divider .or-text {
   font-size: 16px;
   color: #1d2746;
@@ -9011,8 +9001,12 @@ blockquote .author {
   margin-left: -21px;
 }
 
+.sign_inner .text-center {
+    margin-top: -20px; /* 按钮与上方内容间距 */
+}
+
 .login_form .form-group {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   position: relative;
 }
 .login_form .form-group .small_text {
