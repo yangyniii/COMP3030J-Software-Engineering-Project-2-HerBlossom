@@ -8996,8 +8996,8 @@ blockquote .author {
 .sign_inner .divider {
   border-bottom: 1px solid #e3e8ea;
   position: relative;
-  margin-bottom: 30px;
-  margin-top: 36px;
+  margin-bottom: 10px;
+  margin-top: 50px;
 }
 .sign_inner .divider .or-text {
   font-size: 16px;
