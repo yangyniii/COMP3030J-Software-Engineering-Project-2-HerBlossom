@@ -157,7 +157,7 @@ def register():
         return jsonify({'message': 'Email already exists'}), 400
 
     try:
-        db.register_user(name, password, email, 'default.jpg', 'default.jpg')
+        db.register_user(name, password, email, 'default.jpg', 'default.jpg',0,0,0,0,0,"null","null","null")
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
