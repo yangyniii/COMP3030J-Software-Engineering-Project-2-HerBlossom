@@ -81,7 +81,7 @@
                         <div class="divider">
                             <span class="or-text"></span>
                         </div>
-                        <form action="#" class="row login_form">
+                        <form action="#" id="signInForm" class="row login_form">
                             <div class="col-lg-12 form-group">
                                 <div class="small_text">❥ Your email </div>
                                 <input type="email" class="form-control" id="email" placeholder="info@KbDoc.com">
@@ -107,10 +107,11 @@
                         </div>
                             <div class="col-lg-12 text-center">
                                 <button type="button" class="btn action_btn ban-button" id="clearButton" onclick="clearForm()">Clear</button>
-                                <button type="submit" class="btn action_btn thm_btn" onclick="validateForm()">Sign in</button>
+                                <button type="submit" class="btn action_btn thm_btn" id="signinButton" onclick="signin()">Sign in</button>
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -138,23 +139,20 @@
       }
 
       fetch("/check_email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.exists) {
-            emailError.style.display = "none";
-          } else {
-            emailError.style.display = "block";
-          }
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email})
         })
-        .catch((error) => console.error("Error:", error));
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.exists) {
+                        emailError.style.display = "none";
+                    } else {
+                        emailError.style.display = "block";
+                    }
+                })
+                .catch((error) => console.error("Error:", error));
     }
-
-    // Attach the function to the email input field
-    document.getElementById("email").addEventListener('input', checkEmailExists);
 
     // Function to validate and submit the form
     document.getElementById("signInForm").addEventListener("submit", function (event) {
@@ -170,17 +168,14 @@
 
         fetch("/signin", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email, password})
         })
-            .then((response) => {
-                if (response.redirected) {
-                window.location.href = "/index";
-            } else {
-                displayGeneralMessage( "An error occurred.");
-            }
-        })
-        .catch(error => console.error("Error:", error));
+                .then((response) => {
+                    // 处理登录响应
+                    visitMainPage();
+                })
+                .catch(error => console.error("Error:", error));
     });
 
     // Display General Message
@@ -220,6 +215,7 @@
     }
 
 </script>
+</form>
 </body>
 <script>
     // Function to visit the main page as a guest
