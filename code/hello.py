@@ -82,31 +82,6 @@ def sign_in():
         return jsonify({'message': 'An error occurred during login'}), 500
 
 
-# Route for the form submission
-# @app.route('/signin', methods=['POST'])
-# def signin():
-#     data = request.json  # Get JSON data from the request
-#     email = data.get('email')
-#     password = data.get('password')
-#
-#     db = Mysql()
-#     user = db.signin_user(email, password)
-#     print("user", user)
-#
-#     avatar = db.get_avatar(email)
-#     user_id = db.get_user_id(email)
-#
-#     if user:
-#         session['email'] = email
-#         session['avatar_url'] = avatar
-#         session['user_id'] = user_id  # 假设 user_id 是一个元组，取第一个元素
-#         print("userid+", user_id)
-#         return jsonify({'message': 'Login successful', 'redirect': '/profile'})
-#     else:
-#         # print("login failed")
-#         return jsonify({'message': 'Login failed. Please check your credentials.'})
-
-
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()  # Clear all session data
@@ -159,6 +134,182 @@ def check_email():
 
     return jsonify({'exists': exists})
 
+# Avatar-related methods
+
+# Configure upload folder
+UPLOAD_FOLDER = 'static/photo/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Add allowed extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+# Function to check allowed extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Show the user's profile
+@app.route('/profile', methods=['GET'])
+def profile():
+    # Check if the user is logged in
+    if 'email' not in session:
+        # If not logged in, return 401 error
+        return render_template('signin.html')
+
+    # print("email", session)
+    # Render the Profile page
+    return render_template('profile.html')
+
+
+@app.route('/get_user_info', methods=['GET'])
+def get_user_info():
+    db = Mysql()  # Instantiate the database object
+    user_email = session.get('email')  # Get the current user's email from the session
+    user_info = db.get_user_info(user_email)  # Query user information from the database
+
+    if user_info:
+        # print("Fetched user info:", user_info)
+        # Return user information as JSON
+        return jsonify({
+            'name': user_info['name'],
+            'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
+            'email': user_info['email'],
+            'avatar': user_info.get('avatar')
+        })
+    else:
+        # If user is not found, return 404
+        return jsonify({'message': 'User not found'}), 404
+
+
+# Handle avatar upload
+@app.route('/upload_avatar', methods=['POST'])
+def upload_avatar():
+    # Check if the 'file' field exists in the request.files dictionary
+    # If it doesn't, return a 400 Bad Request error message
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file part'})
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'})
+
+    if file and allowed_file(file.filename):
+        # Generate the filename
+        filename = secure_filename(file.filename)
+        # Save into the database
+        relative_path = f'static/photo/{filename}'
+        # Save the uploaded file in the photo directory
+        absolute_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        # Ensure the directory exists
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+
+        # Save the file
+        file.save(absolute_path)
+
+        # Get the user's email from the session
+        user_email = session.get('email')
+        if not user_email:
+            return jsonify({'message': 'Please sign in first'}), 403
+
+        # Update the profile picture path (relative path) in the database
+        db = Mysql()
+        db.update_user_avatar(user_email, relative_path)
+
+        session['avatar_url'] = absolute_path  # Save the updated avatar in the session
+
+        # Return success message and profile picture path (for direct use by the frontend)
+        return jsonify({'message': 'Avatar uploaded successfully', 'avatar_url': f'/{relative_path}'}), 200
+
+    return jsonify({'message': 'File not allowed'}), 400
+
+
+# Update password
+@app.route('/profile', methods=['POST'])
+def update_password():
+    new_password = request.json.get('password')
+    email = session.get('email')  # Get the email from the session
+    db = Mysql()
+    db.update_password(email, new_password)
+    return jsonify({'message': 'Password updated successfully'})
+
+@app.route('/publish_post', methods=['GET'])
+def publish_post():
+    data = request.json  # 获取请求的 JSON 数据
+    print(f"Received data: {data}")  # 打印接收到的数据
+    # 检查是否包含必需字段
+    if not data.get('user_id') or not data.get('title') or not data.get('content') or not data.get('create_time'):
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    user_id = data.get('user_id')
+    title = data.get('title')
+    content = data.get('content')
+    create_time = data.get('create_time')
+
+    db = Mysql()
+
+    try:
+        db.publish_post(user_id, title, content, create_time)
+        return jsonify({'message': 'Registration successful'}), 200
+    except Exception as e:
+        return jsonify({'message': f'Error: {str(e)}'}), 500
+
+@app.route('/delete_post', methods=['DELETE'])
+def delete_post():
+    post_id = request.args.get('post_id', '')
+    db = Mysql()
+    try:
+        success = db.delete_post(post_id)
+        if success:
+            return jsonify({'success': True})
+        else:
+            return jsonify({'success': False, 'message': 'Failed to delete lost information'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/post_post', methods=['GET'])
+def post_post():
+    db = Mysql()
+    post_list = db.get_posts()
+    if post_list:
+        return jsonify({'posts': post_list})
+    else:
+        return jsonify({'message': 'No books found'}), 404
+
+@app.route('/publish_comment', methods=['GET'])
+def publish_comment():
+    data = request.json  # 获取请求的 JSON 数据
+    print(f"Received data: {data}")  # 打印接收到的数据
+    # 检查是否包含必需字段
+    if not data.get('commentable_id') or not data.get('commentable_type') or not data.get('user_id') or not data.get('content') or not data.get('create_time'):
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    commentable_id = data.get('commentable_id')
+    commentable_type = data.get('commentable_type')
+    user_id = data.get('user_id')
+    content = data.get('content')
+    create_time = data.get('create_time')
+
+    db = Mysql()
+
+    try:
+        db.publish_comment(commentable_id,commentable_type, user_id, content, create_time)
+        return jsonify({'message': 'Registration successful'}), 200
+    except Exception as e:
+        return jsonify({'message': f'Error: {str(e)}'}), 500
+
+@app.route('/search_topics', methods=['GET'])
+def search_topics():
+    name = request.args.get('name', '')
+    db = Mysql()
+    try:
+        topics = db.search_topics_by_name(name)
+        return jsonify({'topics': topics})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
