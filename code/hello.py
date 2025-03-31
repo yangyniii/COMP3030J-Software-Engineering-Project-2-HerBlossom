@@ -181,6 +181,25 @@ def get_user_info():
         # If user is not found, return 404
         return jsonify({'message': 'User not found'}), 404
 
+@app.route('/get_user_info_by_id', methods=['GET'])
+def get_user_info_by_id():
+    user_id = request.args.get('user_id')  # Get user_id from query parameter
+    if not user_id:
+        return jsonify({'message': 'User ID is required'}), 400  # Optional: Return an error if no user_id is provided
+
+    db = Mysql()  # Instantiate the database object
+    user_info = db.get_user_info_by_id(user_id)  # Query user information from the database
+
+    if user_info:
+        return jsonify({
+            'username': user_info['username'],
+            'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
+            'email': user_info['email'],
+            'avatar': user_info.get('avatar')
+        })
+    else:
+        # If user is not found, return 404
+        return jsonify({'message': 'User not found'}), 404
 
 # Handle avatar upload
 @app.route('/upload_avatar', methods=['POST'])
@@ -311,7 +330,7 @@ def search_topics():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
-@app.route('/forum-single', methods=['GET'])
+@app.route('/forum', methods=['GET'])
 def forum():
     try:
         db = Mysql()
@@ -334,13 +353,29 @@ def forum():
         total_comments = 0
         hot_tags = []
     
-    return render_template('forum-single.html',
+    return render_template('forum.html', 
                          posts=posts,
                          online_count=online_count,
                          total_posts=total_posts,
                          total_comments=total_comments,
                          hot_tags=hot_tags,
                          is_logged_in='email' in session)
+
+@app.route('/forum-single', methods=['GET'])
+def post_detail():
+    post_id = 1
+    if post_id:
+        db = Mysql()
+        post = db.get_post_by_id(post_id)
+        if post:
+            return render_template('forum-single.html', post=post)
+        else:
+            return jsonify({'message': 'Post not found'}), 404
+    else:
+        return jsonify({'message': 'Post ID is required'}), 400
+
+
+
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
