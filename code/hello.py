@@ -311,6 +311,37 @@ def search_topics():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
+@app.route('/forum', methods=['GET'])
+def forum():
+    try:
+        db = Mysql()
+        # 获取帖子列表
+        posts = db.get_posts()
+        # 获取在线人数（这里暂时设置为固定值，后续可以改为动态计算）
+        online_count = 100
+        # 获取总帖子数
+        total_posts = len(posts) if posts else 0
+        # 获取总评论数（需要从数据库获取）
+        total_comments = 0
+        # 获取热门标签（需要从数据库获取）
+        hot_tags = []
+    except Exception as e:
+        print(f"数据库连接错误: {str(e)}")
+        # 设置默认值
+        posts = []
+        online_count = 0
+        total_posts = 0
+        total_comments = 0
+        hot_tags = []
+    
+    return render_template('forum.html', 
+                         posts=posts,
+                         online_count=online_count,
+                         total_posts=total_posts,
+                         total_comments=total_comments,
+                         hot_tags=hot_tags,
+                         is_logged_in='email' in session)
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
