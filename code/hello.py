@@ -311,7 +311,7 @@ def search_topics():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
-@app.route('/forum', methods=['GET'])
+@app.route('/forum-single', methods=['GET'])
 def forum():
     try:
         db = Mysql()
@@ -334,7 +334,7 @@ def forum():
         total_comments = 0
         hot_tags = []
     
-    return render_template('forum.html', 
+    return render_template('forum-single.html',
                          posts=posts,
                          online_count=online_count,
                          total_posts=total_posts,
