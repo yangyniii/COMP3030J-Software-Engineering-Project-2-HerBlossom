@@ -401,10 +401,10 @@
                             <div class="col-lg-9">
                                 <div class="forum-post-top">
                                     <a class="author-avatar" href="#">
-                                        <img src="../static/img/forum/author-avatar.png" alt="">
+                                        <img id="avatar" src="" alt="user avatar">
                                     </a>
                                     <div class="forum-post-author">
-                                        <a class="author-name" href="#"> Eh Jewel </a>
+                                        <a class="author-name" href="#" id="username">  </a>
                                         <div class="forum-author-meta">
                                             <div class="author-badge">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
@@ -415,7 +415,7 @@
                                             </div>
                                             <div class="author-badge">
                                                 <i class="icon_calendar"></i>
-                                                <a href="">January 16 at 10:32 PM</a>
+                                                <a href="">{{post.create_time}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -431,12 +431,12 @@
                         <!-- Forum post content -->
                         <div class="q-title">
                             <span class="question-icon" title="Question">Q:</span>
-                            <h1>Sticky navbar is shown, but state is inactive</h1>
+                            <h1>{{ post.title }}</h1>
                             <a href="#" class="badge">Features</a>
                         </div>
                         <div class="forum-post-content">
                             <div class="content">
-                                <p>Daft.</p>
+                                <p>{{ post.content }}</p>
                             </div>
                             <div class="forum-post-btm">
                                 <div class="taxonomy forum-post-tags">
@@ -513,7 +513,7 @@
                                             <img src="../static/img/forum/author-avatar.png" alt="">
                                         </a>
                                         <div class="forum-post-author">
-                                            <a class="author-name" href="#"> Eh Jewel </a>
+                                            <a class="author-name" href="#" id="username"> </a>
                                             <div class="forum-author-meta">
                                                 <div class="author-badge">
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
@@ -849,5 +849,35 @@
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
 </body>
+
+<script>
+// 假设您从会话或其他地方获取了 user_id
+const user_id = {{post.user_id}} // 这里需要实现获取 user_id 的逻辑
+
+// 获取用户信息
+fetch(`/get_user_info_by_id?user_id=${user_id}`)
+    .then(response => response.json())  // 解析 JSON 响应
+    .then(data => {
+        console.log(data);  // 打印数据以调试
+        if (data.message === 'User not found') {
+            alert('User not found!');
+        } else {
+            // 如果用户信息存在，则更新页面中的内容
+            // 将用户名填充到页面中的元素
+            document.getElementById("username").textContent = data.username || "Default Username";
+
+            // 设置头像图片，如果没有头像，则使用默认头像
+            const avatarImg = document.getElementById("avatar");
+            avatarImg.src = data.avatar || '../static/photo/default_avatar.png';  // 设置头像路径
+
+            // 如果有其他信息，也可以进行类似的更新
+            // 例如，更新邮箱、手机号等
+            // document.getElementById("user_email").textContent = data.email || "No Email";
+            // document.getElementById("user_phone").textContent = data.phone || "No Phone";
+        }
+    })
+    .catch(error => console.error('Error:', error)); // 错误处理
+</script>
+
 
 </html>
