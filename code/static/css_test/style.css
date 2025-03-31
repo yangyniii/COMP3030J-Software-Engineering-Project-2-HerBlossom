@@ -7832,6 +7832,14 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
   padding: 8px 28px;
   margin-top: 2px;
 }
+.action-button-container .post-btn {
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 28px;
+  margin-top: 2px;
+}
+
 .action-button-container .ask-btn:hover {
   background: #16c9f0;
 }
@@ -7871,6 +7879,34 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 .forum-post-content .content {
   line-height: 26px;
 }
+
+.forum-post-content .post-images {
+    margin-top: 15px;
+}
+.forum-post-content .image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;
+    list-style: none;
+    padding: 0;
+}
+.forum-post-content .image-grid li {
+    position: relative;
+}
+
+.forum-post-content .image-grid img {
+    width: 97%;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    transition: transform 0.3s;
+}
+.forum-post-content .image-grid img:hover {
+    transform: scale(1.05);
+}
+
+
 .forum-post-content .forum-post-btm {
   display: flex;
   justify-content: space-between;
@@ -9856,5 +9892,171 @@ blockquote .author {
 
 /*========== End footer_area css_test ==========*/
 /*---------------------------------------------------- */
+
+/*==========Edit Post===========================*/
+/* Styling for the rich text editor */
+.editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.editor-toolbar button {
+    flex: 1;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.editor-toolbar button:hover {
+    background-color: #ddd;
+}
+
+.editor-toolbar button:active {
+    background-color: #bbb;
+}
+
+button.active {
+    background-color: #aaa !important;
+}
+
+.rich-text-editor {
+    min-height: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-top: 10px;
+    outline: none;
+}
+
+.editor-toolbar button:focus {
+    background-color: #ccc;
+}
+
+.color-picker-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.color-picker-container input[type="color"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+}
+
+.color-picker-container::before {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #000;
+    position: absolute;
+}
+
+.color-picker-container input[type="color"]:hover + ::before {
+    filter: brightness(1.2);
+}
+
+.color-picker-container input[type="color"]:active + ::before {
+    filter: brightness(0.8);
+}
+
+/*====rich text content=========*/
+.card {
+  --bg: #e8e8e8;
+  --contrast: #e2e0e0;
+  --grey: #93a1a1;
+  position: relative;
+  padding: 9px;
+  background-color: var(--bg);
+  border-radius: 35px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-conic-gradient(var(--bg) 0.0000001%, var(--grey) 0.000104%) 60% 60%/600% 600%;
+  filter: opacity(10%) contrast(105%);
+}
+
+
+
+/*=====九宫格====================*/
+
+.image-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+    max-width: 300px;
+}
+.upload-btn {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px dashed #ccc;
+}
+.image-item {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/*===========tags============================*/
+.suggested-tags {
+        margin-top: 10px;
+    }
+    .tag-btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .tag-btn:hover {
+        background-color: #0056b3;
+    }
+
+
 
 /*# sourceMappingURL=style.css_test.map */

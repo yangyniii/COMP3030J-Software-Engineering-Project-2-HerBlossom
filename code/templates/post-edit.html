@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/niceselectpicker/nice-select.css">
+    <link rel="stylesheet" href="../static/assets/slick/slick.css">
+    <link rel="stylesheet" href="../static/assets/slick/slick-theme.css">
+    <!-- icon css_test-->
+    <link rel="stylesheet" href="../static/assets/elagent-icon/style.css">
+    <link rel="stylesheet" href="../static/assets/animation/animate.css">
+    <link rel="stylesheet" href="../static/css_test/style.css">
+    <link rel="stylesheet" href="../static/css_test/responsive.css">
+    <title>HerBloom - Edit Post</title>
+</head>
+
+<body data-scroll-animation="true">
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="../static/img/spinner_logo.png" alt="">
+                    <h4><span>HerBloom</span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="click_capture"></div>
+
+    <div class="body_wrapper">
+        <nav class="navbar navbar-expand-lg menu_one" id="sticky">
+            <div class="container">
+                <a class="navbar-brand sticky_logo" href="index.html">
+                    <img src="../static/img/logo-w.png" srcset="../static/img/logo-w2x.png 2x" alt="logo">
+                    <img src="../static/img/logo.png" srcset="../static/img/logo-2x.png 2x" alt="logo">
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="menu_toggle">
+                        <span class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-cross">
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav menu ml-auto">
+                        <li class="nav-item dropdown submenu">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Home</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                               <li class="nav-item"><a href="index.html" class="nav-link">Light Knowledgebase</a></li>
+                                <li class="nav-item"><a href="index-helpdesk.html" class="nav-link">Help Desk</a></li>
+                            <li class="nav-item"><a href="index-3.html" class="nav-link">Cool Knowledgebase</a> </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu mega_menu tab-demo">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Docs</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-5 tabHeader">
+                                            <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                                aria-orientation="vertical">
+                                                <li class="nav-item active">
+                                                    <a class="nav-link active" id="v-pills-doc-tab" data-toggle="pill"
+                                                        href="#v-pills-doc" role="tab" aria-controls="v-pills-doc"
+                                                        aria-selected="true">Doc Topics</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-code-tab" data-toggle="pill"
+                                                        href="#v-pills-code" role="tab" aria-controls="v-pills-code"
+                                                        aria-selected="false">Shortcodes</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-layout-tab" data-toggle="pill"
+                                                        href="#v-pills-layout" role="tab" aria-controls="v-pills-layout"
+                                                        aria-selected="false">Layouts</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-tour-tab" data-toggle="pill"
+                                                        href="#v-pills-tour" role="tab" aria-controls="v-pills-tour"
+                                                        aria-selected="false">Tour</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-content-tab" data-toggle="pill"
+                                                        href="#v-pills-content" role="tab"
+                                                        aria-controls="v-pills-content"
+                                                        aria-selected="false">Content</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-pages-tab" data-toggle="pill"
+                                                        href="#v-pills-pages" role="tab" aria-controls="v-pills-pages"
+                                                        aria-selected="false">Other Pages</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="tab-content tabContent" id="v-pills-tabContent">
+                                                <div class="tab-pane fade active show" id="v-pills-doc" role="tabpanel"
+                                                    aria-labelledby="v-pills-doc-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li>
+                                                                <a href="doc-archive.html">Doc Archive</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="doclist.html">Doc Topic</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-code" role="tabpanel"
+                                                    aria-labelledby="v-pills-code-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="tab.html">Tabs</a></li>
+                                                            <li><a href="accordion.html">Accordion</a></li>
+                                                            <li><a href="notice.html">Notice</a></li>
+                                                            <li><a href="tab.html">Tables</a></li>
+                                                            <li><a href="image-pointing.html">Image Lightbox</a></li>
+                                                        </ul>
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="tooltip.html">Tooltip</a></li>
+                                                            <li><a href="lightbox.html">Lightbox</a></li>
+                                                            <li><a href="can-use.html">Can I Use</a></li>
+                                                            <li><a href="footnote.html">Footnote</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-layout" role="tabpanel"
+                                                    aria-labelledby="v-pills-layout-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="layouts.html">Both Sidebar</a></li>
+                                                            <li><a href="layout-leftsidebar.html">Left Sidebar</a></li>
+                                                            <li><a href="layout-full.html">Full-wdith</a></li>
+                                                            <li><a href="sticky-menu.html">Sticky menu</a></li>
+                                                            <li><a href="simple-footer.html">Simple Footer</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-tour" role="tabpanel"
+                                                    aria-labelledby="v-pills-tour-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list w_100">
+                                                            <li><a href="image-pointing.html">Image Hotspot</a></li>
+                                                            <li><a href="tour.html">Application Interface</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-content" role="tabpanel"
+                                                    aria-labelledby="v-pills-content-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="typography.html">Typography</a></li>
+                                                            <li><a href="code.html">Code</a></li>
+                                                            <li><a href="image.html">Image</a></li>
+                                                            <li><a href="video.html">Video</a></li>
+                                            <li><a href="keyboard-shortcuts.html">Keyboard Shortcuts</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-pages" role="tabpanel"
+                                                    aria-labelledby="v-pills-pages-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="doclist.html">Doc Topics</a>
+                                                            </li>
+                                                            <li><a href="Onepage.html">Onepage</a>
+                                                            </li>
+                                                            <li><a href="cheatsheet.html">Cheatseet</a>
+                                                            </li>
+                                                            <li><a href="changelog.html">Changelog</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Pages
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                                <li class="nav-item"><a href="forums.html" class="nav-link">Forum</a></li>
+                                <li class="nav-item"><a href="signin.html" class="nav-link">Sign In</a></li>
+                                <li class="nav-item"><a href="register.html" class="nav-link">Sign Up</a></li>
+                                <li class="nav-item"><a href="typography.html" class="nav-link">Typography</a></li>
+                                <li class="nav-item"><a href="error.html" class="nav-link">404 Error</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item active dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="forums.html" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Forum
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="forums.html" class="nav-link">Forums Root</a></li>
+                                <li class="nav-item"><a href="forum-topics.html" class="nav-link">Forum Topics</a></li>
+                                <li class="nav-item active"><a href="forum-single.html" class="nav-link">Forum Single</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu dropdown_menu_two">
+                                <li class="nav-item">
+                                    <a href="doc-archive.html" class="nav-link">
+                                        <img src="../static/img/tick.png" alt="">
+                                        <div class="text">
+                                            <h5>KbDoc</h5>
+                                            <p>Launch Simple Websites</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="doclist.html" class="nav-link">
+                                        <img src="../static/img/sheet.png" alt="">
+                                        <div class="text">
+                                            <h5>docall</h5>
+                                            <p>Digital Assets Subscription</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="index.html" class="nav-link">
+                                        <img src="../static/img/shopping-bag.png" alt="">
+                                        <div class="text">
+                                            <h5>Docenvato</h5>
+                                            <p>Tutorials & Courses</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="index.html" class="nav-link">
+                                        <img src="../static/img/gear.png" alt="">
+                                        <div class="text">
+                                            <h5>Tools</h5>
+                                            <p>Hire a Freelancer</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Blog
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="blog-grid.html" class="nav-link">Blog Grid</a></li>
+                                <li class="nav-item active"><a href="blog-grid-two.html" class="nav-link">Blog Grid
+                                        Two</a></li>
+                                <li class="nav-item"><a href="blog-list.html" class="nav-link">Blog List</a></li>
+                                <li class="nav-item"><a href="blog-single.html" class="nav-link">Blog Details</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a class="nav_btn" href="#">Free Trail</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="breadcrumb_area">
+            <img class="p_absolute bl_left" src="../static/img/v.svg" alt="">
+            <img class="p_absolute bl_right" src="../static/img/home_one/b_leaf.svg" alt="">
+            <img class="p_absolute star" src="../static/img/home_one/banner_bg.png" alt="">
+            <img class="p_absolute wave_shap_one" src="../static/img/blog-classic/shap_01.png" alt="">
+            <img class="p_absolute wave_shap_two" src="../static/img/blog-classic/shap_02.png" alt="">
+            <img class="p_absolute one wow fadeInRight" src="../static/img/home_one/girl_img.png" alt="">
+            <img class="p_absolute two wow fadeInUp" data-wow-delay="0.2s" src="../static/img/home_one/flower.png" alt="">
+        </section>
+
+        <section class="page_breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Edit Your Post</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="edit-post-page sec_pad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 doc_mobile_menu display_none">
+                        <aside class="doc_left_sidebarlist">
+                            <div class="open_icon" id="left">
+                                <i class="arrow_carrot-right"></i>
+                                <i class="arrow_carrot-left"></i>
+                            </div>
+                            <div class="scroll">
+                                <ul class="list-unstyled nav-sidebar">
+                                    <li class="nav-item">
+                                        <a href="doclist.html" class="nav-link"><img src="../static/img/side-nav/home.png" alt="">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="shortcode.html" class="nav-link"><img src="../static/img/side-nav/briefcase.png" alt="briefcase">Shortcodes</a>
+                                        <span class="icon"><i class="arrow_carrot-down"></i></span>
+                                        <ul class="list-unstyled dropdown_nav">
+                                            <li><a href="tab.html">Tabs</a></li>
+                                            <li><a href="accordion.html">Accordion</a></li>
+                                            <li><a href="notice.html">Notices</a></li>
+                                            <li><a href="table.html">Table</a></li>
+                                            <li><a href="lightbox.html">Image Lightbox</a></li>
+                                            <li><a href="tooltip.html">Tooltip</a></li>
+                                            <li><a href="can-use.html">Can I Use</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a href="layouts.html" class="nav-link"><img src="../static/img/side-nav/coding.png" alt="">Layouts</a>
+                                        <span class="icon"><i class="arrow_carrot-down"></i></span>
+                                        <ul class="list-unstyled dropdown_nav">
+                                            <li><a href="layouts.html">Both Sidebar</a></li>
+                                            <li><a href="layout-leftsidebar.html" class="active">Left Sidebar</a></li>
+                                            <li><a href="layout-full.html">Full-width</a></li>
+                                            <li><a href="sticky-menu.html">Sticky Menu</a></li>
+                                            <li><a href="simple-footer.html">Simple Footer</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="tour.html" class="nav-link"><img src="../static/img/side-nav/chat1.png" alt="">Tour</a>
+                                        <span class="icon"><i class="arrow_carrot-down"></i></span>
+                                        <ul class="list-unstyled dropdown_nav">
+                                            <li><a href="image-pointing.html">Image Hotspots</a></li>
+                                            <li><a href="tour.html">Application Interface</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="typography.html" class="nav-link"><img src="../static/img/side-nav/document.png" alt="">Content</a>
+                                        <span class="icon"><i class="arrow_carrot-down"></i></span>
+                                        <ul class="list-unstyled dropdown_nav">
+                                            <li><a href="typography.html">Typography</a></li>
+                                            <li><a href="code.html">Code</a></li>
+                                            <li><a href="image.html">Image</a></li>
+                                            <li><a href="video.html">Video</a></li>
+                                            <li><a href="keyboard-shortcuts.html">Keyboard Shortcuts</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="changelog.html" class="nav-link"><img src="../static/img/side-nav/document2.png" alt="">Change Log</a>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled nav-sidebar coding_nav">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><img src="../static/img/side-nav/account.png" alt="">Account</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><img src="../static/img/side-nav/coding.png" alt="">Development</a>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled nav-sidebar bottom_nav">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><img src="../static/img/side-nav/united-states.png" alt="">Unlted States</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><img src="../static/img/side-nav/edit.png" alt="">English </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><img src="../static/img/side-nav/users.png" alt="">Sign In <i class="arrow_right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-lg-8">
+                        <!-- Post Edit Header -->
+                        <div class="edit-post-header">
+                            <h2>Edit Post</h2>
+                        </div>
+
+                        <!-- Post Form -->
+                        <form action="#" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="post-title">Title</label>
+                                <input type="text" id="post-title" class="form-control" placeholder="Enter title here"
+                                       required>
+                            </div>
+
+                            <!-- Rich Text Editor for Content -->
+                            <div class="form-group">
+                                <label for="post-content">Content</label>
+                                <div class="editor-toolbar">
+                                    <button type="button" onclick="formatText('bold')"><b>B</b></button>
+                                    <button type="button" onclick="formatText('italic')"><i>I</i></button>
+                                    <button type="button" onclick="formatText('underline')"><u>U</u></button>
+                                    <button type="button" onclick="formatText('strikeThrough')"><s>S</s></button>
+                                    <button type="button" onclick="formatText('insertOrderedList')">1.</button>
+                                    <button type="button" onclick="formatText('insertUnorderedList')">•</button>
+                                    <button type="button" onclick="formatText('justifyLeft')">L</button>
+                                    <button type="button" onclick="formatText('justifyCenter')">C</button>
+                                    <button type="button" onclick="formatText('justifyRight')">R</button>
+                                    <input type="color" id="colorPicker" onchange="changeColor(this.value)">
+                                </div>
+                                <div id="post-content" contenteditable="true" class="rich-text-editor"></div>
+                            </div>
+
+                            <!-- Image Upload Section -->
+                            <div class="form-group">
+                                <label>Upload Images (Max 9)</label>
+                                <div class="image-upload-grid" id="image-preview">
+                                    <div class="upload-btn" id="upload-btn">+</div>
+                                </div>
+                                <input type="file" id="post-images" class="form-control" accept="image/*" multiple
+                                       max="9" style="display: none;">
+                            </div>
+
+                            <!-- Tags -->
+                            <div class="card">
+                                <div class="card-overlay"></div>
+                                <label for="post-tags">Tags</label>
+                                <input type="text" id="post-tags" class="form-control"
+                                       placeholder="Add tags separated by commas">
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-group">
+                                <label for="post-category">Category</label>
+                                <select id="post-category" class="form-control">
+                                    <option value="General">General</option>
+                                    <option value="Bug">Bug</option>
+                                    <option value="Feature">Feature</option>
+                                    <option value="Error">Error</option>
+                                </select>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="action-button-container action-btns">
+                                <button type="submit" class="action_btn btn-ans ask-btn reply-btn">Post</button>
+                                <a href="#" class="action_btn btn-ans ask-btn too-btn">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
+    <script src="../static/js_test/jquery-3.2.1.min.js"></script>
+    <script src="../static/js_test/pre-loader.js"> </script>
+    <script src="../static/assets/bootstrap/js/popper.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/niceselectpicker/jquery.nice-select.min.js"></script>
+    <script src="../static/assets/slick/slick.min.js"></script>
+    <script src="../static/js_test/parallaxie.js"></script>
+    <script src="../static/js_test/TweenMax.min.js"></script>
+    <script src="../static/js_test/jquery.wavify.js"></script>
+    <script src="../static/assets/wow/wow.min.js"></script>
+    <script src="../static/js_test/main.js"></script>
+    <script>
+        // JavaScript for rich text formatting
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        function changeColor(color) {
+            document.execCommand("foreColor", false, color);
+        }
+
+        // JavaScript for previewing multiple images in a 3x3 grid format
+        const imageInput = document.getElementById('post-images');
+        const imagePreview = document.getElementById('image-preview');
+        const uploadBtn = document.getElementById('upload-btn');
+        let uploadedImages = [];
+
+        uploadBtn.addEventListener('click', () => imageInput.click());
+
+        imageInput.addEventListener('change', function () {
+            const files = Array.from(this.files).slice(0, 9 - uploadedImages.length);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgWrapper = document.createElement('div');
+                    imgWrapper.classList.add('image-item');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('preview-image');
+                    imgWrapper.appendChild(img);
+                    imagePreview.insertBefore(imgWrapper, uploadBtn);
+                    uploadedImages.push(file);
+                };
+                reader.readAsDataURL(file);
+            });
+            if (uploadedImages.length >= 8) {
+                uploadBtn.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
