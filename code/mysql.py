@@ -131,30 +131,25 @@ class Mysql(object):
             })
         return book_list
 
-    def get_book_by_id(self, book_id):
+    def get_post_by_id(self, post_id):
         """
-        Retrieve a book by its ID from the database.
+        Retrieve a post by its ID from the database.
 
         Returns:
-        - dict: A dictionary containing book information.
+        - dict: A dictionary containing post information.
         """
-        sql = "SELECT * FROM books WHERE id = %s"
-        self.cursor.execute(sql, (book_id,))
-        book = self.cursor.fetchone()
-        if book:
-            print(book[10])
+        sql = "SELECT * FROM post WHERE post_id = %s"
+        self.cursor.execute(sql, (post_id,))
+        post = self.cursor.fetchone()
+        if post:
+            print(post[2])
             return {
-                'id': book[0],
-                'title': book[1],
-                'author': book[2],
-                'publisher': book[3],
-                'edition': book[4],
-                'isbn': book[5],
-                'tag': book[6],
-                'description':book[7],
-                'collections':book[8],
-                'borrowed': book[9],
-                'thumbnail_url': book[10]
+                'id': post[0],
+                'user_id': post[1],
+                'title': post[2],
+                'content': post[3],
+                'comment_count': post[4],
+                'create_time': post[5],
             }
         return None
 
@@ -506,18 +501,62 @@ class Mysql(object):
         - dict: A dictionary containing the user's information including name, password, identification, email, and avatar.
                 If the user is not found, returns None.
         """
-        sql = "SELECT id,name, password, identification, email, avatar FROM users WHERE email = %s"
+        sql = "SELECT user_id, username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE email = %s"
         self.cursor.execute(sql, (email,))
         user_info = self.cursor.fetchone()
         if user_info:
-            avatar = user_info[5] if user_info[5] else '../static/photo/default_avatar.png'
+            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
+            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
             return {
-                'id': user_info[0],
-                'name': user_info[1],
-                'password': user_info[2],
-                'identification': user_info[3],
-                'email': user_info[4],
-                'avatar': avatar
+                'user_id': user_info[0],
+                'username': user_info[1],
+                'email': user_info[2],
+                'avatar': avatar,
+                'cover': cover,
+                'password': user_info[5],
+                'follower_count': user_info[6],
+                'followee_count': user_info[7],
+                'following_topic_count': user_info[8],
+                'post_count': user_info[9],
+                'comment_count': user_info[10],
+                'bio': user_info[11],
+                'company': user_info[12],
+                'location': user_info[13]
+            }
+        return None
+
+    def get_user_info_by_id(self, user_id):
+        """
+        Retrieve user information based on the user's email.
+
+        Parameters:
+        - email (str): The email address of the user to query.
+
+        Returns:
+        - dict: A dictionary containing the user's information including name, password, identification, email, and avatar.
+                If the user is not found, returns None.
+        """
+        sql = "SELECT user_id, username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE user_id = %s"
+        self.cursor.execute(sql, (user_id,))
+        user_info = self.cursor.fetchone()
+        if user_info:
+            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
+            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
+            return {
+                'user_id': user_info[0],
+                'username': user_info[1],
+                'email': user_info[2],
+                'avatar': avatar,
+                'cover': cover,
+                'password': user_info[5],
+                'follower_count': user_info[6],
+                'followee_count': user_info[7],
+                'following_topic_count': user_info[8],
+                'post_count': user_info[9],
+                'comment_count': user_info[10],
+                'bio': user_info[11],
+                'company': user_info[12],
+                'location': user_info[13]
             }
         return None
 
