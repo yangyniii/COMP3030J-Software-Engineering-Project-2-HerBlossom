@@ -340,6 +340,7 @@ def search_posts():
         return jsonify({'success': False, 'message': str(e)})
 
 
+
 @app.route('/forum', methods=['GET'])
 def forum():
     try:
@@ -384,6 +385,42 @@ def post_detail():
             return jsonify({'message': 'Post not found'}), 404
     else:
         return jsonify({'message': 'Post ID is required'}), 400
+
+@app.route('/blog-list', methods=['GET'])
+def blog_list():
+    return render_template('blog-list.html')
+
+@app.route('/blog-single', methods=['GET'])
+def blog_single():
+    return render_template('blog-single.html')
+
+@app.route('/blog-grid', methods=['GET'])
+def blog_grid():
+    return render_template('blog-grid.html')
+
+@app.route('/blog-grid-two', methods=['GET'])
+def blog_grid_two():
+    return render_template('blog-grid-two.html')
+
+@app.route('/forum-topics', methods=['GET'])
+def forum_topics():
+    return render_template('forum-topics.html')
+
+
+@app.route('/post-edit', methods=['GET'])
+def post_edit():
+    return render_template('post-edit.html')
+
+
+@app.route('/forum-single1', methods=['GET'])
+def forum_single1():
+    post = {
+        "title": "Are there any scandal-free sanitary pad brands left?",
+        "content": "The first major scandal of this year’s Consumer Rights Day (March 15) was about sanitary pads. It exposed a shocking black market: discarded pads were simply rinsed, pressed back into shape, and then sold as “brand-new” products.  The pictures were so disgusting that words can’t even describe them.  These “recycled” sanitary pads had bacterial levels exceeding the limit by nearly 100 times, with dangerous pathogens like E. coli and Staphylococcus aureus present in alarming amounts. Long-term use could lead to gynecological infections and even infertility. Even worse, some products contained fluorescent agents far beyond safety standards, posing a cancer risk. When women’s health is compromised, the next generation suffers too.  Whether we’re called “queens,” “goddesses,” or just “women” doesn’t really matter. What matters is:  Does society respect women’s biological needs? Are women’s basic health concerns acknowledged, discussed, and treated without bias or neglect?  So, are there any sanitary pad brands left that haven’t been exposed yet? And will women’s safety ever be taken seriously?."
+    }
+    return render_template('forum-single1.html', post=post)  # 传递 post 变量
+
+
 
 @app.route('/forum-topics', methods=['GET'])
 def forum_topics():
