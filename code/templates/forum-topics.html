@@ -355,7 +355,7 @@
             <div class="container custom_container">
                 <form action="#" class="banner_search_form banner_search_form_two">
                     <div class="input-group">
-                        <input type="search" class="form-control" placeholder='Search ("/" to focus)'>
+                        <input id="search-input" type="search" class="form-control" placeholder='Search ("/" to focus)'>
                         <div class="input-group-append">
                             <select class="custom-select" id="inlineFormCustomSelect">
                                 <option selected>All Category</option>
@@ -364,7 +364,7 @@
                                 <option value="3">KbDoc</option>
                             </select>
                         </div>
-                        <button type="submit"><i class="icon_search"></i></button>
+                        <button id="search-button" type="submit"><i class="icon_search"></i></button>
                     </div>
                 </form>
             </div>
@@ -651,7 +651,7 @@
                         </div>
                         <!-- /.post-header -->
 
-                        <div class="community-posts-wrapper bb-radius">
+                        <div class="community-posts-wrapper bb-radius" id="post-list">
                             <div class="community-post style-two kbDoc richard bug">
                                 <div class="post-content">
                                     <div class="author-avatar">
@@ -1198,5 +1198,69 @@
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
 </body>
+<script>
+    // Search button click event
+        document.getElementById('search-button').addEventListener('click', function() {
+            const searchTerm = document.getElementById('search-input').value;
+            fetchPosts(searchTerm);
+        });
+    // Function to fetch posts
+        function fetchPosts(searchTerm = '') {
+            fetch(`/search_posts?title=${searchTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    const postList = document.getElementById('post-list');
+                    postList.innerHTML = ''; // Clear existing posts
+                    if (data.posts && data.posts.length > 0) {
+                        data.posts.forEach(post => {
+                            const postItem = document.createElement('div');
+                            postItem.className = 'post-item';
+                            postItem.innerHTML = `
+                            <div class="community-posts-wrapper bb-radius">
+                                <div class="community-post style-two kbDoc richard bug">
+                                    <div class="post-content">
+                                        <div class="author-avatar">
+                                            <img src="../static/img/home_support/cp2.jpg" alt="community post">
+                                        </div>
+                                        <div class="entry-content">
+                                            <h3 class="post-title">
+                                                <a href="forum-single.html">${post.title} Workspace/Org Administration</a>
+                                            </h3>
+                                            <ul class="meta">
+                                                <li><img src="../static/img/home_support/cmm1.png" alt="cmm"><a href="#">WordPress
+                                                        Theme</a></li>
+                                                <li><i class="icon_calendar"></i>updated 3 days ago</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="post-meta-wrapper">
+                                        <ul class="post-meta-info">
+                                            <li><a href="#"><i class="icon_chat_alt"></i>20</a></li>
+                                            <li><a href="#"><i class="icon_star"></i>5</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
 
+                            <!--?<a href="/book_detail?book_id=${book.id}" class="book-item-link">-->
+                            <!--?    <div class="flex-container">-->
+                            <!--?        <img src="${book.thumbnail_url}" alt="Book Thumbnail" class="book-image">-->
+                            <!--?        <div class="book-info">-->
+                            <!--?            <p><strong>Book Name:</strong> ${book.title}</p>-->
+                            <!--?            <p><strong>Author:</strong> ${book.author}</p>-->
+                            <!--?            <p><strong>Publisher:</strong> ${book.publisher}</p>-->
+                            <!--?            <p><strong>Number of Collections:</strong> ${book.collections}</p>-->
+                            <!--?            <p><strong>Number of Borrowed:</strong> ${book.borrowed}</p>-->
+                            <!--?        </div>-->
+                            <!--?    </div>-->
+                            <!--?</a>-->
+                            `;
+                            bookList.appendChild(bookItem);
+                        });
+                    } else {
+                        postList.innerHTML = '<p>No post found.</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+</script>
 </html>

@@ -329,13 +329,13 @@ def publish_comment():
         return jsonify({'message': f'Error: {str(e)}'}), 500
 
 
-@app.route('/search_topics', methods=['GET'])
-def search_topics():
-    name = request.args.get('name', '')
+@app.route('/search_posts', methods=['GET'])
+def search_posts():
+    title = request.args.get('title', '')
     db = Mysql()
     try:
-        topics = db.search_topics_by_name(name)
-        return jsonify({'topics': topics})
+        posts = db.search_posts_by_title(title)
+        return jsonify({'posts': posts})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
@@ -363,7 +363,7 @@ def forum():
         total_comments = 0
         hot_tags = []
 
-    return render_template('forum.html',
+    return render_template('forums.html',
                            posts=posts,
                            online_count=online_count,
                            total_posts=total_posts,
@@ -385,6 +385,36 @@ def post_detail():
     else:
         return jsonify({'message': 'Post ID is required'}), 400
 
+@app.route('/forum-topics', methods=['GET'])
+def forum_topics():
+    try:
+        db = Mysql()
+        # 获取帖子列表
+        posts = db.get_posts()
+        # 获取在线人数（这里暂时设置为固定值，后续可以改为动态计算）
+        online_count = 100
+        # 获取总帖子数
+        total_posts = len(posts) if posts else 0
+        # 获取总评论数（需要从数据库获取）
+        total_comments = 0
+        # 获取热门标签（需要从数据库获取）
+        hot_tags = []
+    except Exception as e:
+        print(f"数据库连接错误: {str(e)}")
+        # 设置默认值
+        posts = []
+        online_count = 0
+        total_posts = 0
+        total_comments = 0
+        hot_tags = []
+
+    return render_template('forum-topics.html',
+                           posts=posts,
+                           online_count=online_count,
+                           total_posts=total_posts,
+                           total_comments=total_comments,
+                           hot_tags=hot_tags,
+                           is_logged_in='email' in session)
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

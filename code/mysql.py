@@ -843,3 +843,34 @@ class Mysql(object):
                 'read_count': user[3]
             })
         return ranked_users
+
+    def get_posts(self):
+        """
+        Retrieve a list of all books from the database.
+
+        Returns:
+        - list: A list of dictionaries containing book information.
+        """
+        sql = "SELECT * FROM post"
+        self.cursor.execute(sql)
+        posts = self.cursor.fetchall()
+        posts_list = []
+        for post in posts:
+            posts_list.append({
+                'post_id': post[0],
+                'user_id': post[1],
+                'title': post[2],
+                'content': post[3],
+                'comment_count': post[4],
+                'create_time': post[5],
+            })
+        return posts_list
+
+    def search_posts_by_title(self, title):
+        query = ("SELECT post_id, user_id, title, content, comment_count, create_time FROM post WHERE title "
+                 "LIKE %s")
+        self.cursor.execute(query, (f"%{title}%",))
+        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
+        results = self.cursor.fetchall()
+        posts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
+        return posts
