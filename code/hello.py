@@ -385,6 +385,21 @@ def post_detail():
     else:
         return jsonify({'message': 'Post ID is required'}), 400
 
+@app.route('/blog-list', methods=['GET'])
+def blog_list():
+    return render_template('blog-list.html')
+
+@app.route('/blog-single', methods=['GET'])
+def blog_single():
+    return render_template('blog-single.html')
+
+@app.route('/blog-grid', methods=['GET'])
+def blog_grid():
+    return render_template('blog-grid.html')
+
+@app.route('/blog-grid-two', methods=['GET'])
+def blog_grid_two():
+    return render_template('blog-grid-two.html')
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
