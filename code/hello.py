@@ -134,6 +134,7 @@ def check_email():
 
     return jsonify({'exists': exists})
 
+
 # Avatar-related methods
 
 # Configure upload folder
@@ -181,6 +182,7 @@ def get_user_info():
         # If user is not found, return 404
         return jsonify({'message': 'User not found'}), 404
 
+
 @app.route('/get_user_info_by_id', methods=['GET'])
 def get_user_info_by_id():
     user_id = request.args.get('user_id')  # Get user_id from query parameter
@@ -200,6 +202,7 @@ def get_user_info_by_id():
     else:
         # If user is not found, return 404
         return jsonify({'message': 'User not found'}), 404
+
 
 # Handle avatar upload
 @app.route('/upload_avatar', methods=['POST'])
@@ -255,6 +258,7 @@ def update_password():
     db.update_password(email, new_password)
     return jsonify({'message': 'Password updated successfully'})
 
+
 @app.route('/publish_post', methods=['GET'])
 def publish_post():
     data = request.json  # 获取请求的 JSON 数据
@@ -276,6 +280,7 @@ def publish_post():
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
 
+
 @app.route('/delete_post', methods=['DELETE'])
 def delete_post():
     post_id = request.args.get('post_id', '')
@@ -289,6 +294,7 @@ def delete_post():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
+
 @app.route('/post_post', methods=['GET'])
 def post_post():
     db = Mysql()
@@ -298,12 +304,14 @@ def post_post():
     else:
         return jsonify({'message': 'No books found'}), 404
 
+
 @app.route('/publish_comment', methods=['GET'])
 def publish_comment():
     data = request.json  # 获取请求的 JSON 数据
     print(f"Received data: {data}")  # 打印接收到的数据
     # 检查是否包含必需字段
-    if not data.get('commentable_id') or not data.get('commentable_type') or not data.get('user_id') or not data.get('content') or not data.get('create_time'):
+    if not data.get('commentable_id') or not data.get('commentable_type') or not data.get('user_id') or not data.get(
+            'content') or not data.get('create_time'):
         return jsonify({'message': 'Missing required fields'}), 400
 
     commentable_id = data.get('commentable_id')
@@ -315,10 +323,11 @@ def publish_comment():
     db = Mysql()
 
     try:
-        db.publish_comment(commentable_id,commentable_type, user_id, content, create_time)
+        db.publish_comment(commentable_id, commentable_type, user_id, content, create_time)
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
+
 
 @app.route('/search_topics', methods=['GET'])
 def search_topics():
@@ -329,6 +338,7 @@ def search_topics():
         return jsonify({'topics': topics})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
+
 
 @app.route('/forum', methods=['GET'])
 def forum():
@@ -352,14 +362,15 @@ def forum():
         total_posts = 0
         total_comments = 0
         hot_tags = []
-    
-    return render_template('forum.html', 
-                         posts=posts,
-                         online_count=online_count,
-                         total_posts=total_posts,
-                         total_comments=total_comments,
-                         hot_tags=hot_tags,
-                         is_logged_in='email' in session)
+
+    return render_template('forum.html',
+                           posts=posts,
+                           online_count=online_count,
+                           total_posts=total_posts,
+                           total_comments=total_comments,
+                           hot_tags=hot_tags,
+                           is_logged_in='email' in session)
+
 
 @app.route('/forum-single', methods=['GET'])
 def post_detail():
@@ -373,8 +384,6 @@ def post_detail():
             return jsonify({'message': 'Post not found'}), 404
     else:
         return jsonify({'message': 'Post ID is required'}), 400
-
-
 
 
 # Set up the basic port for the pages
