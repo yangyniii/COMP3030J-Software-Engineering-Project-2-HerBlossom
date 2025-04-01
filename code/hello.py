@@ -406,6 +406,10 @@ def forum_topics():
     return render_template('forum-topics.html')
 
 
+@app.route('/post-edit', methods=['GET'])
+def post_edit():
+    return render_template('post-edit.html')
+
 
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
