@@ -66,12 +66,11 @@ def sign_in():
         if not user:
             return jsonify({'message': 'Invalid email, password, or identification'}), 401
 
-        if user['id'] in session:
+        if user['email'] in session:
             return jsonify({'message': 'Already logged in'}), 400
 
         # Store user information in the session
         session['email'] = user['email']
-        session['user_id'] = user['id']
         print("Session data:", session)  # Debugging session data
 
         # Redirect to main route
@@ -191,6 +190,11 @@ def get_user_info_by_id():
 
     db = Mysql()  # Instantiate the database object
     user_info = db.get_user_info_by_id(user_id)  # Query user information from the database
+    # 在获取用户信息处添加打印语句
+    print('User data:', user_info)
+
+    # 在处理用户信息处输出头像路径
+    print('Avatar path11:', user_info['avatar'])
 
     if user_info:
         return jsonify({
@@ -422,36 +426,14 @@ def forum_single1():
 
 
 
-@app.route('/forum-topics', methods=['GET'])
-def forum_topics():
-    try:
-        db = Mysql()
-        # 获取帖子列表
-        posts = db.get_posts()
-        # 获取在线人数（这里暂时设置为固定值，后续可以改为动态计算）
-        online_count = 100
-        # 获取总帖子数
-        total_posts = len(posts) if posts else 0
-        # 获取总评论数（需要从数据库获取）
-        total_comments = 0
-        # 获取热门标签（需要从数据库获取）
-        hot_tags = []
-    except Exception as e:
-        print(f"数据库连接错误: {str(e)}")
-        # 设置默认值
-        posts = []
-        online_count = 0
-        total_posts = 0
-        total_comments = 0
-        hot_tags = []
-
-    return render_template('forum-topics.html',
-                           posts=posts,
-                           online_count=online_count,
-                           total_posts=total_posts,
-                           total_comments=total_comments,
-                           hot_tags=hot_tags,
-                           is_logged_in='email' in session)
+@app.route('/post_posts', methods=['GET'])
+def post_posts():
+    db = Mysql()
+    post_list = db.get_posts()
+    if post_list:
+        return jsonify({'posts': post_list})
+    else:
+        return jsonify({'message': 'No post found'}), 404
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
