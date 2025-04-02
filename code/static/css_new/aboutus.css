@@ -1,0 +1,111 @@
+
+.about_container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+
+    border-radius: 29px;
+background: #e1a8c3;
+box-shadow:  -10px 10px 20px #a47b8e,
+             10px -10px 20px #ffd5f8;
+}
+
+
+
+
+.learn-more {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    color: #FF69B4;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+    background-color: #FF1493;
+    color: white;
+    transform: scale(1.1);
+}
+
+@keyframes sparkle {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+h1::after {
+    content: '✨';
+    font-size: 2rem;
+    animation: sparkle 1s infinite;
+}
+
+
+
+.communities-boxes .kbDoc-com-box .icon-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* queen never cry 标志大小调试*/
+.journalism-feature-image img{
+  max-width: 130%;
+  height: auto;
+}
+
+
+/* 对于 Queens never cry 滚动条的css */
+/* 定义渐入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* 滚动条容器 */
+.marquee-container {
+    position: absolute;
+    top: calc(10% + 3% );  /* 标题下方 8% + 标题自身高度 */
+    left: 0;
+    width: 100%;  /* 让字条离左右边缘 15% */
+    overflow: hidden;  /* 隐藏超出部分 */
+    white-space: nowrap;
+    opacity: 0;  /* 初始隐藏 */
+    animation: fadeIn 1.5s ease-in-out 0s forwards;
+
+}
+
+/* 滚动文本容器 */
+.marquee-content {
+    display: inline-block;
+    font-family: Arial, sans-serif;  /* 使用 Arial 字体 */
+    font-size: 20px;
+    color: pink;
+    animation: marqueeScroll 15s linear infinite;
+}
+
+/* 让文字无缝循环 */
+@keyframes marqueeScroll {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+/* 渐入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
