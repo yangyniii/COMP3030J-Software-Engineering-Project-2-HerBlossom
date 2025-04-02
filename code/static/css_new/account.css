@@ -119,4 +119,41 @@
     justify-content: center; /* Horizontally center the text */
 }
 
+.account-photo {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
+.account-photo img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+
+#changeAvatarBtn {
+  margin-top: 10px;
+}
+/* 弹窗头部样式 */
+.custom-modal-header {
+  position: relative;
+  padding-right: 60px; /* 为右侧按钮留出足够空间 */
+}
+
+/* 自定义关闭按钮样式，与其他按钮统一 */
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+/* 鼠标悬停效果 */
+.modal-close-btn:hover {
+  background-color: #5a6268;
+}

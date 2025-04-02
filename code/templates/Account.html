@@ -700,13 +700,59 @@
                                     <div class="account-container">
                                     <!-- Profile Photo Section -->
                                         <div class="account-photo">
-                                            <img id="avatar" src="../static/photo/default_avatar.png" alt="User Photo"> <!-- Default avatar image -->
-                                            <!-- Form for uploading avatar -->
-                                            <form id="avatarUploadForm" method="POST" enctype="multipart/form-data" action="/profile">
-                                                <input type="file" name="file" accept="image/*" required> <!-- File input for selecting a new avatar -->
-                                                <button type="submit">Upload Avatar</button> <!-- Submit button to upload avatar -->
-                                            </form>
+                                            <!-- 当前头像 -->
+                                            <img id="avatar" src="../static/images/default-avatar.jpg" alt="User Photo">
+                                            <!-- 修改头像按钮 -->
+                                            <button type="button" id="changeAvatarBtn" class="btn btn-secondary"
+                                                    data-toggle="modal" data-target="#avatarModal">
+                                                Change Avatar
+                                            </button>
                                         </div>
+
+                                        <!-- 弹窗 Modal（依赖 Bootstrap Modal） -->
+                                        <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="avatarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <!-- 弹窗头部：标题和关闭按钮在同一行 -->
+                                                    <div class="modal-header custom-modal-header">
+                                                        <h5 class="modal-title" id="avatarModalLabel">Upload New
+                                                            Avatar</h5>
+                                                        <button type="button" class="modal-close-btn"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="avatarUploadForm" method="POST"
+                                                              enctype="multipart/form-data" action="/profile">
+                                                            <!-- 隐藏文件输入框 -->
+                                                            <input type="file" id="avatarFileInput" name="file"
+                                                                   accept="image/*" style="display: none;" required>
+
+                                                            <!-- 图片预览区域 -->
+                                                            <div class="avatar-preview-container"
+                                                                 style="text-align:center;">
+                                                                <img id="avatarPreview" src="#" alt="Preview"
+                                                                     style="display:none; max-width:100%; border: 1px solid #ddd; margin:10px auto;">
+                                                            </div>
+
+                                                            <!-- 按钮区域：选择图片 & Done 两个按钮居中排列 -->
+                                                            <div class="button-row" style="text-align:center;">
+                                                                <button type="button" id="chooseImageBtn"
+                                                                        class="btn btn-secondary"
+                                                                        style="margin-right:10px;">Choose your new avatar
+                                                                </button>
+                                                                <button type="button" id="doneBtn"
+                                                                        class="btn btn-primary">Done
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <!-- Profile Information Section -->
                                         <div class="account-info">
@@ -843,6 +889,45 @@
     <script src="../static/assets/tooltipster/js/tooltipster.bundle.min.js"></script>
     <script src="../static/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="../static/js_test/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chooseImageBtn = document.getElementById('chooseImageBtn');
+            const doneBtn = document.getElementById('doneBtn');
+            const fileInput = document.getElementById('avatarFileInput');
+            const preview = document.getElementById('avatarPreview');
+
+            // 点击选择图片按钮触发文件选择框
+            chooseImageBtn.addEventListener('click', function () {
+                fileInput.click();
+            });
+
+            // 当选择图片后显示预览
+            fileInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.style.display = 'none';
+                }
+            });
+
+            // 点击 Done 按钮提交表单上传图片
+            doneBtn.addEventListener('click', function () {
+                if (!fileInput.files.length) {
+                    alert("Please choose your new avatar.");
+                    return;
+                }
+                document.getElementById('avatarUploadForm').submit();
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
