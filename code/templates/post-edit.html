@@ -540,44 +540,90 @@
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
     <script>
-        // JavaScript for rich text formatting
-        function formatText(command) {
-            document.execCommand(command, false, null);
+    // Prevent the default form submission and handle the submission via JavaScript
+    document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();  // Prevent the default form submission
+
+    const formData = new FormData(this);  // Collect form data
+
+    // Get content from the contenteditable div (rich text editor)
+    const content = document.getElementById('post-content').innerHTML;
+    formData.set('content', content);  // Add content to FormData
+
+    // Add title, tags, and category to FormData
+    formData.set('title', document.getElementById('post-title').value);
+    formData.set('tags', document.getElementById('post-tags').value);
+    formData.set('category', document.getElementById('post-category').value);
+
+    // Add images to FormData
+    const images = document.getElementById('post-images').files;
+    for (let i = 0; i < images.length; i++) {
+        formData.append('images[]', images[i]);
+    }
+
+    // Send the form data to the backend using fetch
+    fetch('/post-edit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Post saved successfully') {
+            alert('Post submitted successfully!');
+            window.location.href = '/forum-topics';  // Redirect to the forum page after successful submission
+        } else {
+            alert('Failed to submit the post!');
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while submitting the post.');
+    });
+});
 
-        function changeColor(color) {
-            document.execCommand("foreColor", false, color);
-        }
 
-        // JavaScript for previewing multiple images in a 3x3 grid format
-        const imageInput = document.getElementById('post-images');
-        const imagePreview = document.getElementById('image-preview');
-        const uploadBtn = document.getElementById('upload-btn');
-        let uploadedImages = [];
+    // JavaScript for rich text formatting in the editor
+    function formatText(command) {
+        document.execCommand(command, false, null);
+    }
 
-        uploadBtn.addEventListener('click', () => imageInput.click());
+    function changeColor(color) {
+        document.execCommand("foreColor", false, color);
+    }
 
-        imageInput.addEventListener('change', function () {
-            const files = Array.from(this.files).slice(0, 9 - uploadedImages.length);
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const imgWrapper = document.createElement('div');
-                    imgWrapper.classList.add('image-item');
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('preview-image');
-                    imgWrapper.appendChild(img);
-                    imagePreview.insertBefore(imgWrapper, uploadBtn);
-                    uploadedImages.push(file);
-                };
-                reader.readAsDataURL(file);
-            });
-            if (uploadedImages.length >= 8) {
-                uploadBtn.style.display = 'none';
-            }
+    // JavaScript for previewing multiple images before uploading
+    const imageInput = document.getElementById('post-images');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadBtn = document.getElementById('upload-btn');
+    let uploadedImages = [];
+
+    // When the upload button is clicked, trigger the file input
+    uploadBtn.addEventListener('click', () => imageInput.click());
+
+    // When the file input changes (files are selected), preview the images
+    imageInput.addEventListener('change', function () {
+        const files = Array.from(this.files).slice(0, 9 - uploadedImages.length);  // Limit to 9 images
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgWrapper = document.createElement('div');
+                imgWrapper.classList.add('image-item');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('preview-image');
+                imgWrapper.appendChild(img);
+                imagePreview.insertBefore(imgWrapper, uploadBtn);
+                uploadedImages.push(file);
+            };
+            reader.readAsDataURL(file);
         });
-    </script>
+
+        // Hide the upload button when there are 9 images
+        if (uploadedImages.length >= 9) {
+            uploadBtn.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 
