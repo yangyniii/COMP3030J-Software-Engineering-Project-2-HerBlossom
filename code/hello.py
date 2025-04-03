@@ -2,6 +2,7 @@
 from flask import Flask, request, jsonify, session, render_template
 from mysql import Mysql
 from werkzeug.utils import secure_filename
+import time
 import os
 import time
 from datetime import datetime, timedelta
@@ -66,12 +67,11 @@ def sign_in():
         if not user:
             return jsonify({'message': 'Invalid email, password, or identification'}), 401
 
-        if user['id'] in session:
+        if user['email'] in session:
             return jsonify({'message': 'Already logged in'}), 400
 
         # Store user information in the session
         session['email'] = user['email']
-        session['user_id'] = user['id']
         print("Session data:", session)  # Debugging session data
 
         # Redirect to main route
@@ -185,23 +185,30 @@ def get_user_info():
 
 @app.route('/get_user_info_by_id', methods=['GET'])
 def get_user_info_by_id():
-    user_id = request.args.get('user_id')  # Get user_id from query parameter
+    user_id = request.args.get('user_id')  # 从查询参数获取 user_id
+    print(f"Received user_id: {user_id}")
     if not user_id:
-        return jsonify({'message': 'User ID is required'}), 400  # Optional: Return an error if no user_id is provided
+        return jsonify({'message': 'User ID is required'}), 400  # 如果 user_id 为空，则返回 400
 
-    db = Mysql()  # Instantiate the database object
-    user_info = db.get_user_info_by_id(user_id)  # Query user information from the database
+    db = Mysql()  # 实例化数据库对象
+    user_info = db.get_user_info_by_id(user_id)  # 查询用户信息
+    print('User data:', user_info)  # 调试打印
 
-    if user_info:
-        return jsonify({
-            'username': user_info['username'],
-            'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
-            'email': user_info['email'],
-            'avatar': user_info.get('avatar')
-        })
-    else:
-        # If user is not found, return 404
-        return jsonify({'message': 'User not found'}), 404
+    if not user_info:
+        return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
+
+    # 在确认 user_info 不为空后再访问 avatar
+    avatar_path = user_info.get('avatar', 'default.jpg')  # 使用默认头像
+    print('Avatar path11:', avatar_path)
+
+    return jsonify({
+        'username': user_info.get('username', ''),
+        'password': user_info.get('password', ''),  # 这里最好不要返回密码
+        'email': user_info.get('email', ''),
+        'avatar': avatar_path  # 使用默认头像
+    })
+
+
 
 
 # Handle avatar upload
@@ -407,9 +414,6 @@ def forum_topics():
     return render_template('forum-topics.html')
 
 
-@app.route('/post-edit', methods=['GET'])
-def post_edit():
-    return render_template('post-edit.html')
 
 
 @app.route('/forum-single1', methods=['GET'])
@@ -422,36 +426,57 @@ def forum_single1():
 
 
 
-@app.route('/forum-topics', methods=['GET'])
-def forum_topics():
-    try:
-        db = Mysql()
-        # 获取帖子列表
-        posts = db.get_posts()
-        # 获取在线人数（这里暂时设置为固定值，后续可以改为动态计算）
-        online_count = 100
-        # 获取总帖子数
-        total_posts = len(posts) if posts else 0
-        # 获取总评论数（需要从数据库获取）
-        total_comments = 0
-        # 获取热门标签（需要从数据库获取）
-        hot_tags = []
-    except Exception as e:
-        print(f"数据库连接错误: {str(e)}")
-        # 设置默认值
-        posts = []
-        online_count = 0
-        total_posts = 0
-        total_comments = 0
-        hot_tags = []
+@app.route('/post-edit', methods=['GET', 'POST'])
+def post_edit():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        tags = request.form.get('tags')
+        category = request.form.get('category')
 
-    return render_template('forum-topics.html',
-                           posts=posts,
-                           online_count=online_count,
-                           total_posts=total_posts,
-                           total_comments=total_comments,
-                           hot_tags=hot_tags,
-                           is_logged_in='email' in session)
+        # 打印数据，检查是否获取到数据
+        print(f"Title: {title}, Content: {content}, Tags: {tags}, Category: {category}")
+
+        # 处理图片上传
+        image_urls = []
+        image_files = request.files.getlist('images')
+
+        # 检查图片是否成功上传
+        for image in image_files:
+            if image:
+                filename = secure_filename(image.filename)
+                image.save(os.path.join('static/uploads', filename))
+                image_urls.append(f'uploads/{filename}')
+                print(f"Saved image: {filename}")
+
+        # 假设从 Session 获取用户 ID
+        user_id = 1  # 你可以根据实际情况获取用户 ID
+
+        # 保存到数据库
+        db = Mysql()
+        try:
+            db.insert_post(user_id, title, content, tags, category, ','.join(image_urls))
+            return jsonify({'message': 'Post saved successfully'}), 200
+        except Exception as e:
+            print(f"Error saving post: {e}")
+            return jsonify({'message': 'An error occurred while submitting the post.'}), 500
+
+    # 处理 GET 请求，渲染页面
+    return render_template('post-edit.html')
+
+
+
+@app.route('/post_posts', methods=['GET'])
+def post_posts():
+    db = Mysql()
+    post_list = db.get_posts()
+    if post_list:
+        return jsonify({'posts': post_list})
+    else:
+        return jsonify({'message': 'No post found'}), 404
+
+
+
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 import bcrypt
 import pymysql
+import time
 
 class Mysql(object):
     # connect to the database
@@ -21,6 +22,10 @@ class Mysql(object):
             # print("Connect Successfully")
         except:
             print("Connect failed")
+
+            def get_posts(self):
+                # 获取帖子列表的数据库逻辑
+                return []
 
     def getItems(self, page, keyword=None):
         """
@@ -148,8 +153,11 @@ class Mysql(object):
                 'user_id': post[1],
                 'title': post[2],
                 'content': post[3],
-                'comment_count': post[4],
-                'create_time': post[5],
+                'tags': post[4],
+                'category': post[5],
+                'comment_count': post[6],
+                'create_time': post[7],
+                'image_urls': post[8],
             }
         return None
 
@@ -504,6 +512,7 @@ class Mysql(object):
         sql = "SELECT user_id, username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE email = %s"
         self.cursor.execute(sql, (email,))
         user_info = self.cursor.fetchone()
+
         if user_info:
             avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
             cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
@@ -511,8 +520,8 @@ class Mysql(object):
                 'user_id': user_info[0],
                 'username': user_info[1],
                 'email': user_info[2],
-                'avatar': avatar,
-                'cover': cover,
+                'avatar': user_info[3] or 'default.jpg',  # 避免 avatar 为 None
+                'cover': user_info[4] or 'default.jpg',
                 'password': user_info[5],
                 'follower_count': user_info[6],
                 'followee_count': user_info[7],
@@ -522,10 +531,14 @@ class Mysql(object):
                 'bio': user_info[11],
                 'company': user_info[12],
                 'location': user_info[13]
+
             }
+
         return None
 
+
     def get_user_info_by_id(self, user_id):
+
         """
         Retrieve user information based on the user's email.
 
@@ -861,16 +874,31 @@ class Mysql(object):
                 'user_id': post[1],
                 'title': post[2],
                 'content': post[3],
-                'comment_count': post[4],
-                'create_time': post[5],
+                'tags': post[4],
+                'category': post[5],
+                'comment_count': post[6],
+                'create_time': post[7],
+                'image_urls': post[8],
             })
         return posts_list
 
     def search_posts_by_title(self, title):
-        query = ("SELECT post_id, user_id, title, content, comment_count, create_time FROM post WHERE title "
+        query = ("SELECT post_id, user_id, title, content, tags, category, comment_count, create_time, image_urls FROM post WHERE title "
                  "LIKE %s")
         self.cursor.execute(query, (f"%{title}%",))
         columns = [desc[0] for desc in self.cursor.description]  # 获取列名
         results = self.cursor.fetchall()
         posts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
         return posts
+
+    def insert_post(self, user_id, title, content, tags, category, image_urls):
+        # 插入数据到数据库
+        sql = """INSERT INTO post (user_id, title, content, tags, category, image_urls, comment_count, create_time)
+                 VALUES (%s, %s, %s, %s, %s, %s, 0, %s)"""
+        create_time = int(time.time())  # 当前时间戳
+        try:
+            self.cursor.execute(sql, (user_id, title, content, tags, category, image_urls, create_time))
+            self.conn.commit()
+        except Exception as e:
+            print(f"Error executing query: {e}")
+            self.conn.rollback()  # 在出错时回滚
