@@ -1,6 +1,8 @@
 import bcrypt
 import pymysql
 import time
+from datetime import datetime
+
 
 class Mysql(object):
     # connect to the database
@@ -895,7 +897,7 @@ class Mysql(object):
         # 插入数据到数据库
         sql = """INSERT INTO post (user_id, title, content, tags, category, image_urls, comment_count, create_time)
                  VALUES (%s, %s, %s, %s, %s, %s, 0, %s)"""
-        create_time = int(time.time())  # 当前时间戳
+        create_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         try:
             self.cursor.execute(sql, (user_id, title, content, tags, category, image_urls, create_time))
             self.conn.commit()
