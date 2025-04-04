@@ -25,9 +25,7 @@ class Mysql(object):
         except:
             print("Connect failed")
 
-            def get_posts(self):
-                # 获取帖子列表的数据库逻辑
-                return []
+
 
     def getItems(self, page, keyword=None):
         """
@@ -866,7 +864,7 @@ class Mysql(object):
         Returns:
         - list: A list of dictionaries containing book information.
         """
-        sql = "SELECT * FROM post"
+        sql = "SELECT * FROM post ORDER BY create_time DESC"
         self.cursor.execute(sql)
         posts = self.cursor.fetchall()
         posts_list = []
@@ -904,3 +902,4 @@ class Mysql(object):
         except Exception as e:
             print(f"Error executing query: {e}")
             self.conn.rollback()  # 在出错时回滚
+
