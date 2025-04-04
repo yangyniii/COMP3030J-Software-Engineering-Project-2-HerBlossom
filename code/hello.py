@@ -401,9 +401,9 @@ def blog_list():
 def blog_single():
     return render_template('blog-single.html')
 
-@app.route('/blog-grid', methods=['GET'])
+@app.route('/blog', methods=['GET'])
 def blog_grid():
-    return render_template('blog-grid.html')
+    return render_template('blog.html')
 
 @app.route('/blog-grid-two', methods=['GET'])
 def blog_grid_two():
