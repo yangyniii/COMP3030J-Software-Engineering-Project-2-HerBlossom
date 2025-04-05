@@ -453,17 +453,16 @@
                                 <div class="post-images">
                                     <ul class="image-grid">
                                         {% for url in post.image_urls %}
-                                        <li>
-                                            <a href="{{ url }}" data-lightbox="post-gallery">
-                                                <img src="{{ url }}" alt="图片{{ loop.index }}">
-                                            </a>
-                                        </li>
+                                            <li>
+                                                <a href="{{ url_for('static', filename=url) }}" data-lightbox="post-gallery">
+                                                    <img src="{{ url_for('static', filename=url) }}" alt="图片{{ loop.index }}">
+                                                </a>
+                                            </li>
                                         {% endfor %}
+
                                     </ul>
                                 </div>
                                 {% endif %}
-
-
 
                             <div class="action-button-container action-btns">
                                 <a href="#" class="action_btn btn-ans ask-btn reply-btn">Reply</a>

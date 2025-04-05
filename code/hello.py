@@ -478,6 +478,7 @@ def forum_single():
 
     if not post:
         return render_template('404.html', message="Post not found"), 404
+    print("Image URLs raw:", post['image_urls'])
 
     return render_template('forum-single.html', post={
         'post_id': post['id'],
@@ -489,7 +490,9 @@ def forum_single():
         'comment_count': post['comment_count'],
         'create_time': post['create_time'],
         'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
+
     })
+
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

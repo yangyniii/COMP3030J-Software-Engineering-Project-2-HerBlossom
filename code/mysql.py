@@ -892,14 +892,16 @@ class Mysql(object):
         return posts
 
     def insert_post(self, user_id, title, content, tags, category, image_urls):
-        # 插入数据到数据库
-        sql = """INSERT INTO post (user_id, title, content, tags, category, image_urls, comment_count, create_time)
-                 VALUES (%s, %s, %s, %s, %s, %s, 0, %s)"""
+        sql = """
+            INSERT INTO post (user_id, title, content, tags, category, comment_count, create_time, image_urls)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
         create_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         try:
-            self.cursor.execute(sql, (user_id, title, content, tags, category, image_urls, create_time))
+            self.cursor.execute(sql, (user_id, title, content, tags, category, 0, create_time, image_urls))
             self.conn.commit()
         except Exception as e:
             print(f"Error executing query: {e}")
-            self.conn.rollback()  # 在出错时回滚
+            self.conn.rollback()
+
 
