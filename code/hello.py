@@ -429,6 +429,9 @@ def post_edit():
         # 处理图片上传
         image_urls = []
         image_files = request.files.getlist('images')
+        print(f"Received images: {len(image_files)}")
+        if not image_files:
+            print("No images received.")
 
         # 检查图片是否成功上传
         for image in image_files:
