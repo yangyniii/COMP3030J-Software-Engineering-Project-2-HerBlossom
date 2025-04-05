@@ -157,8 +157,8 @@
             <img class="p_absolute one wow fadeInRight" src="../static/img/home_one/girl_img.png" alt="">
             <img class="p_absolute two wow fadeInUp" data-wow-delay="0.2s" src="../static/img/home_one/flower.png" alt="">
             <div class="container">
-                <form action="#" class="banner_search_form">
-                    <input type="search" class="form-control" placeholder='Search any blog here'>
+                <form action="/blog-search" method="GET" class="banner_search_form">
+                    <input type="search" name="keyword" class="form-control" placeholder='Search any blog here' value="{{ keyword if keyword else '' }}">
                     <button type="submit"><i class="icon_search"></i></button>
                 </form>
             </div>
@@ -169,13 +169,13 @@
                     <div class="col-sm-7">
                         <nav aria-label="breadcrumb">
                           <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/index">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Blog</li>
                           </ol>
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on April 03, 2025</a>
+                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on {{ featured_blog.publish_date if featured_blog else 'April 03, 2025' }}</a>
                     </div>
                 </div>
             </div>
@@ -183,6 +183,33 @@
         <section class="blog_top_post_area sec_pad bg_color">
             <div class="container">
                 <div class="row blog_top_post">
+                    {% if featured_blog %}
+                    <div class="col-lg-5 p-0">
+                        <div class="b_top_post_content">
+                            <div class="post_tag">
+                                <a href="#">{{ featured_blog.read_time }}</a>
+                                <a class="c_blue" href="/blog-category/{{ featured_blog.category }}">{{ featured_blog.category }}</a>
+                            </div>
+                            <h3>{{ featured_blog.title }}</h3>
+                            <p>{{ featured_blog.content[:200] }}...</p>
+                            <a href="{{ featured_blog.link_url }}" class="learn_btn" target="_blank">Continue Reading<i class="arrow_right"></i></a>
+                            <div class="media post_author">
+                                <div class="round_img">
+                                    <img src="../static/img/blog-grid/{{ featured_blog.author_avatar }}" alt="">
+                                </div>
+                                <div class="media-body author_text">
+                                    <h4>{{ featured_blog.author_name }}</h4>
+                                    <div class="date">{{ featured_blog.publish_date }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 p_top_img">
+                        <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            <img src="../static/img/blog-grid/{{ featured_blog.image_url }}" alt="{{ featured_blog.title }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                    {% else %}
                     <div class="col-lg-5 p-0">
                         <div class="b_top_post_content">
                             <div class="post_tag">
@@ -208,6 +235,7 @@
                             <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/5mjEDbpNmec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -216,181 +244,61 @@
                 <div class="container">
                     <ul class="nav blog_tab">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Main</a>
+                            <a class="nav-link {% if not category %}active{% endif %}" href="/blog">All</a>
                         </li>
-                        <li class="nav-item cat-woocommerce">
-                            <a class="nav-link" href="#">Skills</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'Skills' %}active{% endif %}" href="/blog-category/Skills">Skills</a>
                         </li>
-                        <li class="nav-item cat-startups">
-                            <a class="nav-link" href="#">Physical Health</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'Physical Health' %}active{% endif %}" href="/blog-category/Physical Health">Physical Health</a>
                         </li>
-                        <li class="nav-item cat-laravel">
-                            <a class="nav-link" href="#">Mental Health</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'Mental Health' %}active{% endif %}" href="/blog-category/Mental Health">Mental Health</a>
                         </li>
-                        <li class="nav-item cat-wordpress">
-                            <a class="nav-link" href="#">WordPress</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'HerBlossom' %}active{% endif %}" href="/blog-category/HerBlossom">HerBlossom</a>
                         </li>
-                        <li class="nav-item cat-megento">
-                            <a class="nav-link" href="#">Megento</a>
-                        </li>
-                        <li class="nav-item cat-startups">
-                            <a class="nav-link" href="#">Startups</a>
-                        </li>
-                        <li class="nav-item cat-HerBlossom">
-                            <a class="nav-link" href="#">HerBlossom</a>
-                        </li>
-                        <li class="nav-item cat-others">
-                            <a class="nav-link" href="#">Others</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'Others' %}active{% endif %}" href="/blog-category/Others">Others</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="container">
                 <div class="row blog_grid_tab">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp">
-                            <img src="../static/img/blog-grid/blog_grid_post1.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">18 Min Read</a>
-                                    <a class="c_blue" href="#">WordPress</a>
-                                </div>
-                                <a href="blog-single.html">
-                                    <h4 class="b_title">Is Your Store Safe From Magento Killer?</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_1.jpg" alt="">
+                    {% if blogs %}
+                        {% for blog in blogs %}
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="blog_grid_post wow fadeInUp" data-wow-delay="{{ loop.index0 * 0.2 }}s">
+                                <img src="../static/img/blog-grid/{{ blog.image_url }}" alt="{{ blog.title }}">
+                                <div class="grid_post_content">
+                                    <div class="post_tag">
+                                        <a href="#">{{ blog.read_time }}</a>
+                                        <a class="c_blue" href="/blog-category/{{ blog.category }}">{{ blog.category }}</a>
                                     </div>
-                                    <div class="media-body author_text">
-                                        <h4>Jason Response</h4>
-                                        <div class="date">Sep 14, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="../static/img/blog-grid/blog_grid_post2.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">18 Min Read</a>
-                                    <a class="cat-HerBlossom orange" href="#">HerBlossom</a>
-                                </div>
-                                <a href="blog-single.html">
-                                    <h4 class="b_title">70 Best Startups You Need to Watch Out for</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_2.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Druid Wensleydale</h4>
-                                        <div class="date">Sep 14, 2020</div>
+                                    <a href="/blog-single/{{ blog.blog_id }}">
+                                        <h4 class="b_title">{{ blog.title }}</h4>
+                                    </a>
+                                    <p>{{ blog.content[:100] }}...</p>
+                                    <div class="media post_author">
+                                        <div class="round_img">
+                                            <img src="../static/img/blog-grid/{{ blog.author_avatar }}" alt="">
+                                        </div>
+                                        <div class="media-body author_text">
+                                            <h4>{{ blog.author_name }}</h4>
+                                            <div class="date">{{ blog.publish_date }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.4s">
-                            <img src="../static/img/blog-grid/blog_grid_post3.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">10 Min Read</a>
-                                    <a class="cat-laravel green" href="#">Laravel</a>
-                                </div>
-                                <a href="blog-single.html">
-                                    <h4 class="b_title">Create Conditional Logic Forms & Publish</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_3.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Douglas Lyphe</h4>
-                                        <div class="date">Nov 10, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12 text-center">
+                            <h3>No blogs found</h3>
+                            <p>Please try a different search term or category.</p>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="../static/img/blog-grid/blog_grid_post4.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">18 Min Read</a>
-                                    <a class="cat-woocommerce" href="#">WooCommerce</a>
-                                </div>
-                                <a href="blog-single.html">
-                                    <h4 class="b_title">How to Use Forms for Enhancing UX In WordPress</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_4.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Indigo Violet</h4>
-                                        <div class="date">March 23, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.4s">
-                            <img src="../static/img/blog-grid/blog_grid_post5.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">10 Min Read</a>
-                                    <a class="cat-link cat-megento" href="#">Megento</a>
-                                </div>
-                                <a href="blog-single.html">
-                                    <h4 class="b_title">Create A WordPress Multi Step Form With weForms</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_5.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Niles Peppertrout</h4>
-                                        <div class="date">Oct 12, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.6s">
-                            <img src="../static/img/blog-grid/blog_grid_post6.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="blog-single.html">14 Min Read</a>
-                                    <a class="cat-laravel" href="#">Laravel</a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="b_title">The Grand Ecommerce Giveaway Worth</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_6.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Hanson Deck</h4>
-                                        <div class="date">Sep 17, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -418,87 +326,6 @@
                                 </label>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="doc_blog_grid_area_two">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp">
-                            <img src="../static/img/blog-grid/blog_grid_post7.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">18 Min Read</a>
-                                    <a class="c_blue" href="#">WordPress</a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="b_title">Create A WordPress Multi Step Form With weForms</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_1.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Jason Response</h4>
-                                        <div class="date">Sep 14, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="../static/img/blog-grid/blog_grid_post8.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">18 Min Read</a>
-                                    <a class="orange" href="#">HerBlossom</a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="b_title">How to Create GDPR Consent Form In WordPress</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_2.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Druid Wensleydale</h4>
-                                        <div class="date">Sep 14, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="blog_grid_post wow fadeInUp" data-wow-delay="0.4s">
-                            <img src="../static/img/blog-grid/blog_grid_post9.jpg" alt="">
-                            <div class="grid_post_content">
-                                <div class="post_tag">
-                                    <a href="#">10 Min Read</a>
-                                    <a class="cat-laravel" href="#">Laravel</a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="b_title">Create Conditional Logic Forms & Publish</h4>
-                                </a>
-                                <p>The pressure to keep our skills sharp is constant. Mastering new skills may...</p>
-                                <div class="media post_author">
-                                    <div class="round_img">
-                                        <img src="../static/img/blog-grid/author_3.jpg" alt="">
-                                    </div>
-                                    <div class="media-body author_text">
-                                        <h4>Douglas Lyphe</h4>
-                                        <div class="date">Nov 10, 2020</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 text-center wow fadeInUp" data-wow-delay="0.3s">
-                        <a href="#" class="doc_border_btn all_doc_btn">Load More<i class="arrow_right"></i></a>
                     </div>
                 </div>
             </div>
@@ -597,6 +424,118 @@
     <script src="../static/js_test/jquery.wavify.js"></script>
     <script src="../static/assets/wow/wow.min.js"></script>
     <script src="../static/js_test/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有博客文章和分类标签
+            const blogPosts = document.querySelectorAll('.blog_grid_post');
+            const categoryLinks = document.querySelectorAll('.blog_tab .nav-link');
+            const blogGridContainer = document.querySelector('.blog_grid_tab');
+            
+            // 获取Skills标签下的第一个博客文章作为参考
+            const skillsFirstPost = Array.from(blogPosts).find(post => 
+                post.querySelector('.post_tag a:last-child').textContent.trim().toLowerCase() === 'skills'
+            );
+            
+            // 为每个分类链接添加点击事件
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 移除所有链接的active类
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    // 为当前点击的链接添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.textContent.trim().toLowerCase();
+                    
+                    // 创建一个数组来存储要显示的博客文章
+                    let visiblePosts = [];
+                    
+                    // 收集要显示的博客文章
+                    blogPosts.forEach(post => {
+                        const postCategory = post.querySelector('.post_tag a:last-child').textContent.trim().toLowerCase();
+                        const postDate = post.querySelector('.date').textContent.trim();
+                        
+                        if (category === 'all' || postCategory === category) {
+                            post.style.display = 'none'; // 先隐藏所有文章
+                            // 确保所有文章使用相同的样式类
+                            post.className = 'blog_grid_post wow fadeInUp';
+                            visiblePosts.push({
+                                element: post,
+                                date: new Date(postDate)
+                            });
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                    
+                    // 按日期排序（从新到旧）
+                    visiblePosts.sort((a, b) => b.date - a.date);
+                    
+                    // 清空并重新添加排序后的文章
+                    blogGridContainer.innerHTML = '';
+                    
+                    // 创建行容器
+                    let currentRow = document.createElement('div');
+                    currentRow.className = 'row blog_grid_tab';
+                    blogGridContainer.appendChild(currentRow);
+                    
+                    // 添加排序后的文章，每3个文章创建新行
+                    visiblePosts.forEach((post, index) => {
+                        if (index > 0 && index % 3 === 0) {
+                            currentRow = document.createElement('div');
+                            currentRow.className = 'row blog_grid_tab';
+                            blogGridContainer.appendChild(currentRow);
+                        }
+                        
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col-lg-4 col-sm-6';
+                        
+                        // 如果是单个文章，使用与Skills第一个文章相同的样式
+                        if (visiblePosts.length === 1 && category !== 'all') {
+                            const skillsImg = skillsFirstPost.querySelector('img');
+                            const skillsContent = skillsFirstPost.querySelector('.grid_post_content');
+                            
+                            // 复制Skills第一个文章的样式
+                            const img = post.element.querySelector('img');
+                            if (img && skillsImg) {
+                                img.style.width = skillsImg.style.width || '100%';
+                                img.style.height = skillsImg.style.height || '250px';
+                                img.style.objectFit = 'cover';
+                            }
+                            
+                            const content = post.element.querySelector('.grid_post_content');
+                            if (content && skillsContent) {
+                                content.style.width = skillsContent.style.width || '100%';
+                                content.style.padding = skillsContent.style.padding || '20px';
+                                content.style.height = 'auto';
+                            }
+                        } else {
+                            // 对于多个文章，使用标准样式
+                            const img = post.element.querySelector('img');
+                            if (img) {
+                                img.style.width = '100%';
+                                img.style.height = '250px';
+                                img.style.objectFit = 'cover';
+                            }
+                            
+                            const content = post.element.querySelector('.grid_post_content');
+                            if (content) {
+                                content.style.width = '100%';
+                                content.style.padding = '20px';
+                                content.style.height = 'auto';
+                            }
+                        }
+                        
+                        colDiv.appendChild(post.element);
+                        currentRow.appendChild(colDiv);
+                        
+                        post.element.style.display = 'block';
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -387,12 +387,130 @@ def blog_list():
     return render_template('blog-list.html')
 
 @app.route('/blog-single', methods=['GET'])
-def blog_single():
+def blog_single_default():
     return render_template('blog-single.html')
 
 @app.route('/blog', methods=['GET'])
 def blog_grid():
-    return render_template('blog.html')
+    db = Mysql()
+    # 获取特色博客
+    featured_blog = db.get_featured_blog()
+    # 获取所有博客
+    all_blogs = db.get_all_blogs()
+    
+    # 将博客数据转换为字典列表，方便在模板中使用
+    blogs = []
+    for blog in all_blogs:
+        blog_dict = {
+            'blog_id': blog[0],
+            'title': blog[1],
+            'content': blog[2],
+            'image_url': blog[3],
+            'category': blog[4],
+            'read_time': blog[5],
+            'author_name': blog[6],
+            'author_avatar': blog[7],
+            'publish_date': blog[8],
+            'link_url': blog[9],
+            'is_featured': blog[10]
+        }
+        blogs.append(blog_dict)
+    
+    # 将特色博客转换为字典
+    featured_blog_dict = None
+    if featured_blog:
+        featured_blog_dict = {
+            'blog_id': featured_blog[0],
+            'title': featured_blog[1],
+            'content': featured_blog[2],
+            'image_url': featured_blog[3],
+            'category': featured_blog[4],
+            'read_time': featured_blog[5],
+            'author_name': featured_blog[6],
+            'author_avatar': featured_blog[7],
+            'publish_date': featured_blog[8],
+            'link_url': featured_blog[9],
+            'is_featured': featured_blog[10]
+        }
+    
+    return render_template('blog.html', blogs=blogs, featured_blog=featured_blog_dict)
+
+@app.route('/blog-category/<category>', methods=['GET'])
+def blog_category(category):
+    db = Mysql()
+    # 获取指定分类的博客
+    category_blogs = db.get_blogs_by_category(category)
+    
+    # 将博客数据转换为字典列表
+    blogs = []
+    for blog in category_blogs:
+        blog_dict = {
+            'blog_id': blog[0],
+            'title': blog[1],
+            'content': blog[2],
+            'image_url': blog[3],
+            'category': blog[4],
+            'read_time': blog[5],
+            'author_name': blog[6],
+            'author_avatar': blog[7],
+            'publish_date': blog[8],
+            'link_url': blog[9],
+            'is_featured': blog[10]
+        }
+        blogs.append(blog_dict)
+    
+    return render_template('blog.html', blogs=blogs, category=category)
+
+@app.route('/blog-search', methods=['GET'])
+def blog_search():
+    keyword = request.args.get('keyword', '')
+    db = Mysql()
+    # 搜索博客
+    search_results = db.search_blogs(keyword)
+    
+    # 将博客数据转换为字典列表
+    blogs = []
+    for blog in search_results:
+        blog_dict = {
+            'blog_id': blog[0],
+            'title': blog[1],
+            'content': blog[2],
+            'image_url': blog[3],
+            'category': blog[4],
+            'read_time': blog[5],
+            'author_name': blog[6],
+            'author_avatar': blog[7],
+            'publish_date': blog[8],
+            'link_url': blog[9],
+            'is_featured': blog[10]
+        }
+        blogs.append(blog_dict)
+    
+    return render_template('blog.html', blogs=blogs, keyword=keyword)
+
+@app.route('/blog-single/<int:blog_id>', methods=['GET'])
+def blog_single(blog_id):
+    db = Mysql()
+    # 获取博客详情
+    blog = db.get_blog_by_id(blog_id)
+    
+    if blog:
+        blog_dict = {
+            'blog_id': blog[0],
+            'title': blog[1],
+            'content': blog[2],
+            'image_url': blog[3],
+            'category': blog[4],
+            'read_time': blog[5],
+            'author_name': blog[6],
+            'author_avatar': blog[7],
+            'publish_date': blog[8],
+            'link_url': blog[9],
+            'is_featured': blog[10]
+        }
+        return render_template('blog-single.html', blog=blog_dict)
+    else:
+        return render_template('404.html')
 
 @app.route('/blog-grid-two', methods=['GET'])
 def blog_grid_two():
@@ -409,7 +527,7 @@ def forum_topics():
 def forum_single1():
     post = {
         "title": "Are there any scandal-free sanitary pad brands left?",
-        "content": "The first major scandal of this year’s Consumer Rights Day (March 15) was about sanitary pads. It exposed a shocking black market: discarded pads were simply rinsed, pressed back into shape, and then sold as “brand-new” products.  The pictures were so disgusting that words can’t even describe them.  These “recycled” sanitary pads had bacterial levels exceeding the limit by nearly 100 times, with dangerous pathogens like E. coli and Staphylococcus aureus present in alarming amounts. Long-term use could lead to gynecological infections and even infertility. Even worse, some products contained fluorescent agents far beyond safety standards, posing a cancer risk. When women’s health is compromised, the next generation suffers too.  Whether we’re called “queens,” “goddesses,” or just “women” doesn’t really matter. What matters is:  Does society respect women’s biological needs? Are women’s basic health concerns acknowledged, discussed, and treated without bias or neglect?  So, are there any sanitary pad brands left that haven’t been exposed yet? And will women’s safety ever be taken seriously?."
+        "content": "The first major scandal of this year's Consumer Rights Day (March 15) was about sanitary pads. It exposed a shocking black market: discarded pads were simply rinsed, pressed back into shape, and then sold as \"brand-new\" products.  The pictures were so disgusting that words can't even describe them.  These \"recycled\" sanitary pads had bacterial levels exceeding the limit by nearly 100 times, with dangerous pathogens like E. coli and Staphylococcus aureus present in alarming amounts. Long-term use could lead to gynecological infections and even infertility. Even worse, some products contained fluorescent agents far beyond safety standards, posing a cancer risk. When women's health is compromised, the next generation suffers too.  Whether we're called \"queens,\" \"goddesses,\" or just \"women\" doesn't really matter. What matters is:  Does society respect women's biological needs? Are women's basic health concerns acknowledged, discussed, and treated without bias or neglect?  So, are there any sanitary pad brands left that haven't been exposed yet? And will women's safety ever be taken seriously?"
     }
     return render_template('forum-single1.html', post=post)  # 传递 post 变量
 

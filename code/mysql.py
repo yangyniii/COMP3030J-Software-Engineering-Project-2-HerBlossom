@@ -904,4 +904,190 @@ class Mysql(object):
             print(f"Error executing query: {e}")
             self.conn.rollback()
 
+    def get_all_blogs(self):
+        """
+        获取所有博客信息
+        
+        Returns:
+            list: 博客列表
+        """
+        try:
+            sql = "SELECT * FROM blog ORDER BY create_time DESC"
+            self.cursor.execute(sql)
+            blogs = self.cursor.fetchall()
+            return blogs
+        except Exception as e:
+            print(f"获取博客列表失败: {e}")
+            return []
+            
+    def get_blogs_by_category(self, category):
+        """
+        根据分类获取博客信息
+        
+        Parameters:
+            category (str): 博客分类
+            
+        Returns:
+            list: 博客列表
+        """
+        try:
+            sql = "SELECT * FROM blog WHERE category = %s ORDER BY create_time DESC"
+            self.cursor.execute(sql, (category,))
+            blogs = self.cursor.fetchall()
+            return blogs
+        except Exception as e:
+            print(f"获取分类博客列表失败: {e}")
+            return []
+            
+    def get_featured_blog(self):
+        """
+        获取特色博客信息
+        
+        Returns:
+            tuple: 特色博客信息
+        """
+        try:
+            sql = "SELECT * FROM blog WHERE is_featured = 1 ORDER BY create_time DESC LIMIT 1"
+            self.cursor.execute(sql)
+            blog = self.cursor.fetchone()
+            return blog
+        except Exception as e:
+            print(f"获取特色博客失败: {e}")
+            return None
+            
+    def add_blog(self, blog_data):
+        """
+        添加博客信息
+        
+        Parameters:
+            blog_data (dict): 博客数据
+            
+        Returns:
+            bool: 是否添加成功
+        """
+        try:
+            current_time = int(time.time())
+            sql = """
+                INSERT INTO blog (title, content, image_url, category, read_time, 
+                                 author_name, author_avatar, publish_date, link_url, 
+                                 is_featured, create_time)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            self.cursor.execute(sql, (
+                blog_data.get('title'),
+                blog_data.get('content'),
+                blog_data.get('image_url'),
+                blog_data.get('category'),
+                blog_data.get('read_time'),
+                blog_data.get('author_name'),
+                blog_data.get('author_avatar'),
+                blog_data.get('publish_date'),
+                blog_data.get('link_url'),
+                blog_data.get('is_featured', 0),
+                current_time
+            ))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"添加博客失败: {e}")
+            self.conn.rollback()
+            return False
+            
+    def get_blog_by_id(self, blog_id):
+        """
+        根据ID获取博客信息
+        
+        Parameters:
+            blog_id (int): 博客ID
+            
+        Returns:
+            tuple: 博客信息
+        """
+        try:
+            sql = "SELECT * FROM blog WHERE blog_id = %s"
+            self.cursor.execute(sql, (blog_id,))
+            blog = self.cursor.fetchone()
+            return blog
+        except Exception as e:
+            print(f"获取博客详情失败: {e}")
+            return None
+            
+    def update_blog(self, blog_id, blog_data):
+        """
+        更新博客信息
+        
+        Parameters:
+            blog_id (int): 博客ID
+            blog_data (dict): 博客数据
+            
+        Returns:
+            bool: 是否更新成功
+        """
+        try:
+            sql = """
+                UPDATE blog 
+                SET title = %s, content = %s, image_url = %s, category = %s, 
+                    read_time = %s, author_name = %s, author_avatar = %s, 
+                    publish_date = %s, link_url = %s, is_featured = %s
+                WHERE blog_id = %s
+            """
+            self.cursor.execute(sql, (
+                blog_data.get('title'),
+                blog_data.get('content'),
+                blog_data.get('image_url'),
+                blog_data.get('category'),
+                blog_data.get('read_time'),
+                blog_data.get('author_name'),
+                blog_data.get('author_avatar'),
+                blog_data.get('publish_date'),
+                blog_data.get('link_url'),
+                blog_data.get('is_featured', 0),
+                blog_id
+            ))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"更新博客失败: {e}")
+            self.conn.rollback()
+            return False
+            
+    def delete_blog(self, blog_id):
+        """
+        删除博客
+        
+        Parameters:
+            blog_id (int): 博客ID
+            
+        Returns:
+            bool: 是否删除成功
+        """
+        try:
+            sql = "DELETE FROM blog WHERE blog_id = %s"
+            self.cursor.execute(sql, (blog_id,))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"删除博客失败: {e}")
+            self.conn.rollback()
+            return False
+            
+    def search_blogs(self, keyword):
+        """
+        搜索博客
+        
+        Parameters:
+            keyword (str): 搜索关键词
+            
+        Returns:
+            list: 博客列表
+        """
+        try:
+            sql = "SELECT * FROM blog WHERE title LIKE %s OR content LIKE %s ORDER BY create_time DESC"
+            self.cursor.execute(sql, (f'%{keyword}%', f'%{keyword}%'))
+            blogs = self.cursor.fetchall()
+            return blogs
+        except Exception as e:
+            print(f"搜索博客失败: {e}")
+            return []
+
 
