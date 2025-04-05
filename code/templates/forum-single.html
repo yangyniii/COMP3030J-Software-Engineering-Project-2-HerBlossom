@@ -436,8 +436,9 @@
                         </div>
                         <div class="forum-post-content">
                             <div class="content">
-                                <p>{{ post.content }}</p>
+                              <p>{{ post.content|safe }}</p>
                             </div>
+
                             <div class="forum-post-btm">
                                 <div class="taxonomy forum-post-tags">
                                     <i class="icon_tags_alt"></i><a href="#">Bug</a>, <a href="#">Feature</a>, <a href="#">Error</a>
@@ -447,56 +448,21 @@
                                 </div>
                             </div>
 
-                            <!-- 新增图片展示区域（最多9张图片） -->
-                            <div class="post-images">
-                                <ul class="image-grid">
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片1">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片2">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片3">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片4">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片5">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片6">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片7">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片8">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../static/img/forum/author-avatar.png" data-lightbox="post-gallery">
-                                            <img src="../static/img/forum/author-avatar.png" alt="图片9">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <!-- 图片展示区域（动态显示，最多9张） -->
+                                {% if post.image_urls %}
+                                <div class="post-images">
+                                    <ul class="image-grid">
+                                        {% for url in post.image_urls %}
+                                        <li>
+                                            <a href="{{ url }}" data-lightbox="post-gallery">
+                                                <img src="{{ url }}" alt="图片{{ loop.index }}">
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
 
 
                             <div class="action-button-container action-btns">
