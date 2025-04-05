@@ -380,18 +380,7 @@ def forum():
                            is_logged_in='email' in session)
 
 
-@app.route('/forum-single', methods=['GET'])
-def post_detail():
-    post_id = 1
-    if post_id:
-        db = Mysql()
-        post = db.get_post_by_id(post_id)
-        if post:
-            return render_template('forum-single.html', post=post)
-        else:
-            return jsonify({'message': 'Post not found'}), 404
-    else:
-        return jsonify({'message': 'Post ID is required'}), 400
+
 
 @app.route('/blog-list', methods=['GET'])
 def blog_list():
@@ -476,7 +465,31 @@ def post_posts():
         return jsonify({'message': 'No post found'}), 404
 
 
+@app.route('/forum-single', methods=['GET'])
+def forum_single():
+    post_id = request.args.get('post_id')
+    print("forum- single Received post_id:", post_id)
+    if not post_id:
+        return jsonify({'message': 'Post ID is required'}), 400
 
+    db = Mysql()
+    post = db.get_post_by_id(post_id)  # 你需要确保这个方法存在并能根据 post_id 返回数据
+    print("forum- single Queried post:", post)
+
+    if not post:
+        return render_template('404.html', message="Post not found"), 404
+
+    return render_template('forum-single.html', post={
+        'post_id': post['id'],
+        'user_id': post['user_id'],
+        'title': post['title'],
+        'content': post['content'],
+        'tags': post['tags'],
+        'category': post['category'],
+        'comment_count': post['comment_count'],
+        'create_time': post['create_time'],
+        'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
+    })
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

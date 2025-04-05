@@ -853,7 +853,7 @@
 
 <script>
 // 假设您从会话或其他地方获取了 user_id
-const user_id = {{post.user_id}} // 这里需要实现获取 user_id 的逻辑
+const user_id = "{{post.user_id}}" // 这里需要实现获取 user_id 的逻辑
 
 // 获取用户信息
 fetch(`/get_user_info_by_id?user_id=${user_id}`)
