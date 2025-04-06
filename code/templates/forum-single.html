@@ -432,7 +432,7 @@
                         <div class="q-title">
                             <span class="question-icon" title="Question">Q:</span>
                             <h1>{{ post.title }}</h1>
-                            <a href="#" class="badge">Features</a>
+                            <a href="#" class="badge">{{ post.category }}</a>
                         </div>
                         <div class="forum-post-content">
                             <div class="content">
@@ -441,8 +441,14 @@
 
                             <div class="forum-post-btm">
                                 <div class="taxonomy forum-post-tags">
-                                    <i class="icon_tags_alt"></i><a href="#">Bug</a>, <a href="#">Feature</a>, <a href="#">Error</a>
+                                    <i class="icon_tags_alt"></i>
+                                    {% if post.tags %}
+                                        <a href="#">{{ post.tags }}</a>
+                                    {% else %}
+                                        <span>No tag</span>
+                                    {% endif %}
                                 </div>
+
                                 <div class="taxonomy forum-post-cat">
                                     <img src="../static/img/forum/logo-favicon.png" alt=""><a href="#">HerBlossom Support</a>
                                 </div>
