@@ -47,13 +47,19 @@ CREATE TABLE `post`  (
   `user_id` int UNSIGNED NOT NULL COMMENT '用户ID',
   `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '正文内容',
+  `tags` VARCHAR(255),
+  `category` VARCHAR(50),
   `comment_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论数量',
-  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `create_time` VARCHAR(255),
+  `image_urls` TEXT,
   PRIMARY KEY (`post_id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `create_time`(`create_time` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帖子表' ROW_FORMAT = Dynamic;
-
+  INDEX `idx_user_id`(`user_id`) USING BTREE,
+  INDEX `idx_create_time`(`create_time`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  COMMENT = '帖子表'
+  ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of post
 -- ----------------------------
