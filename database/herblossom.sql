@@ -47,13 +47,19 @@ CREATE TABLE `post`  (
   `user_id` int UNSIGNED NOT NULL COMMENT '用户ID',
   `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '正文内容',
+  `tags` VARCHAR(255),
+  `category` VARCHAR(50),
   `comment_count` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论数量',
-  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `create_time` VARCHAR(255),
+  `image_urls` TEXT,
   PRIMARY KEY (`post_id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `create_time`(`create_time` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帖子表' ROW_FORMAT = Dynamic;
-
+  INDEX `idx_user_id`(`user_id`) USING BTREE,
+  INDEX `idx_create_time`(`create_time`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  COMMENT = '帖子表'
+  ROW_FORMAT = Dynamic;
 -- ----------------------------
 -- Records of post
 -- ----------------------------
@@ -109,3 +115,23 @@ CREATE TABLE `users`  (
 INSERT INTO `users` VALUES (1, '1', '1', 'default.jpg', 'default.jpg', '1', 1, 2, 3, 4, 5, '6', 'ucd', 'Beijing');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- 博客表结构
+DROP TABLE IF EXISTS `blog`;
+CREATE TABLE `blog` (
+  `blog_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '博客ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '博客标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '博客内容',
+  `image_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '博客图片URL',
+  `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '博客分类',
+  `read_time` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '阅读时间',
+  `author_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作者名称',
+  `author_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作者头像URL',
+  `publish_date` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发布日期',
+  `link_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '博客链接URL',
+  `is_featured` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否特色博客',
+  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`blog_id`) USING BTREE,
+  INDEX `category`(`category` ASC) USING BTREE,
+  INDEX `create_time`(`create_time` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '博客表' ROW_FORMAT = Dynamic;
