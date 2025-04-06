@@ -867,147 +867,136 @@
     <script src="../static/js_test/main.js"></script>
 </body>
 <script>
-    window.onload = function () {
-        console.log("Page fully loaded");
+    const postsPerPage = 5;
+    let allPosts = [];
+    let currentPage = 1;
 
-        // 获取帖子列表
-        fetch('/post_posts')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Received data:", data);
-                    const postList = document.getElementById('post-list');
-
-                    if (data.posts && data.posts.length > 0) {
-                        // 更新帖子列表中的作者用户名和头像
-                        data.posts.forEach(post => {
-                            const postItem = document.createElement('div');
-                            postItem.className = 'community-post style-two';
-                            postItem.innerHTML = `
-                            <div class="post-content">
-                                <div class="author-avatar">
-                                    <img src="${userAvatarMap.get(post.user_id)}" alt="avatar" style="width: 80%; height: auto;">
-                                </div>
-                                <div class="entry-content">
-                                    <h3 class="post-title">
-                                        <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
-                                    </h3>
-                                    <ul class="meta">
-                                        <li><img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
-                                            <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id)}</a></li>
-                                        <li><i class="icon_calendar"></i>${post.create_time}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="post-meta-wrapper">
-                                <ul class="post-meta-info">
-                                    <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
-                                    <li><a href="#"><i class="icon_star"></i>5</a></li>
-                                </ul>
-                            </div>
-                            `;
-
-                            postList.appendChild(postItem);
-                        });
-
-
-                        // 获取帖子列表中所有帖子对应的用户信息并设置用户名和头像
-                        const userLinks = document.querySelectorAll('.meta a[data-userid]');
-                        userLinks.forEach(link => {
-                            const userId = link.getAttribute('data-userid');
-                            fetchUserAndSetUsername(userId, link);
-                        });
-                    } else {
-                        postList.innerHTML = '<p>No posts found</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching posts:', error);
-                });
-    }
-
-    // 储存用户ID对应的用户名和头像
     const userAvatarMap = new Map();
     const userNameMap = new Map();
 
-    function fetchUserAndSetUsername(userId, element) {
-        fetch(`/get_user_info_by_id?user_id=${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.username) {
-                        userNameMap.set(userId, data.username);
-                        element.textContent = data.username;
-                    } else {
-                        userNameMap.set(userId, 'Unknown User');
-                        element.textContent = 'Unknown User';
-                    }
+    window.onload = function () {
+        console.log("Page fully loaded");
 
-                    if (data.avatar) {
-                        userAvatarMap.set(userId, data.avatar);
-                        element.previousElementSibling.src = '..' + data.avatar;
-                    } else {
-                        userAvatarMap.set(userId, '../static/img/home_support/default_avatar.jpg');
-                        element.previousElementSibling.querySelector('img').src = '../static/img/home_support/default_avatar.jpg'; // 设置默认头像
-                    }
-                })
-                .catch(error => console.error('Error fetching user info:', error));
+        fetch('/post_posts')
+            .then(response => response.json())
+            .then(data => {
+                allPosts = data.posts || [];
+                renderPagination();
+                renderPostsForPage(currentPage);
+            })
+            .catch(error => console.error('Error fetching posts:', error));
     }
 
+    function renderPostsForPage(page) {
+        const postList = document.getElementById('post-list');
+        postList.innerHTML = '';
 
-    // Search button click event
-        document.getElementById('search-button').addEventListener('click', function() {
-            const searchTerm = document.getElementById('search-input').value;
-            fetchPosts(searchTerm);
+        const start = (page - 1) * postsPerPage;
+        const end = start + postsPerPage;
+        const postsToShow = allPosts.slice(start, end);
+
+        postsToShow.forEach(post => {
+            const postItem = document.createElement('div');
+            postItem.className = 'community-post style-two';
+            postItem.innerHTML = `
+                <div class="post-content">
+                    <div class="author-avatar">
+                        <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="post-title">
+                            <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
+                        </h3>
+                        <ul class="meta">
+                            <li>
+                                <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
+                                <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
+                            </li>
+                            <li><i class="icon_calendar"></i>${post.create_time}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="post-meta-wrapper">
+                    <ul class="post-meta-info">
+                        <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
+                        <li><a href="#"><i class="icon_star"></i>5</a></li>
+                    </ul>
+                </div>
+            `;
+            postList.appendChild(postItem);
+
+            const userLink = postItem.querySelector('a[data-userid]');
+            fetchUserAndSetUsername(post.user_id, userLink);
         });
-    // Function to fetch posts
-        function fetchPosts(searchTerm = '') {
-            fetch(`/search_posts?title=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    const postList = document.getElementById('post-list');
-                    postList.innerHTML = ''; // Clear existing posts
-                    if (data.posts && data.posts.length > 0) {
-                        data.posts.forEach(post => {
-                            const postItem = document.createElement('div');
-                            postItem.className = 'post-item';
-                            postItem.innerHTML = `
-                            <div class="community-posts-wrapper bb-radius">
-                                <div class="community-post style-two HerBlossom richard bug">
-                                    <div class="post-content">
-                                        <div class="author-avatar">
-                                            <img src="../static/img/home_support/cp2.jpg" alt="community post">
-                                        </div>
-                                        <div class="entry-content">
-                                            <h3 class="post-title">
-                                                <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
- </h3>
-                                            <ul class="meta">
-                                                <li><img src="../static/img/home_support/cmm1.png" alt="cmm"><a href="#">WordPress
-                                                        Theme</a></li>
-                                                <li><i class="icon_calendar"></i>updated 3 days ago</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="post-meta-wrapper">
-                                        <ul class="post-meta-info">
-                                            <li><a href="#"><i class="icon_chat_alt"></i>20</a></li>
-                                            <li><a href="#"><i class="icon_star"></i>5</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            `;
-                            postList.appendChild(postItem);
-                        });
-                    } else {
-                        postList.innerHTML = '<p>No post found.</p>';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+    }
 
+    function renderPagination() {
+        const totalPages = Math.ceil(allPosts.length / postsPerPage);
+        const paginationList = document.querySelector('.post-pagination');
+        paginationList.innerHTML = '';
+
+        // Prev Button
+        const prev = document.createElement('li');
+        prev.className = currentPage === 1 ? 'prev-post pegi-disable' : 'prev-post';
+        prev.innerHTML = `<a href="#"><i class="arrow_carrot-left"></i></a>`;
+        prev.onclick = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPostsForPage(currentPage);
+                renderPagination();
+            }
+        };
+        paginationList.appendChild(prev);
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const pageLi = document.createElement('li');
+            pageLi.innerHTML = `<a href="#" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+            pageLi.onclick = () => {
+                currentPage = i;
+                renderPostsForPage(currentPage);
+                renderPagination();
+            };
+            paginationList.appendChild(pageLi);
         }
+
+        // Next Button
+        const next = document.createElement('li');
+        next.className = currentPage === totalPages ? 'next-post pegi-disable' : 'next-post';
+        next.innerHTML = `<a href="#"><i class="arrow_carrot-right"></i></a>`;
+        next.onclick = () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPostsForPage(currentPage);
+                renderPagination();
+            }
+        };
+        paginationList.appendChild(next);
+    }
+
+    function fetchUserAndSetUsername(userId, element) {
+        if (userNameMap.has(userId)) {
+            element.textContent = userNameMap.get(userId);
+            return;
+        }
+
+        fetch(`/get_user_info_by_id?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                const username = data.username || 'Unknown User';
+                const avatar = data.avatar ? '..' + data.avatar : '../static/img/home_support/default_avatar.jpg';
+
+                userNameMap.set(userId, username);
+                userAvatarMap.set(userId, avatar);
+
+                element.textContent = username;
+                const avatarImg = element.closest('.author-avatar').querySelector('img');
+                if (avatarImg) {
+                    avatarImg.src = avatar;
+                }
+            })
+            .catch(error => console.error('Error fetching user info:', error));
+    }
 </script>
+
 </html>
