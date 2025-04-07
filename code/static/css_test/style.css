@@ -6,7 +6,7 @@ is the file you need to edit to change the look of the
 templates.
 ---------------------------------------------------- */
 /*=====================================================================
-@Template Name: KbDoc
+@Template Name: HerBlossom
 @Version: 1.0.0
 
 @Default Styles
@@ -1642,57 +1642,57 @@ ul.list-style li:last-child {
 
 /*=========== End doc_banner_area_two css_test ============*/
 /*=========== Start Banner Support ============*/
-.kbDoc-banner-support {
+.HerBlossom-banner-support {
   height: 945px;
   background-image: linear-gradient(30deg, #feefec 0%, #f5fdff 100%);
   padding: 200px 0;
   position: relative;
 }
 @media (max-width: 991px) {
-  .kbDoc-banner-support {
+  .HerBlossom-banner-support {
     padding: 150px 0;
   }
 }
 @media (max-width: 768px) {
-  .kbDoc-banner-support {
+  .HerBlossom-banner-support {
     padding: 100px 0;
     height: 820px;
   }
 }
-.kbDoc-banner-support .banner-content-wrapper {
+.HerBlossom-banner-support .banner-content-wrapper {
   max-width: 770px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
 }
 @media (max-width: 991px) {
-  .kbDoc-banner-support .banner-content-wrapper {
+  .HerBlossom-banner-support .banner-content-wrapper {
     max-width: 90%;
   }
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-title {
+.HerBlossom-banner-support .banner-content-wrapper .banner-title {
   font-size: 44px;
   font-weight: 500;
   color: #774c6e;
   margin-bottom: 12px;
 }
 @media (max-width: 768px) {
-  .kbDoc-banner-support .banner-content-wrapper .banner-title {
+  .HerBlossom-banner-support .banner-content-wrapper .banner-title {
     font-size: 34px;
   }
 }
-.kbDoc-banner-support .banner-content-wrapper p {
+.HerBlossom-banner-support .banner-content-wrapper p {
   font-size: 18px;
   color: #6b707f;
   line-height: 28px;
   margin-bottom: 40px;
 }
 @media (max-width: 991px) {
-  .kbDoc-banner-support .banner-content-wrapper p br {
+  .HerBlossom-banner-support .banner-content-wrapper p br {
     display: none;
   }
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-search-form {
+.HerBlossom-banner-support .banner-content-wrapper .banner-search-form {
   box-shadow: 0px 4px 10px 0px rgba(49, 12, 2, 0.06);
   max-width: 770px;
   margin: 0 auto;
@@ -1700,34 +1700,34 @@ ul.list-style li:last-child {
   background: #fff;
   border-radius: 30px;
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-search-form input {
+.HerBlossom-banner-support .banner-content-wrapper .banner-search-form input {
   width: 100%;
   background: transparent;
   border: 0;
   padding: 15px 30px;
   height: 60px;
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-search-form input::placeholder {
+.HerBlossom-banner-support .banner-content-wrapper .banner-search-form input::placeholder {
   color: #6b707f;
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-search-form button {
+.HerBlossom-banner-support .banner-content-wrapper .banner-search-form button {
   background: transparent;
   border: 0;
   padding-right: 20px;
   color: #ff6b8b;
   font-size: 20px;
 }
-.kbDoc-banner-support .banner-content-wrapper .banner-search-form button i {
+.HerBlossom-banner-support .banner-content-wrapper .banner-search-form button i {
   transform: rotate(-90deg);
   display: inline-block;
 }
-.kbDoc-banner-support .bottom-shape {
+.HerBlossom-banner-support .bottom-shape {
   position: absolute;
   width: 100%;
   left: 0;
   bottom: -1px;
 }
-.kbDoc-banner-support .bottom-shape img {
+.HerBlossom-banner-support .bottom-shape img {
   width: 100%;
 }
 
@@ -4712,7 +4712,7 @@ body:not(.onepage-doc) .body_fixed #font-switcher {
   margin-bottom: 70px;
 }
 
-.kbDoc-chart-wrapper {
+.HerBlossom-chart-wrapper {
   position: relative;
 }
 
@@ -5054,33 +5054,33 @@ body:not(.onepage-doc) .body_fixed #font-switcher {
     width: calc(100% + 15px);
   }
 }
-.communities-boxes .kbDoc-com-box {
+.communities-boxes .HerBlossom-com-box {
   text-align: center;
   margin-bottom: 57px;
   width: 20%;
   flex: 0 0 205px;
 }
 @media (max-width: 1200px) {
-  .communities-boxes .kbDoc-com-box {
+  .communities-boxes .HerBlossom-com-box {
     flex: 0 0 165px;
   }
 }
 @media (max-width: 991px) {
-  .communities-boxes .kbDoc-com-box {
+  .communities-boxes .HerBlossom-com-box {
     flex: 0 0 180px;
   }
 }
 @media (max-width: 768px) {
-  .communities-boxes .kbDoc-com-box {
+  .communities-boxes .HerBlossom-com-box {
     flex: 0 0 185px;
   }
 }
 @media (max-width: 420px) {
-  .communities-boxes .kbDoc-com-box {
+  .communities-boxes .HerBlossom-com-box {
     flex: 0 0 150px;
   }
 }
-.communities-boxes .kbDoc-com-box .icon-container {
+.communities-boxes .HerBlossom-com-box .icon-container {
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 40px 70px 0px rgba(2, 47, 57, 0.1);
@@ -5091,7 +5091,7 @@ body:not(.onepage-doc) .body_fixed #font-switcher {
   width: 100px;
   margin: 0 auto 34px;
 }
-.communities-boxes .kbDoc-com-box .kbDoc-com-box-content .title {
+.communities-boxes .HerBlossom-com-box .HerBlossom-com-box-content .title {
   font-size: 20px;
   line-height: 26px;
   font-weight: 500;
@@ -5099,16 +5099,16 @@ body:not(.onepage-doc) .body_fixed #font-switcher {
   margin-bottom: 5px;
   transition: all 0.3s ease-in-out;
 }
-.communities-boxes .kbDoc-com-box .kbDoc-com-box-content .title a {
+.communities-boxes .HerBlossom-com-box .HerBlossom-com-box-content .title a {
   color: #774c6e;
 }
-.communities-boxes .kbDoc-com-box .kbDoc-com-box-content .title a:hover {
+.communities-boxes .HerBlossom-com-box .HerBlossom-com-box-content .title a:hover {
   color: #ff6b8b;
 }
-.communities-boxes .kbDoc-com-box .kbDoc-com-box-content .title:hover {
+.communities-boxes .HerBlossom-com-box .HerBlossom-com-box-content .title:hover {
   color: #ff6b8b;
 }
-.communities-boxes .kbDoc-com-box .kbDoc-com-box-content .total-post {
+.communities-boxes .HerBlossom-com-box .HerBlossom-com-box-content .total-post {
   color: #6b707f;
   font-size: 14px;
 }
@@ -8103,7 +8103,7 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
   color: #6b707f;
   display: inline-block;
 }
-.post_tag a.cat-KbDoc {
+.post_tag a.cat-HerBlossom {
   color: #fd8d2a;
 }
 .post_tag a.cat-megento {
@@ -8204,11 +8204,11 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 .blog_tab .nav-item.cat-laravel .nav-link:before {
   background: #ff2d20;
 }
-.blog_tab .nav-item.cat-KbDoc .nav-link:hover {
+.blog_tab .nav-item.cat-HerBlossom .nav-link:hover {
   background: rgba(253, 141, 42, 0.2);
   color: #fd8d2a;
 }
-.blog_tab .nav-item.cat-KbDoc .nav-link:before {
+.blog_tab .nav-item.cat-HerBlossom .nav-link:before {
   background: #fd8d2a;
 }
 .blog_tab .nav-item.cat-megento .nav-link:hover {

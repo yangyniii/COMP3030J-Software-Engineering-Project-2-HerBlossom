@@ -907,6 +907,9 @@
                         <h3 class="post-title">
                             <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
                         </h3>
+                        <div class="post-preview">
+                            ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
+                        </div>
                         <ul class="meta">
                             <li>
                                 <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
@@ -1006,46 +1009,49 @@
                         const postList = document.getElementById('post-list');
                         postList.innerHTML = ''; // Clear existing posts
 
-                        if (data.posts && data.posts.length > 0) {
-                            data.posts.forEach(post => {  // 修正为遍历 data.posts
-                                const postItem = document.createElement('div');
-                                postItem.className = 'community-post style-two';
-                                postItem.innerHTML = `
-                            <div class="post-content">
-                                <div class="author-avatar">
-                                    <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
-                                </div>
-                                <div class="entry-content">
-                                    <h3 class="post-title">
-                                        <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
-                                    </h3>
-                                    <ul class="meta">
-                                        <li>
-                                            <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
-                                            <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
-                                        </li>
-                                        <li><i class="icon_calendar"></i>${post.create_time}</li>
-                                    </ul>
-                                </div>
+                    if (data.posts && data.posts.length > 0) {
+                        data.posts.forEach(post => {
+                            const postItem = document.createElement('div');
+                            postItem.className = 'community-post style-two';
+                            postItem.innerHTML = `
+                        <div class="post-content">
+                            <div class="author-avatar">
+                                <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
                             </div>
-                            <div class="post-meta-wrapper">
-                                <ul class="post-meta-info">
-                                    <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
-                                    <li><a href="#"><i class="icon_star"></i>5</a></li>
+                            <div class="entry-content">
+                                <h3 class="post-title">
+                                    <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
+                                </h3>
+                                <div class="post-preview">
+                                    ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
+                                </div>
+                                <ul class="meta">
+                                    <li>
+                                        <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
+                                        <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
+                                    </li>
+                                    <li><i class="icon_calendar"></i>${post.create_time}</li>
                                 </ul>
                             </div>
-                            `;
-                                postList.appendChild(postItem);
+                        </div>
+                        <div class="post-meta-wrapper">
+                            <ul class="post-meta-info">
+                                <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
+                                <li><a href="#"><i class="icon_star"></i>5</a></li>
+                            </ul>
+                        </div>
+                        `;
+                            postList.appendChild(postItem);
 
-                                // const userLink = postItem.querySelector('a[data-userid]');
-                                // fetchUserAndSetUsername(post.user_id, userLink);
-                            });
-                        } else {
-                            postList.innerHTML = '<p>No posts found.</p>';
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-        }
+                            const userLink = postItem.querySelector('a[data-userid]');
+                            fetchUserAndSetUsername(post.user_id, userLink);
+                        });
+                    } else {
+                        postList.innerHTML = '<p>沒有找到相關帖子。</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+    }
 
     // 添加滚动功能
     function scrollToPosts() {

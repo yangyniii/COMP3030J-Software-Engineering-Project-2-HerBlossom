@@ -883,10 +883,19 @@ class Mysql(object):
         return posts_list
 
     def search_posts_by_title(self, title):
-        query = ("SELECT post_id, user_id, title, content, tags, category, comment_count, create_time, image_urls FROM post WHERE title "
-                 "LIKE %s")
-        self.cursor.execute(query, (f"%{title}%",))
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
+        query = """
+            SELECT p.post_id, p.user_id, p.title, p.content, p.tags, p.category, 
+                   p.comment_count, p.create_time, p.image_urls, u.username
+            FROM post p
+            LEFT JOIN users u ON p.user_id = u.user_id
+            WHERE p.title LIKE %s 
+               OR p.content LIKE %s
+               OR p.tags LIKE %s
+               OR u.username LIKE %s
+        """
+        search_term = f"%{title}%"
+        self.cursor.execute(query, (search_term, search_term, search_term, search_term))
+        columns = [desc[0] for desc in self.cursor.description]
         results = self.cursor.fetchall()
         posts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
         return posts
