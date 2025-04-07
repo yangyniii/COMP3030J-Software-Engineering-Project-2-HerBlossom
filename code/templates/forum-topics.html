@@ -399,7 +399,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Getting Started</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToPosts()">Getting Started</a></h3>
                                     <p class="total-post">453 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -412,7 +412,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Integrations</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToRanking()">Ranking List</a></h3>
                                     <p class="total-post">624 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -425,7 +425,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Solar System</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToTags()">Tags</a></h3>
                                     <p class="total-post">120 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -438,7 +438,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Cloud Server</a></h3>
+                                    <h3 class="title"><a href="/blog-list">Blogs</a></h3>
                                     <p class="total-post">235 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -455,7 +455,7 @@
                                 </div>
 
                                 <div class="content">
-                                    <h2 class="ans-title">Can’t find an answer?</h2>
+                                    <h2 class="ans-title">Can't find an answer?</h2>
                                     <p>
                                         Make use of a qualified tutor to get the answer
                                     </p>
@@ -758,7 +758,7 @@
         </section>
 
         <div class="call-to-action">
-            <div class="overlay-bg"></div>    
+            <div class="overlay-bg"></div>
             <div class="container">
                 <div class="action-content-wrapper">
                     <div class="action-title-wrap title-img">
@@ -996,10 +996,10 @@
                 }
             })
             .catch(error => console.error('Error fetching user info:', error));
+    }
 
-
-        // Function to fetch posts
-        function fetchPosts(searchTerm) {
+    // Function to fetch posts
+    function fetchPosts(searchTerm) {
             fetch(`/search_posts?title=${encodeURIComponent(searchTerm)}`)
                     .then(response => response.json())
                     .then(data => {
@@ -1047,8 +1047,28 @@
                     .catch(error => console.error('Error:', error));
         }
 
-        // 搜索按钮点击事件
-        document.getElementById('search-button').addEventListener('click', function (e) {
+    // 添加滚动功能
+    function scrollToPosts() {
+        const postList = document.getElementById('post-list');
+        const firstPost = postList.querySelector('.community-post');
+        if (firstPost) {
+            firstPost.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            postList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function scrollToRanking() {
+        const ticketCategories = document.querySelector('.ticket_widget');
+        ticketCategories.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function scrollToTags() {
+        const tagsWidget = document.querySelector('.tag_widget');
+        tagsWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // 搜索按钮点击事件
+    document.getElementById('search-button').addEventListener('click', function (e) {
             e.preventDefault(); // 阻止默认行为
             const searchTerm = document.getElementById('search-input').value;
             fetchPosts(searchTerm);
@@ -1062,10 +1082,6 @@
                 fetchPosts(searchTerm);
             }
         });
-
-
-    }
-
 </script>
 
 </html>
