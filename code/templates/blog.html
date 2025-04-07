@@ -250,7 +250,13 @@
                             <a class="nav-link {% if category == 'Skills' %}active{% endif %}" href="/blog-category/Skills">Skills</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if category == 'Health' %}active{% endif %}" href="/blog-category/Health">Health</a>
+                            <a class="nav-link {% if category == 'Physical Health' %}active{% endif %}" href="/blog-category/Physical Health">Physical Health</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'Mental Health' %}active{% endif %}" href="/blog-category/Mental Health">Mental Health</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if category == 'HerBlossom' %}active{% endif %}" href="/blog-category/HerBlossom">HerBlossom</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if category == 'Others' %}active{% endif %}" href="/blog-category/Others">Others</a>
@@ -270,7 +276,7 @@
                                         <a href="#">{{ blog.read_time }}</a>
                                         <a class="c_blue" href="/blog-category/{{ blog.category }}">{{ blog.category }}</a>
                                     </div>
-                                    <a href="{{ blog.link_url }}">
+                                    <a href="/blog-single/{{ blog.blog_id }}">
                                         <h4 class="b_title">{{ blog.title }}</h4>
                                     </a>
                                     <p>{{ blog.content[:100] }}...</p>

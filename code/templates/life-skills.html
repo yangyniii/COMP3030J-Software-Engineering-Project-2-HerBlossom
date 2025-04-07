@@ -8,11 +8,16 @@
     <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap-select.min.css">
     <!-- icon css_test-->
     <link rel="stylesheet" href="../static/assets/elagent-icon/style.css">
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
-    <link rel="stylesheet" href="../static/css_test/style.css">
-    <link rel="stylesheet" href="../static/css_test/responsive.css">
+    <link rel="stylesheet" href="../static/css_new/style-hp.css">
+    <link rel="stylesheet" href="../static/css_new/responsive-hp.css">
+    <link rel="stylesheet" href="../static/assets/font-awesome/css/all.css">
+    <link rel="stylesheet" href="../static/assets/niceselectpicker/nice-select.css">
+    <link rel="stylesheet" href="../static/assets/tooltipster/css/tooltipster.bundle.css">
+    <link rel="stylesheet" href="../static/assets/mcustomscrollbar/jquery.mCustomScrollbar.min.css">
     <title>HerBlossom</title>
 </head>
 
@@ -368,6 +373,24 @@
                                         positive workplace relationships which can support career success. Consider
                                         asking a trusted friend or mentor for feedback regarding your interpersonal
                                         communication skills to help improve in this area.</p>
+
+                                    <!-- 将原有的静态图片替换为热点交互图片 -->
+                                    <div class="pointing_img_container pointing_img_two">
+                                        <img class="img-fluid" src="../static/img/blog-single/skill-3.jpg" alt="large">
+                                        <div class="img_pointing one tooltips" data-tooltip-content="#img_tooltipone">
+                                            <div class="dot"></div>
+                                        </div>
+                                        <div class="img_pointing two tooltips" data-tooltip-content="#img_tooltiptwo">
+                                            <div class="dot"></div>
+                                        </div>
+                                        <div class="img_pointing three tooltips"
+                                             data-tooltip-content="#img_tooltipthree">
+                                            <div class="dot"></div>
+                                        </div>
+                                        <div class="img_pointing four tooltips" data-tooltip-content="#img_tooltipfour">
+                                            <div class="dot"></div>
+                                        </div>
+                                    </div>
 
                                     <h3>4. Resilience</h3>
                                     <p>Resilience, or coping with challenges, is an important skill that can help you
@@ -768,6 +791,71 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 图片热点模态弹窗（点击热点后弹出） -->
+            <div class="modal fade img_modal" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="icon_close"></i>
+                </button>
+                <div class="modal-dialog pointing_img_container" role="document">
+                    <div class="modal-content">
+                        <img src="../static/img/img-large.jpg" alt="large">
+                        <div class="img_pointing one tooltips" data-tooltip-content="#img_tooltipone">
+                            <div class="dot"></div>
+                        </div>
+                        <div class="img_pointing two tooltips" data-tooltip-content="#img_tooltiptwo">
+                            <div class="dot"></div>
+                        </div>
+                        <div class="img_pointing three tooltips" data-tooltip-content="#img_tooltipthree">
+                            <div class="dot"></div>
+                        </div>
+                        <div class="img_pointing four tooltips" data-tooltip-content="#img_tooltipfour">
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- tooltip 模板（注意 data-tooltip-content 引用的 id 必须与此处相对应） -->
+            <!-- tooltip one -->
+            <div class="tooltip_templates d-none">
+                <div id="img_tooltipone">
+                    <div class="img_pointing_content">
+                        <p>Gas meter:  <span>Record information such as the amount of gas used and how much is left</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- tooltip two -->
+            <div class="tooltip_templates d-none">
+                <div id="img_tooltiptwo">
+                    <div class="img_pointing_content">
+                        <p>Electromagnetic cut-off valve: <span>In case of a gas leak or other emergency, the valve can quickly cut off the gas supply.</span> </p>
+                    </div>
+                </div>
+            </div>
+            <!-- tooltip three -->
+            <div class="tooltip_templates d-none">
+                <div id="img_tooltipthree">
+                    <div class="img_pointing_content">
+                        <p>The value of this part is the cumulative natural gas usage. <span>The black part is an integer, the red part is a decimal.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- tooltip four -->
+            <div class="tooltip_templates d-none">
+                <div id="img_tooltipfour">
+                    <div class="img_pointing_content">
+                        <p>Natural gas main valve switch:
+                            </br>
+                            <span>open, the pipeline of natural gas can enter;</span>
+                            </br>
+                            <span>shut down, the gas from the outside pipeline cannot enter.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </section>
         <footer class="footer_area f_bg_color">
             <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
@@ -854,15 +942,25 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
+    <!-- jQuery 必须最先加载 -->
     <script src="../static/js_test/jquery-3.2.1.min.js"></script>
-    <script src="../static/js_test/pre-loader.js"> </script>
+    <script src="../static/js_test/pre-loader.js"></script>
     <script src="../static/assets/bootstrap/js/popper.min.js"></script>
     <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/js_test/parallaxie.js"></script>
+    <!-- 依赖插件 -->
+    <script src="../static/assets/bootstrap/js/bootstrap-select.min.js"></script>
     <script src="../static/js_test/TweenMax.min.js"></script>
+    <script src="../static/assets/font-size/js/rv-jquery-fontsize-2.0.3.js"></script>
+    <script src="../static/js_test/parallaxie.js"></script>
     <script src="../static/js_test/jquery.wavify.js"></script>
     <script src="../static/assets/wow/wow.min.js"></script>
+    <script src="../static/js_test/anchor.js"></script>
+    <script src="../static/assets/niceselectpicker/jquery.nice-select.min.js"></script>
+    <script src="../static/assets/tooltipster/js/tooltipster.bundle.min.js"></script>
+    <script src="../static/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- 最后加载 main.js -->
     <script src="../static/js_test/main.js"></script>
+
 </body>
 
 </html>
