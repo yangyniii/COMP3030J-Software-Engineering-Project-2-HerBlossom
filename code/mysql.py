@@ -462,7 +462,7 @@ class Mysql(object):
             return "Error during registration"
 
     def signin_user(self, email, password):
-        query = "SELECT username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE email = %s"
+        query = "SELECT user_id, username, email, avatar, cover, password,follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location FROM users WHERE email = %s"
 
         self.cursor.execute(query, email)
         user_tuple = self.cursor.fetchone()

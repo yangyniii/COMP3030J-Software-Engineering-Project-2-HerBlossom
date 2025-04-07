@@ -72,6 +72,8 @@ def sign_in():
 
         # Store user information in the session
         session['email'] = user['email']
+        session['user_id'] = user['user_id']
+
         print("Session data:", session)  # Debugging session data
 
         # Redirect to main route
@@ -192,7 +194,7 @@ def get_user_info_by_id():
 
     db = Mysql()  # 实例化数据库对象
     user_info = db.get_user_info_by_id(user_id)  # 查询用户信息
-    print('User data:', user_info)  # 调试打印
+    print('get_user_info_by_id User data:', user_info)  # 调试打印
 
     if not user_info:
         return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
@@ -560,7 +562,8 @@ def post_edit():
                 print(f"Saved image: {filename}")
 
         # 假设从 Session 获取用户 ID
-        user_id = 1  # 你可以根据实际情况获取用户 ID
+
+        user_id = session.get('user_id')  # 你可以根据实际情况获取用户 ID
 
         # 保存到数据库
         db = Mysql()
