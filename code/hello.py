@@ -523,8 +523,6 @@ def forum_topics():
     return render_template('forum-topics.html')
 
 
-
-
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
     post = {
@@ -616,6 +614,10 @@ def forum_single():
         'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
 
     })
+
+@app.route('/life-skills', methods=['GET'])
+def life_skills():
+    return render_template('life-skills.html')
 
 
 # Set up the basic port for the pages
