@@ -619,6 +619,10 @@ def forum_single():
 def life_skills():
     return render_template('life-skills.html')
 
+@app.route('/mental-health', methods=['GET'])
+def mental_health():
+    return render_template('mental-health.html')
+
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
