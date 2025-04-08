@@ -623,6 +623,15 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
+@app.route('/get_tags', methods=['GET'])
+def get_tags():
+    try:
+        db = Mysql()
+        tags = db.get_unique_tags()
+        return jsonify({'tags': tags})
+    except Exception as e:
+        print(f"獲取標籤失敗: {e}")
+        return jsonify({'tags': []})
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
