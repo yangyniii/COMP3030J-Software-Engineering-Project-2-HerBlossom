@@ -17,6 +17,45 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Topics</title>
+    <style>
+        .post-preview {
+            margin: 10px 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .search-highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+            border-radius: 3px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 2px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        .tag.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -455,7 +494,7 @@
                                 </div>
 
                                 <div class="content">
-                                    <h2 class="ans-title">Can't find an answer?</h2>
+                                    <h2 class="ans-title">Can’t find an answer?</h2>
                                     <p>
                                         Make use of a qualified tutor to get the answer
                                     </p>
@@ -734,20 +773,9 @@
 
                             <div class="widget tag_widget">
                                 <h4 class="c_head">Tags</h4>
-                                <ul class="list-unstyled w_tag_list style-light">
-                                    <li><a href="#">Swagger</a></li>
-                                    <li><a href="#">HerBlossom</a></li>
-                                    <li><a href="#">weCare</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <li><a href="#">Download</a></li>
-                                    <li><a href="#">Doc</a></li>
-                                    <li><a href="#">Product board</a></li>
-                                    <li><a href="#">WordPress</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">ui/ux</a></li>
-                                    <li><a href="#">Doc Design</a></li>
-                                    <li><a href="#">DocAll</a></li>
-                                </ul>
+                                <div class="tags-container" id="tags-container">
+                                    <!-- Tags will be generated here dynamically -->
+                                </div>
                             </div>
 
                         </div>
@@ -867,7 +895,7 @@
     <script src="../static/js_test/main.js"></script>
 </body>
 <script>
-    const postsPerPage = 4;
+    const postsPerPage = 5;
     let allPosts = [];
     let currentPage = 1;
 
@@ -885,6 +913,8 @@
                 renderPostsForPage(currentPage);
             })
             .catch(error => console.error('Error fetching posts:', error));
+
+        loadTags();
     }
 
     function renderPostsForPage(page) {
@@ -1088,6 +1118,40 @@
                 fetchPosts(searchTerm);
             }
         });
+
+    // 获取并显示标签
+    function loadTags() {
+        fetch('/get_tags')
+            .then(response => response.json())
+            .then(data => {
+                const tagsContainer = document.getElementById('tags-container');
+                tagsContainer.innerHTML = '';
+                
+                data.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag';
+                    tagElement.textContent = tag;
+                    tagElement.onclick = () => filterByTag(tag);
+                    tagsContainer.appendChild(tagElement);
+                });
+            })
+            .catch(error => console.error('Error loading tags:', error));
+    }
+
+    // 根据标签过滤帖子
+    function filterByTag(tag) {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = tag;
+        fetchPosts(tag);
+        
+        // 更新标签的活动状态
+        document.querySelectorAll('.tag').forEach(t => {
+            t.classList.remove('active');
+            if (t.textContent === tag) {
+                t.classList.add('active');
+            }
+        });
+    }
 </script>
 
 </html>
