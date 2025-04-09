@@ -31,8 +31,6 @@
   align-items: center;          /* Center vertically */
 }
 
-
-
 .carousel-section {
     position: relative;  /* 相对定位，作为子元素的定位参考 */
     z-index: 1;         /* 设置层级，确保轮播图在其他元素之上 */
@@ -57,10 +55,12 @@
     display: flex;
     transition: transform 0.5s ease-in-out;
     width: 300%;  /* 三个轮播项总宽度 */
+    flex-direction: row;  /* 确保从左往右排列 */
+    justify-content: space-between;  /* 在项目之间添加均匀的间距 */
 }
 
 .carousel-item {
-    flex: 0 0 33.333%;  /* 每个item占1/3宽度 */
+    flex: 0 0 33.3%;  /* 每个item占1/3宽度 */
     box-sizing: border-box;
     padding: 20px;
     flex-shrink: 0;     /* 防止轮播项被压缩 */
@@ -68,6 +68,7 @@
     display: flex;      /* 弹性布局 */
     flex-direction: column;  /* 垂直方向排列 */
     align-items: center;     /* 水平居中对齐 */
+    position: relative;      /* 添加相对定位 */
 }
 
 .carousel-item img {
