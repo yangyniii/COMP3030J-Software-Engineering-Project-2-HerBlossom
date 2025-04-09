@@ -9,6 +9,16 @@
     text-decoration: none;         /* Remove underline from the link */
 }
 
+.index-little-white{
+    display: block;                /* Make the link a block element */
+    text-align: center;            /* Center the text inside the container */
+    font-size: 20px;               /* Increase the font size even more */
+    color: white;                  /* Set the text color to white */
+    padding: 30px 20px;            /* Add padding around the text */
+    border-radius: 30px;            /* Optional: round the corners of the border */
+    text-decoration: none;         /* Remove underline from the link */
+}
+
 /* From Uiverse.io by adamgiebl */
 .card {
   width: 600px;                          /* Increase the width */
@@ -25,85 +35,86 @@
 
 
 .carousel-section {
-  position: relative;
-  z-index: 1;
-  padding: 50px 0;
-  background-color: #f8f9fa;
+    position: relative;  /* 相对定位，作为子元素的定位参考 */
+    z-index: 1;         /* 设置层级，确保轮播图在其他元素之上 */
+    padding: 50px 0;    /* 上下内边距50px，左右内边距0 */
+    background-color: #f8f9fa;  /* 浅灰色背景 */
 }
 
 
 .carousel-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 30px auto;
-  overflow: hidden;
-  position: relative;
-  border: 1px solid #eee;
-  order-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;        /* 宽度占满父容器 */
+    max-width: 1200px;  /* 最大宽度1200px，防止在大屏幕上过宽 */
+    margin: 30px auto;  /* 上下外边距30px，左右自动居中 */
+    overflow: hidden;   /* 超出部分隐藏，防止轮播项溢出 */
+    position: relative; /* 相对定位，作为导航点的定位参考 */
+    border: 1px solid #eee;  /* 浅灰色边框 */
+    border-radius: 10px;     /* 圆角边框 */
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);  /* 阴影效果 */
+    background: white;       /* 白色背景 */
 }
 
 .carousel-slide {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 300%; /* 设置为100%的3倍，因为有3个轮播项 */
+    display: flex;      /* 弹性布局，使子元素水平排列 */
+    transition: transform 0.5s ease-in-out;  /* 过渡效果，0.5秒完成，缓入缓出 */
+    width: 300%;        /* 宽度为容器的3倍，因为有3个轮播项 */
 }
 
 .carousel-item {
-  width: 33.333%; /* 每个轮播项占轮播宽度的1/3 */
-  flex-shrink: 0; /* 防止轮播项被压缩 */
-  text-align: center;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 33.333%;     /* 每个轮播项占轮播宽度的1/3 */
+    flex-shrink: 0;     /* 防止轮播项被压缩 */
+    text-align: center; /* 文本居中 */
+    padding: 20px;      /* 内边距20px */
+    display: flex;      /* 弹性布局 */
+    flex-direction: column;  /* 垂直方向排列 */
+    align-items: center;     /* 水平居中对齐 */
 }
 
 .carousel-item img {
-  width: 100%;
-  max-width: 800px;
-  height: 400px;
-  object-fit: contain;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100%;        /* 宽度占满父容器 */
+    max-width: 800px;   /* 最大宽度800px */
+    height: 400px;      /* 固定高度400px */
+    object-fit: contain;  /* 保持图片比例，确保图片完整显示 */
+    margin-bottom: 20px;  /* 底部外边距20px */
+    border-radius: 5px;   /* 圆角边框 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* 阴影效果 */
 }
 
 .carousel-item a {
-  text-decoration: none;
-  color: #333;
-  display: block;
-  width: 100%;
+    text-decoration: none;  /* 移除下划线 */
+    color: #333;           /* 深灰色文字 */
+    display: block;        /* 块级元素 */
+    width: 100%;          /* 宽度占满父容器 */
 }
 
 .carousel-item h3 {
-  margin-top: 15px;
-  font-size: 1.5em;
-  color: #333;
-  font-weight: 600;
+    margin-top: 15px;     /* 顶部外边距15px */
+    font-size: 1.5em;     /* 字体大小1.5倍 */
+    color: #333;          /* 深灰色文字 */
+    font-weight: 600;     /* 半粗体 */
 }
 
 
 /* 导航点样式 */
 .carousel-dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;        /* 弹性布局 */
+    justify-content: center;  /* 水平居中 */
+    margin-top: 20px;     /* 顶部外边距20px */
 }
 
 
 .carousel-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #ccc;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    width: 12px;          /* 宽度12px */
+    height: 12px;         /* 高度12px */
+    border-radius: 50%;   /* 圆形 */
+    background-color: #ccc;  /* 浅灰色背景 */
+    margin: 0 5px;        /* 左右外边距5px */
+    cursor: pointer;      /* 鼠标指针变为手型 */
+    transition: background-color 0.3s;  /* 背景色过渡效果 */
 }
 
 .carousel-dot.active {
-  background-color: #FFB6C1; /* 使用粉色作为活动点的颜色 */
+    background-color: #FFB6C1;  /* 粉色背景，表示当前活动的轮播项 */
 }
 
 
