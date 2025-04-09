@@ -623,6 +623,9 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
+@app.route('/useful-skills', methods=['GET'])
+def useful_skills():
+    return render_template('useful-skills.html')
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
