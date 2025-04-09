@@ -162,24 +162,30 @@
             <div class="carousel-container" style="margin-top: 30px;">
                 <div class="carousel-slide">
                     <div class="carousel-item">
-                        <a href="blog.html">
+                        <a href="#">
                             <img src="../static/img/Blog.png" alt="Blog">
                             <h3>Blog</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="/forum">
-                            <img src="../static/img/Forum.jpg" alt="Forum">
+                        <a href="#">
+                            <img src=../static/img/Blog.png" alt="Forum">
                             <h3>Forum</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="/job-recommendation">
+                        <a href="#">
                             <img src="../static/img/Blog_2.png" alt="Job Recommendation">
                             <h3>Job Recommendation</h3>
                         </a>
                     </div>
                 </div>
+
+                <!-- 左右遮罩点击区域 -->
+                <div id="carousel-left" style="position: absolute; left: 0; top: 0; width: 15%; height: 100%; z-index: 10; cursor: w-resize;"></div>
+                <div id="carousel-right" style="position: absolute; right: 0; top: 0; width: 15%; height: 100%; z-index: 10; cursor: e-resize;"></div>
+
+
                 <!-- 添加导航点 -->
                 <div class="carousel-dots">
                     <div class="carousel-dot active" data-index="0"></div>
@@ -579,10 +585,10 @@
     var signinLink = document.getElementById('signin-link');
 
     if (isLoggedIn) {
-        signinLink.textContent = 'Profile';  // 如果用户已登录，显示“Profile”
+        signinLink.textContent = 'Profile';  // 如果用户已登录，显示"Profile"
         signinLink.href = 'profile.html';    // 跳转到用户的个人主页
     } else {
-        signinLink.textContent = 'Sign In';  // 如果用户未登录，显示“Sign In”
+        signinLink.textContent = 'Sign In';  // 如果用户未登录，显示"Sign In"
         signinLink.href = 'signin.html';    // 跳转到登录页面
     }
 };</script>
@@ -592,21 +598,19 @@
         const carousel = document.querySelector('.carousel-slide');
         const items = document.querySelectorAll('.carousel-item');
         const dots = document.querySelectorAll('.carousel-dot');
+        const leftArea = document.getElementById('carousel-left');
+        const rightArea = document.getElementById('carousel-right');
         let currentIndex = 0;
         let interval;
 
-        // 切换到指定索引的轮播项
+        const hrefs = ['/blog','/forum-topics', '/life-skills'];
+
         function goToSlide(index) {
             currentIndex = index;
-            carousel.style.transform = `translateX(-${currentIndex * 33.333}%)`;
-
-            // 更新导航点的活动状态
+            const translateX = -currentIndex * 33.333;  // 修改这里，使用百分比
+            carousel.style.transform = `translateX(${translateX}%)`;
             dots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
+                dot.classList.toggle('active', i === index);
             });
         }
 
@@ -615,22 +619,45 @@
             goToSlide(nextIndex);
         }
 
-        // 为导航点添加点击事件
+        function prevSlide() {
+            const prevIndex = (currentIndex - 1 + items.length) % items.length;
+            goToSlide(prevIndex);
+        }
+
+        // 点击左右区域切换
+        leftArea.addEventListener('click', () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        rightArea.addEventListener('click', () => {
+            nextSlide();
+            resetTimer();
+        });
+
+        // 点击中间轮播页跳转
+        carousel.addEventListener('click', (e) => {
+            if (e.target.closest('.carousel-item')) {
+                window.location.href = hrefs[currentIndex];
+            }
+        });
+
+        // 点击圆点切换
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 goToSlide(index);
-
-                // 重置自动播放计时器
-                clearInterval(interval);
-                interval = setInterval(nextSlide, 3000);
+                resetTimer();
             });
         });
 
-        // 启动自动播放
+        function resetTimer() {
+            clearInterval(interval);
+            interval = setInterval(nextSlide, 3000);
+        }
+
+        // 自动轮播启动
         interval = setInterval(nextSlide, 3000);
-
     });
-
 </script>
 
 
