@@ -1099,4 +1099,28 @@ class Mysql(object):
             print(f"搜索博客失败: {e}")
             return []
 
+    def get_unique_tags(self):
+        """
+        獲取所有不重複的標籤
+        
+        Returns:
+            list: 不重複的標籤列表
+        """
+        try:
+            sql = "SELECT DISTINCT tags FROM post WHERE tags IS NOT NULL AND tags != ''"
+            self.cursor.execute(sql)
+            tags = self.cursor.fetchall()
+            
+            # 將所有標籤合併並去重
+            unique_tags = set()
+            for tag_row in tags:
+                if tag_row[0]:  # 確保不是 None 或空字符串
+                    tag_list = tag_row[0].split(',')
+                    unique_tags.update([tag.strip() for tag in tag_list])
+            
+            return list(unique_tags)
+        except Exception as e:
+            print(f"獲取標籤失敗: {e}")
+            return []
+
 

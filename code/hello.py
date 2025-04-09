@@ -384,10 +384,6 @@ def forum():
 
 
 
-@app.route('/blog-list', methods=['GET'])
-def blog_list():
-    return render_template('blog-list.html')
-
 @app.route('/blog-single', methods=['GET'])
 def blog_single_default():
     return render_template('blog-single.html')
@@ -523,8 +519,6 @@ def forum_topics():
     return render_template('forum-topics.html')
 
 
-
-
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
     post = {
@@ -617,6 +611,17 @@ def forum_single():
 
     })
 
+@app.route('/life-skills', methods=['GET'])
+def life_skills():
+    return render_template('life-skills.html')
+
+@app.route('/mental-health', methods=['GET'])
+def mental_health():
+    return render_template('mental-health.html')
+
+@app.route('/useful-skills', methods=['GET'])
+def useful_skills():
+    return render_template('useful-skills.html')
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

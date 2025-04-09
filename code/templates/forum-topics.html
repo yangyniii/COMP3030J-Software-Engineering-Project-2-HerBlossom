@@ -17,6 +17,45 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Topics</title>
+    <style>
+        .post-preview {
+            margin: 10px 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .search-highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+            border-radius: 3px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 2px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        .tag.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -399,7 +438,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Getting Started</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToPosts()">Getting Started</a></h3>
                                     <p class="total-post">453 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -412,7 +451,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Integrations</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToRanking()">Ranking List</a></h3>
                                     <p class="total-post">624 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -425,7 +464,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Solar System</a></h3>
+                                    <h3 class="title"><a href="#" onclick="scrollToTags()">Tags</a></h3>
                                     <p class="total-post">120 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -438,7 +477,7 @@
                                 </div>
 
                                 <div class="HerBlossom-com-box-content">
-                                    <h3 class="title"><a href="#"> Cloud Server</a></h3>
+                                    <h3 class="title"><a href="/blog">Blogs</a></h3>
                                     <p class="total-post">235 Posts</p>
                                 </div>
                                 <!-- /.HerBlossom-com-box-content -->
@@ -455,7 +494,7 @@
                                 </div>
 
                                 <div class="content">
-                                    <h2 class="ans-title">Can't find an answer?</h2>
+                                    <h2 class="ans-title">Can’t find an answer?</h2>
                                     <p>
                                         Make use of a qualified tutor to get the answer
                                     </p>
@@ -713,41 +752,29 @@
                                 </ul>
                             </div>
                             <div class="widget ticket_widget">
-                                <h4 class="c_head">Ticket Categories</h4>
+                                <h4 class="c_head">Ranking List</h4>
 
                                 <ul class="list-unstyled ticket_categories">
-                                    <li><img src="../static/img/home_support/cmm5.png" alt="category"><a href="#">Docs WordPress
-                                            Theme</a> <span class="count">10</span></li>
+                                    <li><img src="../static/img/home_support/cmm5.png" alt="category"><a href="/forum-single1">Are there any scandal-free sanitary pad brands left?
+                                    </a> <span class="count">10</span></li>
                                     <li><img src="../static/img/home_support/cmm4.png" alt="category"><a href="#">Product Landing
-                                            Page</a><span class="count count-fill">13</span><span
-                                            class="count">54</span></li>
+                                            Page</a><span class="count">8</span></li>
                                     <li><img src="../static/img/home_support/cmm2.png" alt="category"><a href="#">Knowledge base
-                                            Template</a><span class="count">142</span></li>
+                                            Template</a><span class="count">4</span></li>
                                     <li><img src="../static/img/home_support/cmm8.png" alt="category"><a href="#">Startup and App
-                                            WP Theme</a> <span class="count">13</span></li>
+                                            WP Theme</a> <span class="count">3</span></li>
                                     <li><img src="../static/img/home_support/cmm9.png" alt="category"><a href="#">Clean Email
-                                            Template</a> <span class="count">123</span></li>
+                                            Template</a> <span class="count">2</span></li>
                                     <li><img src="../static/img/home_support/cmm10.png" alt="category"><a href="#">Apps WordPress
-                                            Theme</a> <span class="count">18</span></li>
+                                            Theme</a> <span class="count">1</span></li>
                                 </ul>
                             </div>
 
                             <div class="widget tag_widget">
                                 <h4 class="c_head">Tags</h4>
-                                <ul class="list-unstyled w_tag_list style-light">
-                                    <li><a href="#">Swagger</a></li>
-                                    <li><a href="#">HerBlossom</a></li>
-                                    <li><a href="#">weCare</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <li><a href="#">Download</a></li>
-                                    <li><a href="#">Doc</a></li>
-                                    <li><a href="#">Product board</a></li>
-                                    <li><a href="#">WordPress</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">ui/ux</a></li>
-                                    <li><a href="#">Doc Design</a></li>
-                                    <li><a href="#">DocAll</a></li>
-                                </ul>
+                                <div class="tags-container" id="tags-container">
+                                    <!-- Tags will be generated here dynamically -->
+                                </div>
                             </div>
 
                         </div>
@@ -758,7 +785,7 @@
         </section>
 
         <div class="call-to-action">
-            <div class="overlay-bg"></div>    
+            <div class="overlay-bg"></div>
             <div class="container">
                 <div class="action-content-wrapper">
                     <div class="action-title-wrap title-img">
@@ -867,7 +894,7 @@
     <script src="../static/js_test/main.js"></script>
 </body>
 <script>
-    const postsPerPage = 5;
+    const postsPerPage = 4;
     let allPosts = [];
     let currentPage = 1;
 
@@ -885,6 +912,8 @@
                 renderPostsForPage(currentPage);
             })
             .catch(error => console.error('Error fetching posts:', error));
+
+        loadTags();
     }
 
     function renderPostsForPage(page) {
@@ -1003,11 +1032,11 @@
 
     // Function to fetch posts
     function fetchPosts(searchTerm) {
-        fetch(`/search_posts?title=${encodeURIComponent(searchTerm)}`)
-                .then(response => response.json())
-                .then(data => {
-                    const postList = document.getElementById('post-list');
-                    postList.innerHTML = ''; // Clear existing posts
+            fetch(`/search_posts?title=${encodeURIComponent(searchTerm)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const postList = document.getElementById('post-list');
+                        postList.innerHTML = ''; // Clear existing posts
 
                     if (data.posts && data.posts.length > 0) {
                         data.posts.forEach(post => {
@@ -1053,22 +1082,75 @@
                 .catch(error => console.error('Error:', error));
     }
 
+    // 添加滚动功能
+    function scrollToPosts() {
+        const postList = document.getElementById('post-list');
+        const firstPost = postList.querySelector('.community-post');
+        if (firstPost) {
+            firstPost.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            postList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function scrollToRanking() {
+        const ticketCategories = document.querySelector('.ticket_widget');
+        ticketCategories.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function scrollToTags() {
+        const tagsWidget = document.querySelector('.tag_widget');
+        tagsWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     // 搜索按钮点击事件
     document.getElementById('search-button').addEventListener('click', function (e) {
-        e.preventDefault(); // 阻止默认行为
-        const searchTerm = document.getElementById('search-input').value;
-        fetchPosts(searchTerm);
-    });
-
-    // 输入框回车事件
-    document.getElementById('search-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
             e.preventDefault(); // 阻止默认行为
             const searchTerm = document.getElementById('search-input').value;
             fetchPosts(searchTerm);
-        }
-    });
+        });
 
+        // 输入框回车事件
+        document.getElementById('search-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // 阻止默认行为
+                const searchTerm = document.getElementById('search-input').value;
+                fetchPosts(searchTerm);
+            }
+        });
+
+    // 获取并显示标签
+    function loadTags() {
+        fetch('/get_tags')
+            .then(response => response.json())
+            .then(data => {
+                const tagsContainer = document.getElementById('tags-container');
+                tagsContainer.innerHTML = '';
+                
+                data.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag';
+                    tagElement.textContent = tag;
+                    tagElement.onclick = () => filterByTag(tag);
+                    tagsContainer.appendChild(tagElement);
+                });
+            })
+            .catch(error => console.error('Error loading tags:', error));
+    }
+
+    // 根据标签过滤帖子
+    function filterByTag(tag) {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = tag;
+        fetchPosts(tag);
+        
+        // 更新标签的活动状态
+        document.querySelectorAll('.tag').forEach(t => {
+            t.classList.remove('active');
+            if (t.textContent === tag) {
+                t.classList.add('active');
+            }
+        });
+    }
 </script>
 
 </html>
