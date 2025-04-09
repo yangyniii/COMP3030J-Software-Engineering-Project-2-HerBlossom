@@ -384,10 +384,6 @@ def forum():
 
 
 
-@app.route('/blog-list', methods=['GET'])
-def blog_list():
-    return render_template('blog-list.html')
-
 @app.route('/blog-single', methods=['GET'])
 def blog_single_default():
     return render_template('blog-single.html')
