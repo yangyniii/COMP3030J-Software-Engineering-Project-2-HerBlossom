@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
+
+<!--    additional css-->
+    <link rel="stylesheet" href="../static/css_new/index.css">
     <title>HerBlossom</title>
 </head>
 
@@ -144,11 +147,54 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav_btn" href="signin.html">Sign In</a>
+                    <a class="nav_btn" href="signin.html" id="signin-link">Sign In</a>
                 </div>
             </div>
     </nav>
+
+    <!--                anto change the pages-->
+    <section class="carousel-section" style="padding: 50px 0; background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section_title text-center">
+                <h2 class="h_title wow fadeInUp">我们的主要功能</h2>
+                <p class="wow fadeInUp" data-wow-delay="0.2s">探索HerBlossom提供的核心服务</p>
+            </div>
+            <div class="carousel-container" style="margin-top: 30px;">
+                <div class="carousel-slide">
+                    <div class="carousel-item">
+                        <a href="blog.html">
+                            <img src="../static/img/Blog.png" alt="Blog">
+                            <h3>Blog</h3>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/forum">
+                            <img src="../static/img/Blog.png" alt="Forum">
+                            <h3>Forum</h3>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/job-recommendation">
+                            <img src="../static/img/Blog.png" alt="Job Recommendation">
+                            <h3>Job Recommendation</h3>
+                        </a>
+                    </div>
+                </div>
+                <!-- 添加导航点 -->
+                <div class="carousel-dots">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
     <section class="doc_banner_area_two">
+
+
         <div class="b_plus one" data-parallax='{"x": 250, "y": 160, "rotateZ":500}'><img src="../static/img/home_two/plus.png"
                                                                                          alt=""></div>
         <div class="b_plus two" data-parallax='{"x": 250, "y": 260, "rotateZ":500}'><img src="../static/img/home_two/plus_one.png"
@@ -163,162 +209,99 @@
         <img class="p_absolute bord wow fadeInRight" data-wow-delay="0.4s" src="../static/img/home_two/bord.png" alt="">
         <img class="p_absolute girl wow fadeInRight" data-wow-delay="0.8s" src="../static/img/home_two/girl.png" alt="">
         <div class="container">
-            <div class="doc_banner_text_two text-center">
-                <h2>Looking for help?</h2>
-                <p>KnowAll is a fully featured knowledge base theme for WordPress.</p>
-                <form action="#" class="banner_search_form">
-                    <input type="search" class="form-control" placeholder="Search the Knowledge Base">
-                    <button type="submit" class="search_btn">Search</button>
-                </form>
-            </div>
+
+
+<!--            <div class="doc_banner_text_two text-center">-->
+
+<!--            </div>-->
+
+
+
+                <div class="card">
+                    <a class="index-jump-aboutus" href="Aboutus.html">About Us <i class="arrow_right"></i></a>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">Click to learn more about us.</p>
+                </div>
+
+<!--                <h2>Looking for information?</h2>-->
+<!--                <p>HerBlossom is a well-stocked website for female.</p>-->
+<!--                <form action="#" class="banner_search_form">-->
+<!--                    <input type="search" class="form-control" placeholder="Search the Knowledge Base">-->
+<!--                    <button type="submit" class="search_btn">Search</button>-->
+<!--                </form>-->
+<!--            </div>-->
         </div>
     </section>
+
+
+
+<!--    here is the guideline for our main functions-->
     <section class="doc_categories_guide_area sec_pad">
+
+
         <img class="shap wow fadeInUp" src="../static/img/home_one/dow_bg_two.png" alt="">
         <div class="container">
             <div class="section_title text-center">
                 <h2 class="h_title wow fadeInUp">Check out our guide categories</h2>
-                <p class="wow fadeInUp" data-wow-delay="0.2s">Some dodgy chav bevvy amongst argy-bargy spiffing
-                    absolutely bladdered nancy boy cup of tea a load of old tosh porkies.</p>
+                <p class="wow fadeInUp" data-wow-delay="0.2s">Here is the main module of our website,
+                    you click the link to view the content of our website.</p>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
+<!--                    here is blog link-->
                     <div class="categories_guide_item wow fadeInUp">
                         <img src="../static/img/home_two/folder.png" alt="">
                         <div class="doc_tag_title">
-                            <h4>Getting Started</h4>
+                            <h4>Blog</h4>
                         </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>Setup home page layout</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>BBpress sidebar layout styles</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Knowledgebase page setup</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Creating home page blocks</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do i add FAQ post</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
+<!--                        <ul class="list-unstyled tag_list">-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Blog 1</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Blog 2</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Blog 3</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Blog 4</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Blog 5</a></li>-->
+<!--                        </ul>-->
+                        <a href="blog.html" class="doc_border_btn">More<i class="arrow_right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
+<!--                    here is forum link-->
                     <div class="categories_guide_item wow fadeInUp" data-wow-delay="0.2s">
                         <img src="../static/img/home_two/info.png" alt="">
                         <div class="doc_tag_title">
-                            <h4>Integrations</h4>
+                            <h4>Forum</h4>
                         </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>How To Install Manual Theme</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Theme license information</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do i create tree structure menu</a>
-                            </li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do I login forum section</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do I login forum section</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
+<!--                        <ul class="list-unstyled tag_list">-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Post 1</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Post 2</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Post 3</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Post 4</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Post 5</a></li>-->
+<!--                        </ul>-->
+                        <a href="forum-topics.html" class="doc_border_btn">More<i class="arrow_right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
+<!--                    here is job recommendation link-->
                     <div class="categories_guide_item wow fadeInUp" data-wow-delay="0.4s">
-                        <img src="../static/img/home_two/weather.png" alt="">
-                        <div class="doc_tag_title">
-                            <h4>Cloud Server</h4>
-                        </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>Mailbox and User Settings</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Preparing your server for installation</a>
-                            </li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Managing Docs in HerBlossom</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do i add FAQ post</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Creating home page blocks</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="categories_guide_item wow fadeInUp">
-                        <img src="../static/img/home_two/settings.png" alt="">
-                        <div class="doc_tag_title">
-                            <h4>User Settings</h4>
-                        </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>Do I need to know coding</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Managing Docs in HerBlossom</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Working with Conversations</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Copying Email to HerBlossom</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Knowledgebase page setup</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="categories_guide_item wow fadeInUp" data-wow-delay="0.4s">
-                        <img src="../static/img/home_two/memo.png" alt="">
-                        <div class="doc_tag_title">
-                            <h4>Reporting</h4>
-                        </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>Setup home page layout</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>BBpress sidebar layout styles</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Knowledgebase page setup</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Creating home page blocks</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do i add FAQ post</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="categories_guide_item wow fadeInUp" data-wow-delay="0.6s">
-                        <img src="../static/img/home_two/share.png" alt="">
-                        <div class="doc_tag_title">
-                            <h4>Solar System</h4>
-                        </div>
-                        <ul class="list-unstyled tag_list">
-                            <li><a href="#"><i class="icon_document_alt"></i>How do I contact Customer Care?</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How to enable labs features</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Knowledgebase page setup</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>How do I login forum section</a></li>
-                            <li><a href="#"><i class="icon_document_alt"></i>Mailbox and User Settings</a></li>
-                        </ul>
-                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center">
-                <a href="#" class="doc_border_btn all_doc_btn wow fadeinUp">View All Docs<i class="arrow_right"></i></a>
-            </div>
-        </div>
-    </section>
-    <section class="doc_solution_area sec_pad">
-        <div class="container">
-            <div class="section_title text-center">
-                <h2 class="h_title wow fadeInUp">Didn't find any Solution?</h2>
-                <p class="wow fadeInUp" data-wow-delay="0.2s">Loaded with awesome features like Documentation,
-                    Knowledgebase, Forum & more!</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="doc_solution_item online_doc wow fadeInUp">
                         <img src="../static/img/home_two/Briefcase.png" alt="">
-                        <h4>Online Documentation</h4>
-                        <p>Horse play barmy Oxford bonnet are you taking the piss cheeky mufty nice one young
-                            delinquent.</p>
-                        <a href="#" class="learn_btn c_blue">Go To Documentation<i class="arrow_right"></i></a>
+                        <div class="doc_tag_title">
+                            <h4>Job Recommendation</h4>
+                        </div>
+<!--                        <ul class="list-unstyled tag_list">-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Mailbox and User Settings</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Preparing your server for installation</a>-->
+<!--                            </li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Managing Docs in HerBlossom</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>How do i add FAQ post</a></li>-->
+<!--                            <li><a href="#"><i class="icon_document_alt"></i>Creating home page blocks</a></li>-->
+<!--                        </ul>-->
+                        <a href="#" class="doc_border_btn">More<i class="arrow_right"></i></a>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="doc_solution_item premium_doc wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="../static/img/home_two/setting-icon.png" alt="">
-                        <h4>Premium Support</h4>
-                        <p>Horse play barmy Oxford bonnet are you taking the piss cheeky mufty nice one young
-                            delinquent.</p>
-                        <a href="#" class="learn_btn c_blue">Go To Documentation<i class="arrow_right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center">
-                <a href="#" class="doc_border_btn all_doc_btn wow fadeInUp" data-wow-delay="0.6s">Live Chat Now<i
-                        class="icon_chat_alt"></i></a>
             </div>
         </div>
     </section>
+
     <section class="doc_fun_fact_area">
         <div class="animated-waves">
             <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="animated-wave">
@@ -333,7 +316,7 @@
             </svg>
         </div>
         <div class="container">
-            <div class="row">
+           <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6 wow fadeInUp">
                     <div class="doc_fact_item">
                         <div class="counter">5486</div>
@@ -348,19 +331,21 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="doc_fact_item">
-                        <div class="counter">100</div>
+                        <div class="counter">1</div>
                         <p>Finished Projects</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="doc_fact_item">
-                        <div class="counter">476</div>
+                        <div class="counter">5</div>
                         <p>Staff Members</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
     <section class="theme_doc_area bg_color sec_pad">
         <div class="container">
             <div class="section_title text-center">
@@ -471,786 +456,43 @@
             </div>
         </div>
     </section>
-    <section class="doc_faq_area_two sec_pad">
+
+
+
+    <section class="doc_solution_area sec_pad">
         <div class="container">
             <div class="section_title text-center">
-                <h2 class="h_title wow fadeInUp">Frequently Asked Questions</h2>
-                <p class="wow fadeInUp" data-wow-delay="0.2s">Some dodgy chav bevvy amongst argy-bargy spiffing
-                    absolutely bladdered nancy boy cup of tea a load of old tosh porkies.</p>
+                <h2 class="h_title wow fadeInUp">The problem wasn't solved?</h2>
+                <p class="wow fadeInUp" data-wow-delay="0.2s">Contact us with your suggestions or questions</p>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-5">
-                    <div class="fact_navigation_info">
-                        <h4 class="c_head">Quick Navigation</h4>
-                        <ul class="nav nav-tabs fact_navigation" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="online-tab" data-toggle="tab" href="#online" role="tab"
-                                   aria-controls="online" aria-selected="true"><i class="icon_folder-alt"></i>Purchasing
-                                    Online</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="formOne-tab" data-toggle="tab" href="#formOne" role="tab"
-                                   aria-controls="formOne" aria-selected="false"><i class="icon_cloud-upload_alt"></i>Post
-                                    Forms</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pricingOne-tab" data-toggle="tab" href="#pricingOne" role="tab"
-                                   aria-controls="pricingOne" aria-selected="false"><i class="icon_key_alt"></i>Pricing
-                                    & Support</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profileOne-tab" data-toggle="tab" href="#profileOne" role="tab"
-                                   aria-controls="profileOne" aria-selected="false"><i class="icon_lightbulb_alt"></i>Registration
-                                    & Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="return-tab" data-toggle="tab" href="#return" role="tab"
-                                   aria-controls="return" aria-selected="false"><i class="icon_bag_alt"></i>Returns</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="car-tab" data-toggle="tab" href="#car" role="tab"
-                                   aria-controls="car" aria-selected="false"><i class="icon_menu-square_alt2"></i>Care &
-                                    Repair</a>
-                            </li>
-                        </ul>
+<!--            <div class="row">-->
+<!--                <div class="col-sm-6">-->
+                    <div class="doc_solution_item online_doc wow fadeInUp">
+                        <img src="../static/img/home_two/Briefcase.png" alt="">
+                        <h4>Contact Us</h4>
+                        <p>The team that created HerBlossom,
+                            and the original intention of creating HerBlossom</p>
+                        <a href="Aboutus.html" class="learn_btn c_blue">Go To Contact Us<i class="arrow_right"></i></a>
                     </div>
-                </div>
-                <div class="col-lg-8 col-md-7">
-                    <div class="tab-content pl_70" id="myTabContent">
-                        <div class="tab-pane faq_tab_pane fade show active" id="online" role="tabpanel"
-                             aria-labelledby="online-tab">
-                            <div class="accordion doc_faq_info" id="accordionExample">
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapseOne" aria-expanded="true"
-                                                    aria-controls="collapseOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseTwo" aria-expanded="false"
-                                                    aria-controls="collapseTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseThree" aria-expanded="false"
-                                                    aria-controls="collapseThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="card-header" id="headingFour">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseFour" aria-expanded="false"
-                                                    aria-controls="collapseFour">
-                                                Any useful books on numerical computing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="card-header" id="headingfive">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefive" aria-expanded="false"
-                                                    aria-controls="collapsefive">
-                                                How do I repair an item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefive" class="collapse" aria-labelledby="headingfive"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="card-header" id="headingsix">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsesix" aria-expanded="false"
-                                                    aria-controls="collapsesix">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsesix" class="collapse" aria-labelledby="headingsix"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.6s">
-                                    <div class="card-header" id="headingseven">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseseven" aria-expanded="false"
-                                                    aria-controls="collapseseven">
-                                                Is there a warranty on my item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseseven" class="collapse" aria-labelledby="headingseven"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane faq_tab_pane fade" id="formOne" role="tabpanel"
-                             aria-labelledby="formOne-tab">
-                            <div class="accordion doc_faq_info" id="accordionExampletwo">
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingfOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefOne" aria-expanded="true"
-                                                    aria-controls="collapsefOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefOne" class="collapse show" aria-labelledby="headingfOne"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingfTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefTwo" aria-expanded="false"
-                                                    aria-controls="collapsefTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefTwo" class="collapse" aria-labelledby="headingfTwo"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingfThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefThree" aria-expanded="false"
-                                                    aria-controls="collapsefThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefThree" class="collapse" aria-labelledby="headingfThree"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="card-header" id="headingfFour">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefFour" aria-expanded="false"
-                                                    aria-controls="collapsefFour">
-                                                Any useful books on numerical computing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefFour" class="collapse" aria-labelledby="headingfFour"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="card-header" id="headingffive">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseffive" aria-expanded="false"
-                                                    aria-controls="collapseffive">
-                                                How do I repair an item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseffive" class="collapse" aria-labelledby="headingffive"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="card-header" id="headingfsix">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefsix" aria-expanded="false"
-                                                    aria-controls="collapsefsix">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefsix" class="collapse" aria-labelledby="headingfsix"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.6s">
-                                    <div class="card-header" id="headingfseven">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsefseven" aria-expanded="false"
-                                                    aria-controls="collapsefseven">
-                                                Is there a warranty on my item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsefseven" class="collapse" aria-labelledby="headingfseven"
-                                         data-parent="#accordionExampletwo">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane faq_tab_pane fade" id="pricingOne" role="tabpanel"
-                             aria-labelledby="pricingOne-tab">
-                            <div class="accordion doc_faq_info" id="accordionExamplethree">
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingpTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepTwo" aria-expanded="false"
-                                                    aria-controls="collapsepTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepTwo" class="collapse" aria-labelledby="headingpTwo"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingpOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepOne" aria-expanded="true"
-                                                    aria-controls="collapsepOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepOne" class="collapse show" aria-labelledby="headingpOne"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingpThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepThree" aria-expanded="false"
-                                                    aria-controls="collapsepThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepThree" class="collapse" aria-labelledby="headingpThree"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="card-header" id="headingpFour">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepFour" aria-expanded="false"
-                                                    aria-controls="collapsepFour">
-                                                Any useful books on numerical computing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepFour" class="collapse" aria-labelledby="headingpFour"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="card-header" id="headingpfive">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepfive" aria-expanded="false"
-                                                    aria-controls="collapsepfive">
-                                                How do I repair an item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepfive" class="collapse" aria-labelledby="headingpfive"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="card-header" id="headingpsix">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepsix" aria-expanded="false"
-                                                    aria-controls="collapsepsix">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepsix" class="collapse" aria-labelledby="headingpsix"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.6s">
-                                    <div class="card-header" id="headingpseven">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsepseven" aria-expanded="false"
-                                                    aria-controls="collapsepseven">
-                                                Is there a warranty on my item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsepseven" class="collapse" aria-labelledby="headingpseven"
-                                         data-parent="#accordionExamplethree">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane faq_tab_pane fade" id="profileOne" role="tabpanel"
-                             aria-labelledby="profileOne-tab">
-                            <div class="accordion doc_faq_info" id="accordionExamplefour">
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingprTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprTwo" aria-expanded="false"
-                                                    aria-controls="collapseprTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprTwo" class="collapse" aria-labelledby="headingprTwo"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingprOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprOne" aria-expanded="true"
-                                                    aria-controls="collapseprOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprOne" class="collapse show" aria-labelledby="headingprOne"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingprThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprThree" aria-expanded="false"
-                                                    aria-controls="collapseprThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprThree" class="collapse" aria-labelledby="headingprThree"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="card-header" id="headingprFour">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprFour" aria-expanded="false"
-                                                    aria-controls="collapseprFour">
-                                                Any useful books on numerical computing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprFour" class="collapse" aria-labelledby="headingprFour"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="card-header" id="headingprfive">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprfive" aria-expanded="false"
-                                                    aria-controls="collapseprfive">
-                                                How do I repair an item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprfive" class="collapse" aria-labelledby="headingprfive"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="card-header" id="headingprsix">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprsix" aria-expanded="false"
-                                                    aria-controls="collapseprsix">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprsix" class="collapse" aria-labelledby="headingprsix"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.6s">
-                                    <div class="card-header" id="headingprseven">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapseprseven" aria-expanded="false"
-                                                    aria-controls="collapseprseven">
-                                                Is there a warranty on my item? <i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapseprseven" class="collapse" aria-labelledby="headingprseven"
-                                         data-parent="#accordionExamplefour">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane faq_tab_pane fade" id="return" role="tabpanel"
-                             aria-labelledby="return-tab">
-                            <div class="accordion doc_faq_info" id="accordionExamplefive">
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingreOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapsereOne" aria-expanded="true"
-                                                    aria-controls="collapsereOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsereOne" class="collapse show" aria-labelledby="headingreOne"
-                                         data-parent="#accordionExamplefive">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingreTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsereTwo" aria-expanded="false"
-                                                    aria-controls="collapsereTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsereTwo" class="collapse" aria-labelledby="headingreTwo"
-                                         data-parent="#accordionExamplefive">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingreThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsereThree" aria-expanded="false"
-                                                    aria-controls="collapsereThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsereThree" class="collapse" aria-labelledby="headingreThree"
-                                         data-parent="#accordionExamplefive">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane faq_tab_pane fade" id="car" role="tabpanel" aria-labelledby="car-tab">
-                            <div class="accordion doc_faq_info" id="accordionExamplesix">
-                                <div class="card wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="card-header" id="headingcarOne">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapsecarOne" aria-expanded="true"
-                                                    aria-controls="collapsecarOne">
-                                                How can I deploy Documentation Landing?<i class="icon_plus"></i><i
-                                                    class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsecarOne" class="collapse show" aria-labelledby="headingcarOne"
-                                         data-parent="#accordionExamplesix">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp">
-                                    <div class="card-header" id="headingcarTwo">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsecarTwo" aria-expanded="false"
-                                                    aria-controls="collapsecarTwo">
-                                                Is maternity covered in health insurance policies?<i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsecarTwo" class="collapse" aria-labelledby="headingcarTwo"
-                                         data-parent="#accordionExamplesix">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="card-header" id="headingcarThree">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                    data-target="#collapsecarThree" aria-expanded="false"
-                                                    aria-controls="collapsecarThree">
-                                                What are the documents required for claiming? <i
-                                                    class="icon_plus"></i><i class="icon_minus-06"></i>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="collapsecarThree" class="collapse" aria-labelledby="headingcarThree"
-                                         data-parent="#accordionExamplesix">
-                                        <div class="card-body">
-                                            Skive off he lost his bottle the little rotter absolutely bladdered in my
-                                            flat William no biggie, gormless me old mucker such a fibber David bum bag
-                                            so I said cack.!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--                </div>-->
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="doc_solution_item premium_doc wow fadeInUp" data-wow-delay="0.3s">-->
+<!--                        <img src="../static/img/home_two/setting-icon.png" alt="">-->
+<!--                        <h4>Premium Support</h4>-->
+<!--                        <p>Horse play barmy Oxford bonnet are you taking the piss cheeky mufty nice one young-->
+<!--                            delinquent.</p>-->
+<!--                        <a href="#" class="learn_btn c_blue">Go To Documentation<i class="arrow_right"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="text-center">-->
+<!--                <a href="#" class="doc_border_btn all_doc_btn wow fadeInUp" data-wow-delay="0.6s">Live Chat Now<i-->
+<!--                        class="icon_chat_alt"></i></a>-->
+<!--            </div>-->
         </div>
     </section>
-    <section class="doc_action_area_two">
-        <div class="container">
-            <div class="doc_action_info mt_130">
-                <div class="row align-items-center">
-                    <div class="col-lg-9">
-                        <div class="media wow fadeInLeft">
-                            <img src="../static/img/home_two/Internet.png" alt="">
-                            <div class="media-body">
-                                <h2 class="h_title">You will love our solutions</h2>
-                                <p>Take a look at our highly rated 20+ premium and free plugins.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 wow fadeInRight">
-                        <a href="#" class="action_btn">View All Docs <i class="arrow_right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
     <footer class="footer_area footer_p_top f_bg_color">
         <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
         <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png" alt="">
@@ -1281,41 +523,43 @@
                         <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
                             <h3 class="f_title">Company</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Affiliates</a></li>
-                                <li><a href="#">Partners</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">HerBlossom for Good</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="Aboutus.html">About Us</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+
+<!--                                <li><a href="#">Careers</a></li>-->
+<!--                                <li><a href="#">HerBlossom for Good</a></li>-->
+<!--                                <li><a href="#">Contact Us</a></li>-->
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">
-                            <h3 class="f_title">Support</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="index-3.html">Help Desk</a></li>
-                                <li><a href="#">Knowledge Base</a></li>
-                                <li><a href="#">Live Chat</a></li>
-                                <li><a href="#">Integrations</a></li>
-                                <li><a href="#">Reports</a></li>
-                                <li><a href="#">iOS & Android</a></li>
-                                <li><a href="#">Messages</a></li>
-                            </ul>
-                        </div>
-                    </div>
+<!--                    <div class="col-lg-2 col-sm-6">-->
+<!--                        <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">-->
+<!--                            <h3 class="f_title">Support</h3>-->
+<!--                            <ul class="list-unstyled link_list">-->
+<!--                                <li><a href="index-3.html">Help Desk</a></li>-->
+<!--                                <li><a href="#">Knowledge Base</a></li>-->
+<!--                                <li><a href="#">Live Chat</a></li>-->
+<!--                                <li><a href="#">Integrations</a></li>-->
+<!--                                <li><a href="#">Reports</a></li>-->
+<!--                                <li><a href="#">iOS & Android</a></li>-->
+<!--                                <li><a href="#">Messages</a></li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="col-lg-3 col-sm-6">
                         <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
-                            <h3 class="f_title">Doc Pages</h3>
+                            <h3 class="f_title">HerBlossom Pages</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="doclist.html">Doc Topic</a></li>
-                                <li><a href="#">Free Training</a></li>
-                                <li><a href="doc-archive.html">Doc Archive</a></li>
-                                <li><a href="changelog.html">Changelog</a></li>
-                                <li><a href="Onepage.html">Onepage Docs</a></li>
-                                <li><a href="#">Conversion Tracking</a></li>
-                                <li><a href="cheatsheet.html">Cheatseet</a></li>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="signin.html">Sign In</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="#">Forum</a></li>
+                                <li><a href="#">Job Recommendation</a></li>
+
+<!--                                <li><a href="changelog.html">Changelog</a></li>-->
+<!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
+<!--                                <li><a href="#">Conversion Tracking</a></li>-->
+<!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -1325,7 +569,7 @@
         </div>
         <div class="footer_bottom text-center">
             <div class="container">
-                <p>© 2020 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+                <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
             </div>
         </div>
     </footer>
@@ -1347,6 +591,66 @@
 <script src="../static/assets/counterup/jquery.counterup.min.js"></script>
 <script src="../static/assets/counterup/jquery.waypoints.min.js"></script>
 <script src="../static/js_test/main.js"></script>
+<script>
+    window.onload = function() {
+    var isLoggedIn = false;  // 这里可以替换成你实际的登录检查逻辑
+    var signinLink = document.getElementById('signin-link');
+
+    if (isLoggedIn) {
+        signinLink.textContent = 'Profile';  // 如果用户已登录，显示“Profile”
+        signinLink.href = 'profile.html';    // 跳转到用户的个人主页
+    } else {
+        signinLink.textContent = 'Sign In';  // 如果用户未登录，显示“Sign In”
+        signinLink.href = 'signin.html';    // 跳转到登录页面
+    }
+};</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.querySelector('.carousel-slide');
+        const items = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentIndex = 0;
+        let interval;
+
+        // 切换到指定索引的轮播项
+        function goToSlide(index) {
+            currentIndex = index;
+            carousel.style.transform = `translateX(-${currentIndex * 33.333}%)`;
+
+            // 更新导航点的活动状态
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % items.length;
+            goToSlide(nextIndex);
+        }
+
+        // 为导航点添加点击事件
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+
+                // 重置自动播放计时器
+                clearInterval(interval);
+                interval = setInterval(nextSlide, 3000);
+            });
+        });
+
+        // 每3秒切换一次
+        interval = setInterval(nextSlide, 3000);
+    });
+
+</script>
+
+
 </body>
 
 </html>

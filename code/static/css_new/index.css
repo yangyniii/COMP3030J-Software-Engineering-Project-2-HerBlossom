@@ -1,0 +1,116 @@
+
+.index-jump-aboutus {
+    display: block;                /* Make the link a block element */
+    text-align: center;            /* Center the text inside the container */
+    font-size: 50px;               /* Increase the font size even more */
+    color: white;                  /* Set the text color to white */
+    padding: 30px 20px;            /* Add padding around the text */
+    border-radius: 30px;            /* Optional: round the corners of the border */
+    text-decoration: none;         /* Remove underline from the link */
+}
+
+/* From Uiverse.io by adamgiebl */
+.card {
+  width: 600px;                          /* Increase the width */
+  height: 300px;                         /* Increase the height */
+  border-radius: 30px;
+  background: #f6a0b2;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+  margin: 0 auto;                        /* Center the card horizontally */
+  display: flex;                /* Use flexbox for centering */
+  justify-content: center;      /* Center horizontally */
+  align-items: center;          /* Center vertically */
+}
+
+
+
+.carousel-section {
+  position: relative;
+  z-index: 1;
+  padding: 50px 0;
+  background-color: #f8f9fa;
+}
+
+
+.carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #eee;
+  order-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.carousel-slide {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 300%; /* 设置为100%的3倍，因为有3个轮播项 */
+}
+
+.carousel-item {
+  width: 33.333%; /* 每个轮播项占轮播宽度的1/3 */
+  flex-shrink: 0; /* 防止轮播项被压缩 */
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-item img {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.carousel-item a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  width: 100%;
+}
+
+.carousel-item h3 {
+  margin-top: 15px;
+  font-size: 1.5em;
+  color: #333;
+  font-weight: 600;
+}
+
+
+/* 导航点样式 */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel-dot.active {
+  background-color: #FFB6C1; /* 使用粉色作为活动点的颜色 */
+}
+
+
+
+
+
+
+
+
+
