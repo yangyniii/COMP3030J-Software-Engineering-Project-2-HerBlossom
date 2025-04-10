@@ -120,7 +120,7 @@ def register():
         return jsonify({'message': 'Email already exists'}), 400
 
     try:
-        db.register_user(name, password, email, '../static/images/chiikawa.jpg', '../static/images/chiikawa.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
+        db.register_user(name, password, email, 'default.jpg', 'default.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
@@ -200,9 +200,7 @@ def get_user_info_by_id():
         return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
 
     # 在确认 user_info 不为空后再访问 avatar
-    avatar_path = user_info.get('avatar', 'chiikawa.jpg')
-    if not avatar_path.startswith('../'):
-        avatar_path = '../static/images/' + avatar_path
+    avatar_path = user_info.get('avatar', 'default.jpg')  # 使用默认头像
     print('Avatar path11:', avatar_path)
 
     return jsonify({
@@ -625,19 +623,26 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
-@app.route('/about-us', methods=['GET'])
-def about_us():
-    return render_template('aboutus.html')
-
 @app.route('/get_all_tags', methods=['GET'])
 def get_all_tags():
     db = Mysql()
     try:
-        tags = db.get_all_unique_tags()
-        return jsonify({'success': True, 'tags': tags})
+        tags = db.get_unique_tags()
+        return jsonify({'tags': tags})
     except Exception as e:
-        print(f"Error getting tags: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
+        print(f"獲取標籤時出錯: {str(e)}")
+        return jsonify({'tags': []})
+
+@app.route('/search_by_tag', methods=['GET'])
+def search_by_tag():
+    tag = request.args.get('tag', '')
+    db = Mysql()
+    try:
+        posts = db.search_posts_by_tag(tag)
+        return jsonify({'posts': posts})
+    except Exception as e:
+        print(f"按標籤搜索時出錯: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)})
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
