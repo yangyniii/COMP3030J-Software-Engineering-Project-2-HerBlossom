@@ -112,7 +112,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '1', '1', 'default.jpg', 'default.jpg', '1', 1, 2, 3, 4, 5, '6', 'ucd', 'Beijing');
+INSERT INTO `users` VALUES (1, '1', '1', '../static/images/avatar.jpg', 'default.jpg', '1', 1, 2, 3, 4, 5, '6', 'ucd', 'Beijing');
 
 SET FOREIGN_KEY_CHECKS = 1;
 

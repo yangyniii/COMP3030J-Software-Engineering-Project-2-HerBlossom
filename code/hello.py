@@ -121,7 +121,7 @@ def register():
         return jsonify({'message': 'Email already exists'}), 400
 
     try:
-        db.register_user(name, password, email, 'default.jpg', 'default.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
+        db.register_user(name, password, email, '../static/images/avatar.jpg', 'default.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
@@ -201,7 +201,7 @@ def get_user_info_by_id():
         return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
 
     # 在确认 user_info 不为空后再访问 avatar
-    avatar_path = user_info.get('avatar', 'default.jpg')  # 使用默认头像
+    avatar_path = user_info.get('avatar', '../static/images/avatar.jpg')  # 使用默认头像
     print('Avatar path11:', avatar_path)
 
     return jsonify({

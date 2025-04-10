@@ -776,7 +776,7 @@
             .then(response => response.json())
             .then(data => {
                 const username = data.username || 'Unknown User';
-                const avatar = data.avatar ? '..' + data.avatar : '../static/img/home_support/default_avatar.jpg';
+                const avatar = data.avatar ? '..' + data.avatar : '../static/images/avatar.jpg';
 
                 userNameMap.set(userId, username);
                 userAvatarMap.set(userId, avatar);
