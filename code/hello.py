@@ -69,6 +69,7 @@ def sign_in():
 
         if user['email'] in session:
             return jsonify({'message': 'Already logged in'}), 400
+        ## print("Session data:", session)
 
         # Store user information in the session
         session['email'] = user['email']
