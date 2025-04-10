@@ -385,10 +385,6 @@ def forum():
 
 
 
-@app.route('/blog-list', methods=['GET'])
-def blog_list():
-    return render_template('blog-list.html')
-
 @app.route('/blog-single', methods=['GET'])
 def blog_single_default():
     return render_template('blog-single.html')
@@ -624,15 +620,13 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
-@app.route('/get_tags', methods=['GET'])
-def get_tags():
-    try:
-        db = Mysql()
-        tags = db.get_unique_tags()
-        return jsonify({'tags': tags})
-    except Exception as e:
-        print(f"獲取標籤失敗: {e}")
-        return jsonify({'tags': []})
+@app.route('/useful-skills', methods=['GET'])
+def useful_skills():
+    return render_template('useful-skills.html')
+
+@app.route('/about-us', methods=['GET'])
+def about_us():
+    return render_template('aboutus.html')
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
