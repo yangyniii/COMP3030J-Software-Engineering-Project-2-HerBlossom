@@ -1,7 +1,7 @@
 /* 基本样式 */
 body {
     font-family: Arial, sans-serif;
-    background-image: url('../images/background.jpg'); /* 确保路径正确 */
+    background-image: url('../images/background5.jpg'); /* 确保路径正确 */
     background-size: cover;  /* 让图片铺满整个屏幕 */
     background-position: center;  /* 让图片居中 */
     background-repeat: no-repeat;  /* 防止图片重复 */
