@@ -1643,7 +1643,7 @@ ul.list-style li:last-child {
 /*=========== End doc_banner_area_two css_test ============*/
 /*=========== Start Banner Support ============*/
 .HerBlossom-banner-support {
-  height: 945px;
+  height: 600px;
   background-image: linear-gradient(30deg, #feefec 0%, #f5fdff 100%);
   padding: 200px 0;
   position: relative;
