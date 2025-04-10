@@ -32,14 +32,12 @@
     </div>
     
     <div class="body_wrapper">
-       <nav class="navbar navbar-expand-lg menu_two" id="sticky">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="../static/img/logo.png" srcset="../static/img/logo-2x.png 2x" alt="logo">
-            </a>
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg menu_one" id="sticky">
+            <div class="container">
+                <a class="navbar-brand sticky_logo" href="/index">
+                    <img src="../static/img/logo.png" srcset="../static/img/logo-w.png 2x" alt="logo">
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="menu_toggle">
                         <span class="hamburger">
                             <span></span>
@@ -51,72 +49,32 @@
                             <span></span>
                         </span>
                     </span>
-            </button>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav menu ml-auto">
                         <li class="nav-item dropdown submenu">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu">
-                               <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                            </ul>
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Home</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
+                               data-toggle="dropdown"></i>
+                            <!--?                            <ul class="dropdown-menu">-->
+                            <!--?                               <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>-->
+                            <!--?                            </ul>-->
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
-                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-lg-5 tabHeader">
-                                            <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                <li class="nav-item active">
-                                                    <a class="nav-link active" id="v-pills-doc-tab" data-toggle="pill" href="#v-pills-doc" role="tab" aria-controls="v-pills-doc" aria-selected="true">Forum</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="v-pills-code-tab" data-toggle="pill" href="#v-pills-code" role="tab" aria-controls="v-pills-code" aria-selected="false">Blogs</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="v-pills-layout-tab" data-toggle="pill" href="#v-pills-layout" role="tab" aria-controls="v-pills-layout" aria-selected="false">Jobs Recommendation</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-7">
-                                            <div class="tab-content tabContent" id="v-pills-tabContent">
-                                                <div class="tab-pane fade active show" id="v-pills-doc" role="tabpanel" aria-labelledby="v-pills-doc-tab">
-                                                    <div class="d-flex">
-                                                        <ul class="list-unstyled tab_list">
-                                                            <li>
-                                                                 <a href="/forum-topics">Forum Community</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="blog.html">Official Blogs</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href="index.html"><p>Home</p></a>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-code" role="tabpanel" aria-labelledby="v-pills-code-tab">
-                                                    <div class="d-flex">
-                                                        <ul class="list-unstyled tab_list">
-                                                            <li><a href="life-skills.html">Life Skills</a></li>
-                                                            <li><a href="physical-health.html">Physical Health</a></li>
-                                                            <li><a href="mental-health.html">Mental Health</a></li>
-                                                            <li><a href="tab.html">Tables</a></li>
-                                                            <li><a href="image-pointing.html">Image Lightbox</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href="index.html"><p>Home</p></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <a href="/forum-topics" class="nav-link dropdown-toggle" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
+                               data-toggle="dropdown"></i>
+                        </li>
+                        <li class="nav-item dropdown submenu mega_menu tab-demo">
+                            <a href="/blog" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Blog</a>
+                        </li>
+                        <li class="nav-item dropdown submenu mega_menu tab-demo">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -134,7 +92,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="Aboutus.html" class="nav-link">
+                                    <a href="aboutus.html" class="nav-link">
                                         <img src="../static/img/sheet.png" alt="">
                                         <div class="text">
                                             <h5>About Us</h5>
@@ -145,7 +103,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav_btn" href="signin.html" id="signin-link">Sign In</a>
+                    <a class="nav_btn" href="signin.html">Sign In</a>
                 </div>
             </div>
         </nav>
@@ -216,7 +174,7 @@
                         <div class="b_top_post_content">
                             <div class="post_tag">
                                 <a href="#">9 Min Read</a>
-                                <a class="c_blue" href="Aboutus.html">Official</a>
+                                <a class="c_blue" href="aboutus.html">Official</a>
                             </div>
                             <h3>Women in Private Security</h3>
                             <p>Hear some women working for ICoCA Member and Affiliate companies as they reflect on the challenges they face working in the private security industry, as well as the opportunities that lie ahead.</p>
@@ -326,91 +284,84 @@
                 </div>
             </div>
         </section>
-            <footer class="footer_area footer_p_top f_bg_color">
-        <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
-        <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png" alt="">
-        <img class="p_absolute f_cloud" src="../static/img/home_two/cloud.png" alt="">
-        <img class="p_absolute f_email" src="../static/img/home_two/email-icon.png" alt="">
-        <img class="p_absolute f_email_two" src="../static/img/home_two/email-icon_two.png" alt="">
-        <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="../static/img/home_two/man.png" alt="">
-        <div class="footer_top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="f_widget subscribe_widget wow fadeInUp">
-                            <a href="index.html" class="f_logo"><img src="../static/img/logo.png" alt=""></a>
-                            <h4 class="c_head">Subscribe to our newsletter</h4>
-                            <form action="#" class="footer_subscribe_form">
-                                <input type="email" placeholder="Email" class="form-control">
-                                <button type="submit" class="s_btn">Send</button>
-                            </form>
-                            <ul class="list-unstyled f_social_icon">
-                                <li><a href="#"><i class="social_facebook"></i></a></li>
-                                <li><a href="#"><i class="social_twitter"></i></a></li>
-                                <li><a href="#"><i class="social_vimeo"></i></a></li>
-                                <li><a href="#"><i class="social_linkedin"></i></a></li>
-                            </ul>
+        <footer class="footer_area f_bg_color">
+            <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
+            <img class="p_absolute f_man wow fadeInRight" data-wow-delay="0.6s" src="../static/img/home_two/f_man.png" alt="">
+            <img class="p_absolute f_cloud" src="../static/img/home_two/cloud.png" alt="">
+            <img class="p_absolute f_email" src="../static/img/home_two/email-icon.png" alt="">
+            <img class="p_absolute f_email_two" src="../static/img/home_two/email-icon_two.png" alt="">
+            <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.3s" src="../static/img/home_two/man.png" alt="">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="f_widget subscribe_widget wow fadeInUp">
+                                <a href="index.html" class="f_logo"><img src="../static/img/logo.png" alt=""></a>
+                                <h4 class="c_head">Subscribe to our newsletter</h4>
+                                <form action="#" class="footer_subscribe_form">
+                                    <input type="email" placeholder="Email" class="form-control">
+                                    <button type="submit" class="s_btn">Send</button>
+                                </form>
+                                <ul class="list-unstyled f_social_icon">
+                                    <li><a href="#"><i class="social_facebook"></i></a></li>
+                                    <li><a href="#"><i class="social_twitter"></i></a></li>
+                                    <li><a href="#"><i class="social_vimeo"></i></a></li>
+                                    <li><a href="#"><i class="social_linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
+                                <h3 class="f_title">Company</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Testimonials</a></li>
+                                    <li><a href="#">Affiliates</a></li>
+                                    <li><a href="#">Partners</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">HerBlossom for Good</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">
+                                <h3 class="f_title">Support</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="index-3.html">Help Desk</a></li>
+                                    <li><a href="#">Knowledge Base</a></li>
+                                    <li><a href="#">Live Chat</a></li>
+                                    <li><a href="#">Integrations</a></li>
+                                    <li><a href="#">Reports</a></li>
+                                    <li><a href="#">iOS & Android</a></li>
+                                    <li><a href="#">Messages</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
+                                <h3 class="f_title">Doc Pages</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="doclist.html">Doc Topic</a></li>
+                                    <li><a href="#">Free Training</a></li>
+                                    <li><a href="doc-archive.html">Doc Archive</a></li>
+                                    <li><a href="changelog.html">Changelog</a></li>
+                                    <li><a href="Onepage.html">Onepage Docs</a></li>
+                                    <li><a href="#">Conversion Tracking</a></li>
+                                    <li><a href="cheatsheet.html">Cheatseet</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
-                            <h3 class="f_title">HerBlossom Pages</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="signin.html">Sign In</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="forums.html">Forum</a></li>
-                                <li><a href="#">Job Recommendation</a></li>
-
-<!--                                <li><a href="changelog.html">Changelog</a></li>-->
-<!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
-<!--                                <li><a href="#">Conversion Tracking</a></li>-->
-<!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">
-                            <h3 class="f_title">Blog</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="life-skills.html">Life Skills</a></li>
-                                <li><a href="physical-health.html">Physical Health</a></li>
-                                <li><a href="mental-health.html">Mental Health</a></li>
-                                <li><a href="tab.html">Tables</a></li>
-<!--                                <li><a href="#">Image Lightbox</a></li>-->
-<!--                                <li><a href="#">iOS & Android</a></li>-->
-<!--                                <li><a href="#">Messages</a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
-                            <h3 class="f_title">Company</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="Aboutus.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
-
-<!--                                <li><a href="#">Careers</a></li>-->
-<!--                                <li><a href="#">HerBlossom for Good</a></li>-->
-<!--                                <li><a href="#">Contact Us</a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-
+                    <div class="border_bottom"></div>
                 </div>
-                <div class="border_bottom"></div>
             </div>
-        </div>
-        <div class="footer_bottom text-center">
-            <div class="container">
-                <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+            <div class="footer_bottom text-center">
+                <div class="container">
+                    <p>© 2020 All Rights Reserved By <a href="http://www.bootstrapmb.com/">bootstrapmb</a></p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 
     <!-- Back to top button -->

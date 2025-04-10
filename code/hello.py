@@ -623,6 +623,10 @@ def mental_health():
 def useful_skills():
     return render_template('useful-skills.html')
 
+@app.route('/about-us', methods=['GET'])
+def about_us():
+    return render_template('aboutus.html')
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
