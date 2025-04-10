@@ -132,7 +132,7 @@ def show_message_board():
     # 转换为字典列表
     messages = [
         {'id': msg[0], 'sender_name': msg[1], 'message': msg[2], 'send_date': msg[3].strftime("%Y-%m-%d %H:%M:%S"),
-         'avatar': msg[4] or '../static/photo/default_avatar.png'}
+         'avatar': msg[4] or '../static/images/chiikawa.jpg'}
         for msg in raw_messages
     ]
 
