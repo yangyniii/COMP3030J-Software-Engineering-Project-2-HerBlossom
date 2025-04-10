@@ -118,6 +118,25 @@
     background-color: #FFB6C1;  /* 粉色背景，表示当前活动的轮播项 */
 }
 
+/* 确保row使用了flexbox布局 */
+.row {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  flex-wrap: wrap; /* 如果屏幕较小，自动换行 */
+}
+
+/* 让col中的内容居中 */
+.col-lg-4, .col-sm-6 {
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  padding: 15px; /* 适当的内边距，避免内容紧贴边缘 */
+}
+
+/* 确保每个项目容器居中 */
+.categories_guide_item {
+  text-align: center; /* 使文本（如标题和按钮）居中 */
+}
+
 
 
 
