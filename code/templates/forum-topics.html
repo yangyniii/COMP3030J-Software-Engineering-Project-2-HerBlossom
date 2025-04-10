@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Topics</title>
+    <style>
+        .post-preview {
+            margin: 10px 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .active-tag {
+            background-color: #7c6bff !important;
+            color: white !important;
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -62,27 +74,220 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav menu ml-auto">
                         <li class="nav-item dropdown submenu">
-                            <a href="/index" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">Home</a>
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Home</a>
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
-                               data-toggle="dropdown"></i>
-                            <!--?                            <ul class="dropdown-menu">-->
-                            <!--?                               <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>-->
-                            <!--?                            </ul>-->
-                        </li>
-                        <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="/forum-topics" class="nav-link dropdown-toggle" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
-                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
-                               data-toggle="dropdown"></i>
-                        </li>
-                        <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="/blog" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">Blog</a>
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                               <li class="nav-item"><a href="index.html" class="nav-link">Light Knowledgebase</a></li>
+                                <li class="nav-item"><a href="index-helpdesk.html" class="nav-link">Help Desk</a></li>
+                            <li class="nav-item"><a href="index-3.html" class="nav-link">Cool Knowledgebase</a> </li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
                             <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
+                                aria-haspopup="true" aria-expanded="false">Docs</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-5 tabHeader">
+                                            <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                                aria-orientation="vertical">
+                                                <li class="nav-item active">
+                                                    <a class="nav-link active" id="v-pills-doc-tab" data-toggle="pill"
+                                                        href="#v-pills-doc" role="tab" aria-controls="v-pills-doc"
+                                                        aria-selected="true">Doc Topics</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-code-tab" data-toggle="pill"
+                                                        href="#v-pills-code" role="tab" aria-controls="v-pills-code"
+                                                        aria-selected="false">Shortcodes</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-layout-tab" data-toggle="pill"
+                                                        href="#v-pills-layout" role="tab" aria-controls="v-pills-layout"
+                                                        aria-selected="false">Layouts</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-tour-tab" data-toggle="pill"
+                                                        href="#v-pills-tour" role="tab" aria-controls="v-pills-tour"
+                                                        aria-selected="false">Tour</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-content-tab" data-toggle="pill"
+                                                        href="#v-pills-content" role="tab"
+                                                        aria-controls="v-pills-content"
+                                                        aria-selected="false">Content</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="v-pills-pages-tab" data-toggle="pill"
+                                                        href="#v-pills-pages" role="tab" aria-controls="v-pills-pages"
+                                                        aria-selected="false">Other Pages</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="tab-content tabContent" id="v-pills-tabContent">
+                                                <div class="tab-pane fade active show" id="v-pills-doc" role="tabpanel"
+                                                    aria-labelledby="v-pills-doc-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li>
+                                                                <a href="doc-archive.html">Doc Archive</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="doclist.html">Doc Topic</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-code" role="tabpanel"
+                                                    aria-labelledby="v-pills-code-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="tab.html">Tabs</a></li>
+                                                            <li><a href="accordion.html">Accordion</a></li>
+                                                            <li><a href="notice.html">Notice</a></li>
+                                                            <li><a href="tab.html">Tables</a></li>
+                                                            <li><a href="image-pointing.html">Image Lightbox</a></li>
+                                                        </ul>
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="tooltip.html">Tooltip</a></li>
+                                                            <li><a href="lightbox.html">Lightbox</a></li>
+                                                            <li><a href="can-use.html">Can I Use</a></li>
+                                                            <li><a href="footnote.html">Footnote</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-layout" role="tabpanel"
+                                                    aria-labelledby="v-pills-layout-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="layouts.html">Both Sidebar</a></li>
+                                                            <li><a href="layout-leftsidebar.html">Left Sidebar</a></li>
+                                                            <li><a href="layout-full.html">Full-wdith</a></li>
+                                                            <li><a href="sticky-menu.html">Sticky menu</a></li>
+                                                            <li><a href="simple-footer.html">Simple Footer</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-tour" role="tabpanel"
+                                                    aria-labelledby="v-pills-tour-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list w_100">
+                                                            <li><a href="image-pointing.html">Image Hotspot</a></li>
+                                                            <li><a href="tour.html">Application Interface</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-content" role="tabpanel"
+                                                    aria-labelledby="v-pills-content-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="typography.html">Typography</a></li>
+                                                            <li><a href="code.html">Code</a></li>
+                                                            <li><a href="image.html">Image</a></li>
+                                                            <li><a href="video.html">Video</a></li>
+                                            <li><a href="keyboard-shortcuts.html">Keyboard Shortcuts</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="#">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-pages" role="tabpanel"
+                                                    aria-labelledby="v-pills-pages-tab">
+                                                    <div class="d-flex">
+                                                        <ul class="list-unstyled tab_list">
+                                                            <li><a href="doclist.html">Doc Topics</a>
+                                                            </li>
+                                                            <li><a href="Onepage.html">Onepage</a>
+                                                            </li>
+                                                            <li><a href="cheatsheet.html">Cheatseet</a>
+                                                            </li>
+                                                            <li><a href="changelog.html">Changelog</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text">
+                                                        <a href="#">
+                                                            <p>More Categories</p>
+                                                        </a>
+                                                        <a href="doclist.html">
+                                                            <p>All docs</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Pages
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                                <li class="nav-item"><a href="signin.html" class="nav-link">Sign In</a></li>
+                                <li class="nav-item"><a href="register.html" class="nav-link">Sign Up</a></li>
+                                <li class="nav-item"><a href="typography.html" class="nav-link">Typography</a></li>
+                                <li class="nav-item"><a href="error.html" class="nav-link">404 Error</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu active">
+                            <a class="nav-link dropdown-toggle" href="forums.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Forum
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="forums.html" class="nav-link">Forums Root</a></li>
+                                <li class="nav-item active"><a href="forum-topics.html" class="nav-link">Forum Topics</a></li>
+                                <li class="nav-item"><a href="forum-single.html" class="nav-link">Forum Single</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown submenu">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -128,6 +333,21 @@
                                         </div>
                                     </a>
                                 </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Blog
+                            </a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                                data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="blog.html" class="nav-link">Blog Grid</a></li>
+                                <li class="nav-item active"><a href="blog-grid-two.html" class="nav-link">Blog Grid
+                                        Two</a></li>
+                                <li class="nav-item"><a href="blog-list.html" class="nav-link">Blog List</a></li>
+                                <li class="nav-item"><a href="blog-single.html" class="nav-link">Blog Details</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -526,19 +746,8 @@
 
                             <div class="widget tag_widget">
                                 <h4 class="c_head">Tags</h4>
-                                <ul class="list-unstyled w_tag_list style-light">
-                                    <li><a href="#">Swagger</a></li>
-                                    <li><a href="#">HerBlossom</a></li>
-                                    <li><a href="#">weCare</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <li><a href="#">Download</a></li>
-                                    <li><a href="#">Doc</a></li>
-                                    <li><a href="#">Product board</a></li>
-                                    <li><a href="#">WordPress</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">ui/ux</a></li>
-                                    <li><a href="#">Doc Design</a></li>
-                                    <li><a href="#">DocAll</a></li>
+                                <ul class="list-unstyled w_tag_list style-light" id="tag-list">
+                                    <li><a href="#">Loading tags...</a></li>
                                 </ul>
                             </div>
 
@@ -659,7 +868,7 @@
     <script src="../static/js_test/main.js"></script>
 </body>
 <script>
-    const postsPerPage = 5;
+    const postsPerPage = 4;
     let allPosts = [];
     let currentPage = 1;
 
@@ -677,6 +886,17 @@
                 renderPostsForPage(currentPage);
             })
             .catch(error => console.error('Error fetching posts:', error));
+
+        fetch('/get_all_tags')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.tags) {
+                    renderTags(data.tags);
+                } else {
+                    console.error('Failed to load tags');
+                }
+            })
+            .catch(error => console.error('Error fetching tags:', error));
     }
 
     function renderPostsForPage(page) {
@@ -699,6 +919,9 @@
                         <h3 class="post-title">
                             <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
                         </h3>
+                        <div class="post-preview">
+                            ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
+                        </div>
                         <ul class="meta">
                             <li>
                                 <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
@@ -790,19 +1013,38 @@
             .catch(error => console.error('Error fetching user info:', error));
     }
 
-    // Function to fetch posts
-    function fetchPosts(searchTerm) {
-            fetch(`/search_posts?title=${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const postList = document.getElementById('post-list');
-                        postList.innerHTML = ''; // Clear existing posts
+    function renderTags(tags) {
+        const tagList = document.getElementById('tag-list');
+        tagList.innerHTML = '';
 
-                        if (data.posts && data.posts.length > 0) {
-                            data.posts.forEach(post => {  // 修正为遍历 data.posts
-                                const postItem = document.createElement('div');
-                                postItem.className = 'community-post style-two';
-                                postItem.innerHTML = `
+        tags.forEach(tag => {
+            const tagItem = document.createElement('li');
+            tagItem.innerHTML = `<a href="#" onclick="searchByTag('${tag}')">${tag}</a>`;
+            tagList.appendChild(tagItem);
+        });
+    }
+
+    function searchByTag(tag) {
+        // 移除其他標籤的激活狀態
+        const allTags = document.querySelectorAll('#tag-list a');
+        allTags.forEach(tagElement => {
+            tagElement.classList.remove('active-tag');
+            if (tagElement.textContent === tag) {
+                tagElement.classList.add('active-tag');
+            }
+        });
+
+        fetch(`/search_posts?title=${encodeURIComponent(tag)}`)
+            .then(response => response.json())
+            .then(data => {
+                const postList = document.getElementById('post-list');
+                postList.innerHTML = '';
+
+                if (data.posts && data.posts.length > 0) {
+                    data.posts.forEach(post => {
+                        const postItem = document.createElement('div');
+                        postItem.className = 'community-post style-two';
+                        postItem.innerHTML = `
                             <div class="post-content">
                                 <div class="author-avatar">
                                     <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
@@ -811,6 +1053,9 @@
                                     <h3 class="post-title">
                                         <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
                                     </h3>
+                                    <div class="post-preview">
+                                        ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
+                                    </div>
                                     <ul class="meta">
                                         <li>
                                             <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
@@ -826,23 +1071,27 @@
                                     <li><a href="#"><i class="icon_star"></i>5</a></li>
                                 </ul>
                             </div>
-                            `;
-                                postList.appendChild(postItem);
+                        `;
+                        postList.appendChild(postItem);
 
-                                // const userLink = postItem.querySelector('a[data-userid]');
-                                // fetchUserAndSetUsername(post.user_id, userLink);
-                            });
-                        } else {
-                            postList.innerHTML = '<p>No posts found.</p>';
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-        }
+                        const userLink = postItem.querySelector('a[data-userid]');
+                        fetchUserAndSetUsername(post.user_id, userLink);
+                    });
+                } else {
+                    postList.innerHTML = '<p>沒有找到相關帖子。</p>';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
-    // 添加滚动功能
     function scrollToPosts() {
         const postList = document.getElementById('post-list');
-        postList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const firstPost = postList.querySelector('.community-post');
+        if (firstPost) {
+            firstPost.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            postList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 
     function scrollToRanking() {
@@ -854,21 +1103,72 @@
         const tagsWidget = document.querySelector('.tag_widget');
         tagsWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    // 搜索按钮点击事件
+
     document.getElementById('search-button').addEventListener('click', function (e) {
-            e.preventDefault(); // 阻止默认行为
+        e.preventDefault();
+        const searchTerm = document.getElementById('search-input').value;
+        fetchPosts(searchTerm);
+    });
+
+    document.getElementById('search-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
             const searchTerm = document.getElementById('search-input').value;
             fetchPosts(searchTerm);
-        });
+        }
+    });
 
-        // 输入框回车事件
-        document.getElementById('search-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // 阻止默认行为
-                const searchTerm = document.getElementById('search-input').value;
-                fetchPosts(searchTerm);
-            }
-        });
+    // Function to fetch posts
+    function fetchPosts(searchTerm) {
+        fetch(`/search_posts?title=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const postList = document.getElementById('post-list');
+                postList.innerHTML = ''; // Clear existing posts
+
+                if (data.posts && data.posts.length > 0) {
+                    data.posts.forEach(post => {
+                        const postItem = document.createElement('div');
+                        postItem.className = 'community-post style-two';
+                        postItem.innerHTML = `
+                            <div class="post-content">
+                                <div class="author-avatar">
+                                    <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+                                </div>
+                                <div class="entry-content">
+                                    <h3 class="post-title">
+                                        <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
+                                    </h3>
+                                    <div class="post-preview">
+                                        ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
+                                    </div>
+                                    <ul class="meta">
+                                        <li>
+                                            <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
+                                            <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
+                                        </li>
+                                        <li><i class="icon_calendar"></i>${post.create_time}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="post-meta-wrapper">
+                                <ul class="post-meta-info">
+                                    <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
+                                    <li><a href="#"><i class="icon_star"></i>5</a></li>
+                                </ul>
+                            </div>
+                        `;
+                        postList.appendChild(postItem);
+
+                        const userLink = postItem.querySelector('a[data-userid]');
+                        fetchUserAndSetUsername(post.user_id, userLink);
+                    });
+                } else {
+                    postList.innerHTML = '<p>沒有找到相關帖子。</p>';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 </script>
 
 </html>

@@ -69,7 +69,6 @@ def sign_in():
 
         if user['email'] in session:
             return jsonify({'message': 'Already logged in'}), 400
-        ## print("Session data:", session)
 
         # Store user information in the session
         session['email'] = user['email']
@@ -385,6 +384,10 @@ def forum():
 
 
 
+@app.route('/blog-list', methods=['GET'])
+def blog_list():
+    return render_template('blog-list.html')
+
 @app.route('/blog-single', methods=['GET'])
 def blog_single_default():
     return render_template('blog-single.html')
@@ -620,13 +623,15 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
-@app.route('/useful-skills', methods=['GET'])
-def useful_skills():
-    return render_template('useful-skills.html')
-
-@app.route('/about-us', methods=['GET'])
-def about_us():
-    return render_template('aboutus.html')
+@app.route('/get_all_tags', methods=['GET'])
+def get_all_tags():
+    db = Mysql()
+    try:
+        tags = db.get_all_unique_tags()
+        return jsonify({'success': True, 'tags': tags})
+    except Exception as e:
+        print(f"Error getting tags: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
