@@ -514,14 +514,14 @@ class Mysql(object):
         user_info = self.cursor.fetchone()
 
         if user_info:
-            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
-            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
+            avatar = user_info[3] if user_info[3] else '../static/images/chiikawa.jpg'
+            cover = user_info[4] if user_info[4] else '../static/images/chiikawa.jpg'
             return {
                 'user_id': user_info[0],
                 'username': user_info[1],
                 'email': user_info[2],
-                'avatar': user_info[3] or 'default.jpg',  # 避免 avatar 为 None
-                'cover': user_info[4] or 'default.jpg',
+                'avatar': user_info[3] or '../static/images/chiikawa.jpg',  # 避免 avatar 为 None
+                'cover': user_info[4] or '../static/images/chiikawa.jpg',
                 'password': user_info[5],
                 'follower_count': user_info[6],
                 'followee_count': user_info[7],
@@ -538,7 +538,6 @@ class Mysql(object):
 
 
     def get_user_info_by_id(self, user_id):
-
         """
         Retrieve user information based on the user's email.
 
@@ -553,8 +552,8 @@ class Mysql(object):
         self.cursor.execute(sql, (user_id,))
         user_info = self.cursor.fetchone()
         if user_info:
-            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
-            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
+            avatar = user_info[3] if user_info[3] else '../static/images/chiikawa.jpg'
+            cover = user_info[4] if user_info[4] else '../static/images/chiikawa.jpg'
             return {
                 'user_id': user_info[0],
                 'username': user_info[1],
@@ -651,7 +650,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
@@ -683,7 +682,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
@@ -767,7 +766,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
@@ -1099,28 +1098,26 @@ class Mysql(object):
             print(f"搜索博客失败: {e}")
             return []
 
-    def get_unique_tags(self):
+    def get_all_unique_tags(self):
+        """獲取所有帖子中不重複的標籤"""
+        query = """
+            SELECT DISTINCT TRIM(tag) as tag
+            FROM (
+                SELECT tags, 
+                       SUBSTRING_INDEX(SUBSTRING_INDEX(tags, ',', numbers.n), ',', -1) as tag
+                FROM post
+                JOIN (
+                    SELECT 1 as n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+                    SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+                    SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10
+                ) numbers ON CHAR_LENGTH(tags) - CHAR_LENGTH(REPLACE(tags, ',', '')) >= numbers.n - 1
+                WHERE tags IS NOT NULL AND tags != ''
+            ) extracted_tags
+            WHERE TRIM(tag) != ''
+            ORDER BY tag ASC
         """
-        獲取所有不重複的標籤
-        
-        Returns:
-            list: 不重複的標籤列表
-        """
-        try:
-            sql = "SELECT DISTINCT tags FROM post WHERE tags IS NOT NULL AND tags != ''"
-            self.cursor.execute(sql)
-            tags = self.cursor.fetchall()
-            
-            # 將所有標籤合併並去重
-            unique_tags = set()
-            for tag_row in tags:
-                if tag_row[0]:  # 確保不是 None 或空字符串
-                    tag_list = tag_row[0].split(',')
-                    unique_tags.update([tag.strip() for tag in tag_list])
-            
-            return list(unique_tags)
-        except Exception as e:
-            print(f"獲取標籤失敗: {e}")
-            return []
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()
+        return [row[0] for row in results]
 
 
