@@ -913,7 +913,7 @@
             postItem.innerHTML = `
                 <div class="post-content">
                     <div class="author-avatar">
-                        <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+                        <img src="${userAvatarMap.get(post.user_id) || '../static/images/chiikawa.jpg'}" alt="avatar" style="width: 80%; height: auto;">
                     </div>
                     <div class="entry-content">
                         <h3 class="post-title">
@@ -999,7 +999,7 @@
             .then(response => response.json())
             .then(data => {
                 const username = data.username || 'Unknown User';
-                const avatar = data.avatar ? '..' + data.avatar : '../static/img/home_support/default_avatar.jpg';
+                const avatar = data.avatar ? '..' + data.avatar : '../static/images/chiikawa.jpg';
 
                 userNameMap.set(userId, username);
                 userAvatarMap.set(userId, avatar);
@@ -1047,7 +1047,7 @@
                         postItem.innerHTML = `
                             <div class="post-content">
                                 <div class="author-avatar">
-                                    <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+                                    <img src="${userAvatarMap.get(post.user_id) || '../static/images/chiikawa.jpg'}" alt="avatar" style="width: 80%; height: auto;">
                                 </div>
                                 <div class="entry-content">
                                     <h3 class="post-title">
@@ -1133,7 +1133,7 @@
                         postItem.innerHTML = `
                             <div class="post-content">
                                 <div class="author-avatar">
-                                    <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+                                    <img src="${userAvatarMap.get(post.user_id) || '../static/images/chiikawa.jpg'}" alt="avatar" style="width: 80%; height: auto;">
                                 </div>
                                 <div class="entry-content">
                                     <h3 class="post-title">

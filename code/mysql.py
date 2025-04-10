@@ -514,14 +514,14 @@ class Mysql(object):
         user_info = self.cursor.fetchone()
 
         if user_info:
-            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
-            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
+            avatar = user_info[3] if user_info[3] else '../static/images/chiikawa.jpg'
+            cover = user_info[4] if user_info[4] else '../static/images/chiikawa.jpg'
             return {
                 'user_id': user_info[0],
                 'username': user_info[1],
                 'email': user_info[2],
-                'avatar': user_info[3] or 'default.jpg',  # 避免 avatar 为 None
-                'cover': user_info[4] or 'default.jpg',
+                'avatar': user_info[3] or '../static/images/chiikawa.jpg',  # 避免 avatar 为 None
+                'cover': user_info[4] or '../static/images/chiikawa.jpg',
                 'password': user_info[5],
                 'follower_count': user_info[6],
                 'followee_count': user_info[7],
@@ -538,7 +538,6 @@ class Mysql(object):
 
 
     def get_user_info_by_id(self, user_id):
-
         """
         Retrieve user information based on the user's email.
 
@@ -553,8 +552,8 @@ class Mysql(object):
         self.cursor.execute(sql, (user_id,))
         user_info = self.cursor.fetchone()
         if user_info:
-            avatar = user_info[3] if user_info[3] else '../static/photo/default_avatar.png'
-            cover = user_info[4] if user_info[4] else '../static/photo/default_avatar.png'
+            avatar = user_info[3] if user_info[3] else '../static/images/chiikawa.jpg'
+            cover = user_info[4] if user_info[4] else '../static/images/chiikawa.jpg'
             return {
                 'user_id': user_info[0],
                 'username': user_info[1],
@@ -651,7 +650,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
@@ -683,7 +682,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
@@ -767,7 +766,7 @@ class Mysql(object):
             # Map the fetched data to a list of dictionaries
             user_list = [
                 {
-                    column: (value if column != "avatar" or value else "../static/photo/default_avatar.png")
+                    column: (value if column != "avatar" or value else "../static/images/chiikawa.jpg")
                     for column, value in zip(column_names, user)
                 }
                 for user in users
