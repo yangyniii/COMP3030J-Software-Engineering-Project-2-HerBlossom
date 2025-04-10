@@ -625,6 +625,10 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
+@app.route('/about-us', methods=['GET'])
+def about_us():
+    return render_template('aboutus.html')
+
 @app.route('/get_all_tags', methods=['GET'])
 def get_all_tags():
     db = Mysql()
