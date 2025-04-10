@@ -544,7 +544,7 @@
                                     <!-- Profile Photo Section -->
                                         <div class="account-photo">
                                             <!-- 当前头像 -->
-                                            <img id="avatar" src="../static/images/default-avatar.jpg" alt="User Photo">
+                                            <img id="avatar" src="../static/images/chiikawa.jpg" alt="User Photo">
                                             <!-- 修改头像按钮 -->
                                             <button type="button" id="changeAvatarBtn" class="btn btn-secondary"
                                                     data-toggle="modal" data-target="#avatarModal">
@@ -784,7 +784,7 @@
                         // 更新前端页面，显示用户的详细信息
                         document.getElementById('user-name').innerText = data.name;
                         document.getElementById('user-email').innerText = data.email;
-                        document.getElementById('avatar').src = data.avatar ? `../static/images/${data.avatar}` : '../static/images/default-avatar.jpg';
+                        document.getElementById('avatar').src = data.avatar ? `../static/images/${data.avatar}` : '../static/images/chiikawa.jpg';
                     }
                 })
                 .catch(error => {

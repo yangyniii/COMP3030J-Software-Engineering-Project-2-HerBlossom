@@ -669,7 +669,7 @@ fetch(`/get_user_info_by_id?user_id=${user_id}`)
 
             // 设置头像图片，如果没有头像，则使用默认头像
             const avatarImg = document.getElementById("avatar");
-            avatarImg.src = data.avatar || '../static/photo/default_avatar.png';  // 设置头像路径
+            avatarImg.src = data.avatar || '../static/images/chiikawa.jpg';  // 设置头像路径
 
             // 如果有其他信息，也可以进行类似的更新
             // 例如，更新邮箱、手机号等

@@ -69,7 +69,6 @@ def sign_in():
 
         if user['email'] in session:
             return jsonify({'message': 'Already logged in'}), 400
-        ## print("Session data:", session)
 
         # Store user information in the session
         session['email'] = user['email']
@@ -121,7 +120,7 @@ def register():
         return jsonify({'message': 'Email already exists'}), 400
 
     try:
-        db.register_user(name, password, email, '../static/images/avatar.jpg', 'default.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
+        db.register_user(name, password, email, '../static/images/chiikawa.jpg', '../static/images/chiikawa.jpg', 0, 0, 0, 0, 0, "null", "null", "null")
         return jsonify({'message': 'Registration successful'}), 200
     except Exception as e:
         return jsonify({'message': f'Error: {str(e)}'}), 500
@@ -201,7 +200,9 @@ def get_user_info_by_id():
         return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
 
     # 在确认 user_info 不为空后再访问 avatar
-    avatar_path = user_info.get('avatar', '../static/images/avatar.jpg')  # 使用默认头像
+    avatar_path = user_info.get('avatar', 'chiikawa.jpg')
+    if not avatar_path.startswith('../'):
+        avatar_path = '../static/images/' + avatar_path
     print('Avatar path11:', avatar_path)
 
     return jsonify({
@@ -384,6 +385,10 @@ def forum():
 
 
 
+
+@app.route('/blog-list', methods=['GET'])
+def blog_list():
+    return render_template('blog-list.html')
 
 @app.route('/blog-single', methods=['GET'])
 def blog_single_default():
@@ -620,13 +625,15 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
-@app.route('/useful-skills', methods=['GET'])
-def useful_skills():
-    return render_template('useful-skills.html')
-
-@app.route('/about-us', methods=['GET'])
-def about_us():
-    return render_template('aboutus.html')
+@app.route('/get_all_tags', methods=['GET'])
+def get_all_tags():
+    db = Mysql()
+    try:
+        tags = db.get_all_unique_tags()
+        return jsonify({'success': True, 'tags': tags})
+    except Exception as e:
+        print(f"Error getting tags: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
 
 # Set up the basic port for the pages
 if __name__ == '__main__':
