@@ -289,6 +289,15 @@
                             </div>
 
                         </form>
+
+                        <!-- 自定义弹窗 -->
+                        <div id="customAlert" class="custom-alert hidden">
+                            <div class="custom-alert-content">
+                                <p id="customAlertMessage"></p>
+                                <button id="customAlertOk">Done</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -395,46 +404,64 @@
     <script src="../static/js_test/main.js"></script>
     <script>
     // Prevent the default form submission and handle the submission via JavaScript
-    document.querySelector('form').addEventListener('submit', function (e) {
-    e.preventDefault();  // Prevent the default form submission
+    // 自定义弹窗函数：显示弹窗，并在点击按钮后执行回调（例如页面重定向）
+    function showCustomAlert(message, callback) {
+        const customAlert = document.getElementById("customAlert");
+        const alertMessage = document.getElementById("customAlertMessage");
+        customAlert.classList.remove("hidden");
+        alertMessage.textContent = message;
 
-    const formData = new FormData(this);  // Collect form data
-
-    // Get content from the contenteditable div (rich text editor)
-    const content = document.getElementById('post-content').innerHTML;
-    formData.set('content', content);  // Add content to FormData
-
-    // Add title, tags, and category to FormData
-    formData.set('title', document.getElementById('post-title').value);
-    formData.set('tags', document.getElementById('post-tags').value);
-    formData.set('category', document.getElementById('post-category').value);
-
-     // Add images to FormData
-    const images = document.getElementById('post-images').files;
-    console.log(images);
-    for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i]); // Ensure you use 'images' instead of 'images[]' to match backend
+        // 使用 { once: true } 保证只有一次点击事件被注册
+        document.getElementById("customAlertOk").addEventListener("click", function () {
+            customAlert.classList.add("hidden");
+            if (typeof callback === "function") {
+                callback();
+            }
+        }, {once: true});
     }
 
-    // Send the form data to the backend using fetch
-    fetch('/post-edit', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message === 'Post saved successfully') {
-            alert('Post submitted successfully!');
-            window.location.href = '/forum-topics';  // Redirect to the forum page after successful submission
-        } else {
-            alert('Failed to submit the post!');
+    // 防止默认表单提交并使用 fetch 提交数据
+    document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();  // 阻止默认提交行为
+
+        const formData = new FormData(this);  // 收集表单数据
+
+        // 获取富文本编辑器中 contenteditable 的内容
+        const content = document.getElementById('post-content').innerHTML;
+        formData.set('content', content);
+
+        // 获取标题、标签、分类数据，并加入 formData
+        formData.set('title', document.getElementById('post-title').value);
+        formData.set('tags', document.getElementById('post-tags').value);
+        formData.set('category', document.getElementById('post-category').value);
+
+        // 获取图片文件数据
+        const images = document.getElementById('post-images').files;
+        for (let i = 0; i < images.length; i++) {
+            formData.append('images', images[i]); // 注意此处的 key 应与后端保持一致
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while submitting the post.');
+
+        // 使用 fetch 发送 POST 请求
+        fetch('/post-edit', {
+            method: 'POST',
+            body: formData
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Post saved successfully') {
+                        // 显示自定义弹窗，并在点击后重定向
+                        showCustomAlert('Post submitted successfully!', function () {
+                            window.location.href = '/forum-topics';
+                        });
+                    } else {
+                        showCustomAlert('Failed to submit the post!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showCustomAlert('An error occurred while submitting the post.');
+                });
     });
-});
 
 
     // JavaScript for rich text formatting in the editor
