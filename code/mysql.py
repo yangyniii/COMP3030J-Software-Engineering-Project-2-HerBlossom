@@ -1120,4 +1120,32 @@ class Mysql(object):
         results = self.cursor.fetchall()
         return [row[0] for row in results]
 
+    def get_all_jobs(self):
+        sql = "SELECT job_id, title, location, salary, company, experience, education, short_desc, full_desc, tags FROM job"
+        try:
+            self.cursor.execute(sql)
+            jobs = self.cursor.fetchall()
+            job_list = []
+
+            for job in jobs:
+                job_list.append({
+                    'job_id': job[0],
+                    'title': job[1],
+                    'location': job[2],
+                    'salary': job[3],
+                    'company':job[4],
+                    'experience': job[5],
+                    'education': job[6],
+                    'short_desc': job[7],
+                    'full_desc': job[8],
+                    'tags': job[9],
+                })
+            print(job_list)
+            return job_list
+        except Exception as e:
+            print(f"查询 job 表失败: {e}")
+            return []
+
+
+
 

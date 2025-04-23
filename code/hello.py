@@ -625,6 +625,12 @@ def life_skills():
 def mental_health():
     return render_template('mental-health.html')
 
+@app.route('/job-recommendation')
+def job_recommendation():
+    db = Mysql()
+    job_list = db.get_all_jobs()
+    return render_template('job-recommendation.html', job_list=job_list)
+
 @app.route('/get_all_tags', methods=['GET'])
 def get_all_tags():
     db = Mysql()
