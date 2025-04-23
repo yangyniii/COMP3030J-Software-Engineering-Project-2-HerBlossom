@@ -1147,5 +1147,40 @@ class Mysql(object):
             return []
 
 
+    def search_jobs_by_keyword(self, keyword):
+        query = """
+                SELECT job.job_id, \
+                       job.title, \
+                       job.location, \
+                       job.salary, \
+                       job.company,
+                       job.experience, \
+                       job.education, \
+                       job.short_desc, \
+                       job.full_desc, \
+                       job.tags
+                FROM job
+                WHERE job.title LIKE %s
+                   OR job.location LIKE %s
+                   OR job.salary LIKE %s
+                   OR job.company LIKE %s
+                   OR job.experience LIKE %s
+                   OR job.education LIKE %s
+                   OR job.short_desc LIKE %s
+                   OR job.full_desc LIKE %s
+                   OR job.tags LIKE %s \
+                """
+
+        search_term = f"%{keyword}%"  # 构建模糊匹配的搜索关键词
+        self.cursor.execute(query,
+                            (search_term, search_term, search_term, search_term,
+                             search_term, search_term, search_term, search_term, search_term))
+
+        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
+        results = self.cursor.fetchall()  # 获取所有查询结果
+
+        jobs = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 转换结果为字典格式
+        return jobs
+
 
 

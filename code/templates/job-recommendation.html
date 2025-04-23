@@ -117,11 +117,19 @@
             <img class="p_absolute one wow fadeInRight" src="../static/img/home_one/girl_img.png" alt="">
             <img class="p_absolute two wow fadeInUp" data-wow-delay="0.2s" src="../static/img/home_one/flower.png" alt="">
             <div class="container">
-                <form action="/blog-search" method="GET" class="banner_search_form">
-                    <input type="search" name="keyword" class="form-control" placeholder='Search any job here' value="{{ keyword if keyword else '' }}">
-                    <button type="submit"><i class="icon_search"></i></button>
+                <form action="/job-recommendation" method="GET" class="banner_search_form">
+                    <div class="input-group">
+                        <input type="search" name="keyword" class="form-control" placeholder="Search any job here"
+                               value="{{ keyword if keyword else '' }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="icon_search"></i> 搜索
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
+
         </section>
         <section class="page_breadcrumb">
             <div class="container">
@@ -146,19 +154,19 @@
     <div class="container">
         <div class="d-flex flex-wrap gap-3">
             <div class="filter-tag position-relative">
-                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="距离最近、距离最远">Location</button>
+                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="距離最近、距離最遠">Location</button>
             </div>
             <div class="filter-tag position-relative">
-                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="如：Python工程师、数据分析等">Title</button>
+                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="如：Python工程師、數據分析等">Title</button>
             </div>
             <div class="filter-tag position-relative">
-                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="按时薪排序">Salary</button>
+                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="按時薪排序">Salary</button>
             </div>
             <div class="filter-tag position-relative">
-                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="不限、本科、硕士等">Education</button>
+                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="不限、本科、碩士等">Education</button>
             </div>
             <div class="filter-tag position-relative">
-                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="更多选项">Tags</button>
+                <button class="btn btn-outline-secondary" data-toggle="tooltip" title="更多選項">Tags</button>
             </div>
         </div>
     </div>
@@ -168,75 +176,206 @@
 <section class="job_listings_section py-4">
     <div class="container d-flex flex-row gap-4">
         <!-- 左侧职位概览 -->
-        <div class="left_panel border p-3 bg-white" style="width: 35%; max-height: 600px; overflow-y: auto;">
+        <div class="left_panel border p-3 bg-white shadow-sm rounded-3" style="width: 40%; height: 1000px; overflow-y: auto; min-width: 400px;">
             {% if job_list|length == 0 %}
-                <p>暂无职位信息</p>
+                <p class="text-muted text-center py-4">暂无职位信息</p>
             {% else %}
                 {% for job in job_list %}
-                <div class="job_summary border rounded p-2 mb-3" onclick="showJobDetail('{{ job.job_id }}')">
-                    <strong>{{ job.title }}</strong> - {{ job.salary }}<br>
-                    <small>
-                        📍 {{ job.location }} | 🧰 {{ job.experience }} | 🎓 {{ job.education }}<br>
-                        {{ job.short_desc }}<br>
-                        <em>{{ job.tags }}</em>
-                    </small>
+                <div class="job_summary border rounded-3 p-3 mb-3 bg-light shadow-sm hover-shadow transition-all"
+                     onclick="showJobDetail('{{ job.job_id }}')"
+                     style="cursor: pointer; transition: all 0.3s ease;">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="mb-3">{{ job.title }}</h5>
+                        <span class="badge bg-success">{{ job.salary }}</span>
+                    </div>
+                    <div class="job-meta text-muted mb-2">
+                        <small>
+                            <i class="fas fa-map-marker-alt"></i> 📍 {{ job.location }} |
+                            <i class="fas fa-briefcase"></i> 🧰 {{ job.experience }} |
+                            <i class="fas fa-graduation-cap"></i> 🎓 {{ job.education }}
+                        </small>
+                    </div>
+                    <p class="mb-2">{{ job.short_desc }}</p>
+                    <div class="job-tags mt-3">
+                        {% for tag in job.tags.split(',') %}
+                            <span class="badge bg-light text-dark border me-2">{{ tag.strip() }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endfor %}
             {% endif %}
         </div>
 
         <!-- 右侧详细信息 -->
-        <div class="right_panel border p-4 bg-white flex-fill" style="max-height: 600px; overflow-y: auto;">
+        <div class="right_panel border p-4 bg-white shadow-sm rounded-3 flex-fill"
+             style="width: 60%; height: 1000px; overflow-y: auto; min-width: 600px;">
             {% if job_list|length == 0 %}
-                <p>请选择左侧职位查看详情。</p>
+            <div class="text-center py-5">
+                <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
+                <p class="text-muted">Please select a position on the left to view details.</p>
+            </div>
             {% else %}
-                {% for job in job_list %}
-                <div id="{{ job.job_id }}" class="job_detail {% if not loop.first %}d-none{% endif %}">
-                    <h4>{{ job.title }}</h4>
-                    <p>
-                        <strong>地点：</strong>{{ job.location }} ｜
-                        <strong>经验：</strong>{{ job.experience }} ｜
-                        <strong>学历：</strong>{{ job.education }}<br>
-                        <strong>标签：</strong>{{ job.tags }}
-                    </p>
-                    <ul>
+            {% for job in job_list %}
+            <div id="{{ job.job_id }}" class="job_detail {% if not loop.first %}d-none{% endif %}">
+                <div class="job-header border-bottom pb-3 mb-4">
+                    <h4 class="mb-3">{{ job.title }}</h4>
+                    <div class="job-meta d-flex flex-wrap gap-3">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt text-danger"></i>
+                            <strong>Location：</strong>{{ job.location }}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-briefcase text-warning"></i>
+                            <strong>Experience：</strong>{{ job.experience }}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-graduation-cap text-info"></i>
+                            <strong>Education：</strong>{{ job.education }}
+                        </div>
+                    </div>
+                    <div class="job-tags mt-3">
+                        {% for tag in job.tags.split(',') %}
+                        <span class="badge bg-light text-dark border me-2">{{ tag.strip() }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="job-description">
+                    <h5 class="mb-3">Description:</h5>
+                    <ul class="list-unstyled">
                         {% for line in job.full_desc.split('\n') %}
-                            <li>{{ line }}</li>
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            {{ line }}
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
             {% endif %}
         </div>
     </div>
 </section>
 
+        <style>
+            .hover-shadow:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+            }
 
+            .transition-all {
+                transition: all 0.3s ease;
+            }
 
+            .job-meta .meta-item {
+                background: #f8f9fa;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
 
-    <!-- Back to top button -->
-    <a id="back-to-top" title="Back to Top"></a>
+            .job-description li {
+                padding: 0.5rem 0;
+                border-bottom: 1px dashed #eee;
+            }
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
-    <script src="../static/js_test/jquery-3.2.1.min.js"></script>
-    <script src="../static/js_test/pre-loader.js"> </script>
-    <script src="../static/assets/bootstrap/js/popper.min.js"></script>
-    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/js_test/parallaxie.js"></script>
-    <script src="../static/js_test/TweenMax.min.js"></script>
-    <script src="../static/js_test/jquery.wavify.js"></script>
-    <script src="../static/assets/wow/wow.min.js"></script>
-    <script src="../static/js_test/main.js"></script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+            .job-description li:last-child {
+                border-bottom: none;
+            }
 
-    function showJobDetail(id) {
-        document.querySelectorAll('.job_detail').forEach(el => {
-            el.classList.add('d-none');
-        });
-        document.getElementById(id).classList.remove('d-none');
-    }
-</script>
+        </style>
+
+        <!-- Back to top button -->
+        <a id="back-to-top" title="Back to Top"></a>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
+        <script src="../static/js_test/jquery-3.2.1.min.js"></script>
+        <script src="../static/js_test/pre-loader.js"></script>
+        <script src="../static/assets/bootstrap/js/popper.min.js"></script>
+        <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../static/js_test/parallaxie.js"></script>
+        <script src="../static/js_test/TweenMax.min.js"></script>
+        <script src="../static/js_test/jquery.wavify.js"></script>
+        <script src="../static/assets/wow/wow.min.js"></script>
+        <script src="../static/js_test/main.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            // 展示职位详情
+            function showJobDetail(id) {
+                document.querySelectorAll('.job_detail').forEach(el => {
+                    el.classList.add('d-none');
+                });
+                document.getElementById(id).classList.remove('d-none');
+            }
+
+            $(document).ready(function () {
+                // 搜索按钮点击事件
+                $('#search_button').click(function () {
+                    var keyword = $('#search_keyword').val();
+                    searchJobs(keyword);
+                });
+
+                // 当用户按下回车键时触发搜索
+                $('#search_keyword').keypress(function (e) {
+                    if (e.which == 13) {
+                        var keyword = $('#search_keyword').val();
+                        searchJobs(keyword);
+                    }
+                });
+
+                // 搜索职位函数
+                function searchJobs(keyword) {
+                    $.ajax({
+                        url: '/search_jobs',  // 后端处理搜索请求的接口
+                        method: 'GET',
+                        data: {keyword: keyword},  // 传递搜索关键字
+                        success: function (response) {
+                            if (response.jobs && response.jobs.length > 0) {
+                                updateJobList(response.jobs);  // 更新职位列表
+                            } else {
+                                $('#job_list').html('<p class="text-muted text-center py-4">没有找到相关职位</p>');
+                            }
+                        },
+                        error: function (error) {
+                            console.error('搜索失败:', error);
+                        }
+                    });
+                }
+
+                // 更新职位列表
+                function updateJobList(jobs) {
+                    console.log('接收到的职位数据:', jobs);  // 调试输出
+                    var jobHtml = '';
+                    jobs.forEach(function (job) {
+                        jobHtml += `
+                            <div class="job_summary border rounded-3 p-3 mb-3 bg-light shadow-sm hover-shadow transition-all"
+                                 onclick="showJobDetail('${job.job_id}')" style="cursor: pointer;">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h5 class="mb-3">${job.title}</h5>
+                                    <span class="badge bg-success">${job.salary}</span>
+                                </div>
+                                <div class="job-meta text-muted mb-2">
+                                    <small>
+                                        <i class="fas fa-map-marker-alt"></i> 📍 ${job.location} |
+                                        <i class="fas fa-briefcase"></i> 🧰 ${job.experience} |
+                                        <i class="fas fa-graduation-cap"></i> 🎓 ${job.education}
+                                    </small>
+                                </div>
+                                <p class="mb-2">${job.short_desc}</p>
+                                <div class="job-tags mt-3">
+                                    ${job.tags.split(',').map(tag => `<span class="badge bg-light text-dark border me-2">${tag.trim()}</span>`
+                    ).
+                        join('')
+                    }
+                </div>
+                </div>
+                    `;
+                    });
+                    $('#job_list').html(jobHtml);  // 更新职位列表
+                }
+            });
+        </script>

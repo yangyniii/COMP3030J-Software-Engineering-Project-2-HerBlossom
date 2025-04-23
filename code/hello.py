@@ -641,6 +641,17 @@ def get_all_tags():
         print(f"Error getting tags: {str(e)}")
         return jsonify({'success': False, 'message': str(e)}), 500
 
+
+@app.route('/search_jobs', methods=['GET'])
+def search_jobs():
+    keyword = request.args.get('keyword', '')  # 从查询字符串中获取搜索关键词
+    try:
+        db = Mysql()
+        jobs = db.search_jobs_by_keyword(keyword)
+        return jsonify({'jobs': jobs})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
