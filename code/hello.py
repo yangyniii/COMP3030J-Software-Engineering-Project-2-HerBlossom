@@ -644,13 +644,39 @@ def get_all_tags():
 
 @app.route('/search_jobs', methods=['GET'])
 def search_jobs():
-    keyword = request.args.get('keyword', '')  # 从查询字符串中获取搜索关键词
+    # 獲取所有搜索參數
+    keyword = request.args.get('keyword', '')
+    location = request.args.get('location', '')
+    title = request.args.get('title', '')
+    salary = request.args.get('salary', '')
+    education = request.args.get('education', '')
+    tag = request.args.get('tag', '')
+
+    print(f"搜索參數: keyword={keyword}, location={location}, title={title}, salary={salary}, education={education}, tag={tag}")
+
     try:
         db = Mysql()
-        jobs = db.search_jobs_by_keyword(keyword)
-        return jsonify({'jobs': jobs})
+        # 調用數據庫搜索方法
+        jobs = db.search_jobs_by_keyword(keyword, location, title, salary, education, tag)
+        
+        # 打印搜索結果
+        print(f"搜索結果數量: {len(jobs)}")
+        print(f"搜索結果: {jobs}")
+        
+        # 返回JSON格式的結果
+        return jsonify({
+            'success': True,
+            'jobs': jobs,
+            'count': len(jobs)
+        })
     except Exception as e:
-        return jsonify({'success': False, 'message': str(e)})
+        print(f"搜索職位時發生錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': str(e),
+            'jobs': [],
+            'count': 0
+        })
 
 # Set up the basic port for the pages
 if __name__ == '__main__':

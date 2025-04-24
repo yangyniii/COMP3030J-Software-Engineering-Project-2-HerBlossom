@@ -1147,40 +1147,96 @@ class Mysql(object):
             return []
 
 
-    def search_jobs_by_keyword(self, keyword):
-        query = """
-                SELECT job.job_id, \
-                       job.title, \
-                       job.location, \
-                       job.salary, \
-                       job.company,
-                       job.experience, \
-                       job.education, \
-                       job.short_desc, \
-                       job.full_desc, \
-                       job.tags
-                FROM job
-                WHERE job.title LIKE %s
-                   OR job.location LIKE %s
-                   OR job.salary LIKE %s
-                   OR job.company LIKE %s
-                   OR job.experience LIKE %s
-                   OR job.education LIKE %s
-                   OR job.short_desc LIKE %s
-                   OR job.full_desc LIKE %s
-                   OR job.tags LIKE %s \
-                """
-
-        search_term = f"%{keyword}%"  # 构建模糊匹配的搜索关键词
-        self.cursor.execute(query,
-                            (search_term, search_term, search_term, search_term,
-                             search_term, search_term, search_term, search_term, search_term))
-
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
-        results = self.cursor.fetchall()  # 获取所有查询结果
-
-        jobs = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 转换结果为字典格式
-        return jobs
+    def search_jobs_by_keyword(self, keyword, location='', title='', salary='', education='', tag=''):
+        """
+        根據多個條件搜索職位
+        
+        Parameters:
+            keyword (str): 關鍵字
+            location (str): 地點
+            title (str): 職位名稱
+            salary (str): 薪資範圍
+            education (str): 學歷要求
+            tag (str): 標籤
+            
+        Returns:
+            list: 職位列表
+        """
+        conditions = []
+        params = []
+        
+        base_query = """
+            SELECT job.job_id,
+                   job.title,
+                   job.location,
+                   job.salary,
+                   job.company,
+                   job.experience,
+                   job.education,
+                   job.short_desc,
+                   job.full_desc,
+                   job.tags
+            FROM job
+            WHERE 1=1
+        """
+        
+        if keyword:
+            conditions.append("""
+                (job.title LIKE %s
+                OR job.location LIKE %s
+                OR job.company LIKE %s
+                OR job.experience LIKE %s
+                OR job.education LIKE %s
+                OR job.short_desc LIKE %s
+                OR job.full_desc LIKE %s
+                OR job.tags LIKE %s)
+            """)
+            search_term = f"%{keyword}%"
+            params.extend([search_term] * 8)
+            
+        if location:
+            conditions.append("job.location LIKE %s")
+            params.append(f"%{location}%")
+            
+        if title:
+            conditions.append("job.title LIKE %s")
+            params.append(f"%{title}%")
+            
+        if salary:
+            # 處理薪資範圍
+            if salary == "0-10k":
+                conditions.append("job.salary BETWEEN 0 AND 10000")
+            elif salary == "10k-20k":
+                conditions.append("job.salary BETWEEN 10000 AND 20000")
+            elif salary == "20k-30k":
+                conditions.append("job.salary BETWEEN 20000 AND 30000")
+            elif salary == "30k+":
+                conditions.append("job.salary > 30000")
+            
+        if education:
+            conditions.append("job.education LIKE %s")
+            params.append(f"%{education}%")
+            
+        if tag:
+            conditions.append("job.tags LIKE %s")
+            params.append(f"%{tag}%")
+            
+        if conditions:
+            query = base_query + " AND " + " AND ".join(conditions)
+        else:
+            query = base_query
+            
+        query += " ORDER BY job.job_id DESC"
+        
+        try:
+            self.cursor.execute(query, params)
+            columns = [desc[0] for desc in self.cursor.description]
+            results = self.cursor.fetchall()
+            jobs = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
+            return jobs
+        except Exception as e:
+            print(f"搜索職位失敗: {e}")
+            return []
 
 
 
