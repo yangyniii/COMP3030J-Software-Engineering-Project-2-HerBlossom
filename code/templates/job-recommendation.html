@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+@import 'https://fonts.googleapis.com/css?family=Roboto';
 
 <head>
     <!-- Required meta tags -->
@@ -155,12 +156,13 @@
         <div class="d-flex flex-wrap gap-3">
             <div class="filter-tag position-relative">
                 <select class="form-select" id="locationFilter">
-                    <option value="">All Locations</option>
+                    <option value="">Locations</option>
                     <option value="Beijing">Beijing</option>
                     <option value="Shanghai">Shanghai</option>
                     <option value="Shenzhen">Shenzhen</option>
                     <option value="Guangzhou">Guangzhou</option>
                 </select>
+
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="tagFilter">
@@ -173,7 +175,7 @@
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="salaryFilter">
-                    <option value="">All Salaries</option>
+                    <option value="">Salaries</option>
                     <option value="0-10k">0-10k</option>
                     <option value="10k-20k">10k-20k</option>
                     <option value="20k-30k">20k-30k</option>
@@ -182,7 +184,7 @@
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="educationFilter">
-                    <option value="">All Educations</option>
+                    <option value="">Educations</option>
                     <option value="No requirements">No requirements</option>
                     <option value="Junior High">Junior High</option>
                     <option value="High School">High School</option>
@@ -291,6 +293,18 @@
 </section>
 
 <style>
+    @import 'https://fonts.googleapis.com/css?family=Roboto';
+
+
+
+
+/* Add hover shadow effect */
+select.form-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+
+}
+
     .hover-shadow:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -315,6 +329,42 @@
     .job-description li:last-child {
         border-bottom: none;
     }
+
+
+
+
+    select.form-select {
+  display: inline-block;
+  margin: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border: 3px solid #f48ca0; /* 原来是 1px，这里变成三倍 */
+  outline: none;
+  background-color: #fddde6; /* 淡粉色填充 */
+  color: #333333; /* 深灰色字体 */
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9em;
+  font-weight: 300;
+  line-height: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+  width: 200px;
+  letter-spacing: 4px;
+  border-radius: 2px;
+}
+
+/* 保留 hover 和 focus 效果，根据需要也可以改颜色 */
+select.form-select:focus,
+select.form-select:hover {
+  border-color: #ea4c89;
+  background-color: #f8d7da; /* 可选：略微深一点的淡粉 hover 背景 */
+}
+
+select.form-select:active {
+  border-color: #ea4c89;
+  background-color: #f8d7da; /* 保持一致的点击反馈背景 */
+}
 
 </style>
 
