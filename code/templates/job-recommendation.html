@@ -139,7 +139,7 @@
                         <nav aria-label="breadcrumb">
                           <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/index">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Job</li>
+                            <li class="breadcrumb-item active" aria-current="page">Job Recommendation</li>
                           </ol>
                         </nav>
                     </div>
@@ -256,11 +256,11 @@
                         <div class="job-meta d-flex flex-wrap gap-3">
                             <div class="meta-item">
                                 <i class="fas fa-map-marker-alt text-danger"></i>
-                                <strong>Location:</strong>{{ job.location }}
+                                <strong>Location: </strong>{{ job.location }}
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-briefcase text-warning"></i>
-                                <strong>Experience:</strong>{{ job.experience }}
+                                <strong>Experience: </strong>{{ job.experience }}
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-graduation-cap text-info"></i>
@@ -342,15 +342,14 @@ select.form-select:hover {
   background-color: #fddde6; /* 淡粉色填充 */
   color: #333333; /* 深灰色字体 */
   font-family: 'Roboto', sans-serif;
-  font-size: 0.9em;
-  font-weight: 300;
+  font-size: 1.0em;
+  font-weight: 400;
   line-height: 1.5rem;
   text-decoration: none;
-  text-transform: uppercase;
   cursor: pointer;
   transition: all 150ms ease-out;
   width: 200px;
-  letter-spacing: 4px;
+  letter-spacing: 1.6px;
   border-radius: 2px;
 }
 
