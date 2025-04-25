@@ -151,7 +151,7 @@
         </section>
 
        <!-- job-recommendation.html 的内容继续 -->
-<section class="job_filter_section py-4 bg-light">
+<section class="job_filter_section py-4">
     <div class="container">
         <div class="d-flex flex-wrap gap-3">
             <div class="filter-tag position-relative">
@@ -191,12 +191,12 @@
                 </select>
             </div>
             <div class="filter-tag position-relative">
-                <select class="form-select" id="otherFilter">
-                    <option value="">所有標籤</option>
-                    <option value="前端">前端</option>
-                    <option value="後端">後端</option>
-                    <option value="全棧">全棧</option>
-                    <option value="AI">AI</option>
+                <select class="form-select" id="companyFilter">
+                    <option value="">Company</option>
+                    <option value="Express">Express</option>
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Parenting">Parenting</option>
+                    <option value="Cleaning">Cleaning</option>
                 </select>
             </div>
         </div>
@@ -339,7 +339,7 @@ select.form-select:hover {
   padding: 0.75rem 1.5rem;
   border: 3px solid #f48ca0; /* 原来是 1px，这里变成三倍 */
   outline: none;
-  background-color: #fddde6; /* 淡粉色填充 */
+  background-color: #ffe6eb; /* 淡粉色填充 */
   color: #333333; /* 深灰色字体 */
   font-family: 'Roboto', sans-serif;
   font-size: 1.0em;
@@ -414,10 +414,10 @@ select.form-select:active {
                     const searchParams = {
                         keyword: keyword,
                         location: $('#locationFilter').val(),
-                        title: $('#titleFilter').val(),
                         salary: $('#salaryFilter').val(),
                         education: $('#educationFilter').val(),
-                        tag: $('#tagFilter').val()
+                        tag: $('#tagFilter').val(),
+                        company: $('#companyFilter').val()
                     };
 
                     console.log('開始搜索，參數:', searchParams);
