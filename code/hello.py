@@ -651,13 +651,14 @@ def search_jobs():
     salary = request.args.get('salary', '')
     education = request.args.get('education', '')
     tag = request.args.get('tag', '')
+    company = request.args.get('company', '')
 
-    print(f"搜索參數: keyword={keyword}, location={location}, title={title}, salary={salary}, education={education}, tag={tag}")
+    print(f"搜索參數: keyword={keyword}, location={location}, title={title}, salary={salary}, education={education}, tag={tag},company={company}")
 
     try:
         db = Mysql()
         # 調用數據庫搜索方法
-        jobs = db.search_jobs_by_keyword(keyword, location, title, salary, education, tag)
+        jobs = db.search_jobs_by_keyword(keyword, location, title, salary, education, tag,company)
         
         # 打印搜索結果
         print(f"搜索結果數量: {len(jobs)}")

@@ -1147,7 +1147,7 @@ class Mysql(object):
             return []
 
 
-    def search_jobs_by_keyword(self, keyword, location='', title='', salary='', education='', tag=''):
+    def search_jobs_by_keyword(self, keyword, location='', title='', salary='', education='', tag='',company=''):
         """
         根據多個條件搜索職位
         
@@ -1220,6 +1220,10 @@ class Mysql(object):
         if tag:
             conditions.append("job.tags LIKE %s")
             params.append(f"%{tag}%")
+
+        if company:
+            conditions.append("job.company LIKE %s")
+            params.append(f"%{company}%")
             
         if conditions:
             query = base_query + " AND " + " AND ".join(conditions)
