@@ -1204,14 +1204,16 @@ class Mysql(object):
             
         if salary:
             # 處理薪資範圍
-            if salary == "0-10k":
+            if salary == "0-5k":
                 conditions.append("job.salary BETWEEN 0 AND 10000")
-            elif salary == "10k-20k":
-                conditions.append("job.salary BETWEEN 10000 AND 20000")
-            elif salary == "20k-30k":
-                conditions.append("job.salary BETWEEN 20000 AND 30000")
-            elif salary == "30k+":
-                conditions.append("job.salary > 30000")
+            elif salary == "5k-10k":
+                conditions.append("job.salary BETWEEN 5000 AND 10000")
+            elif salary == "10k-15k":
+                conditions.append("job.salary BETWEEN 10000 AND 15000")
+            elif salary == "15k-20k":
+                conditions.append("job.salary BETWEEN 20000 AND 20000")
+            elif salary == "20k+":
+                conditions.append("job.salary > 20000")
             
         if education:
             conditions.append("job.education LIKE %s")

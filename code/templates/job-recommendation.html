@@ -158,28 +158,41 @@
                 <select class="form-select" id="locationFilter">
                     <option value="">Locations</option>
                     <option value="Beijing">Beijing</option>
+                    <option value="Chengdu">Chengdu</option>
+                    <option value="Shenzhen">Shenzhen</option>
+                    <option value="Hangzhou">Hangzhou</option>
+                     <option value="Nanjing">Nanjing</option>
                     <option value="Shanghai">Shanghai</option>
                     <option value="Shenzhen">Shenzhen</option>
-                    <option value="Guangzhou">Guangzhou</option>
+                    <option value="Tianjin">Tianjin</option>
+                    <option value="Wuhan">Wuhan</option>
+
                 </select>
 
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="tagFilter">
-                    <option value="">Tags</option>
+                    <option value="">tags</option>
                     <option value="Care">Care</option>
-                    <option value="Women-Friendly">Women-Friendly</option>
+                     <option value="E-commerce">E-commerce</option>
+                    <option value="Education">Education</option>
+                    <option value="Entry Level">Entry Level</option>
+                    <option value="Express">Express</option>
+                    <option value="Logistics">Logistics</option>
+                    <option value="Parenting">Parenting</option>
+                    <option value="Remote Work">Remote Work</option>
                     <option value="Service">Service</option>
-                    <option value="Packing">Packing</option>
+                     <option value="Tech Jobs">Tech Jobs</option>
                 </select>
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="salaryFilter">
                     <option value="">Salaries</option>
-                    <option value="0-10k">0-10k</option>
-                    <option value="10k-20k">10k-20k</option>
-                    <option value="20k-30k">20k-30k</option>
-                    <option value="30k+">30k+</option>
+                    <option value="0-5k">0-5k</option>
+                    <option value="5k-10k">5k-10k</option>
+                    <option value="10k-15k">10k-15k</option>
+                    <option value="15k-20k">15k-20k</option>
+                    <option value="20k+">20k+</option>
                 </select>
             </div>
             <div class="filter-tag position-relative">
@@ -188,15 +201,24 @@
                     <option value="No requirements">No requirements</option>
                     <option value="Junior High">Junior High</option>
                     <option value="High School">High School</option>
+                    <option value="Bachelor's degree">Bachelor's degree</option>
                 </select>
             </div>
             <div class="filter-tag position-relative">
                 <select class="form-select" id="companyFilter">
                     <option value="">Company</option>
-                    <option value="Express">Express</option>
-                    <option value="Restaurant">Restaurant</option>
-                    <option value="Parenting">Parenting</option>
+                     <option value="AI ">AI </option>
                     <option value="Cleaning">Cleaning</option>
+                    <option value="Express">Express</option>
+                    <option value="Hotel">Hotel</option>
+                      <option value="Logistics">Logistics</option>
+                    <option value="Parenting">Parenting</option>
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Service">Service</option>
+                    <option value="Parenting">Parenting</option>
+
+
+
                 </select>
             </div>
         </div>
@@ -210,7 +232,7 @@
         <div class="left_panel border p-3 bg-white shadow-sm rounded-3" style="width: 40%; height: 1000px; overflow-y: auto; min-width: 400px;">
             <div id="job_list">
                 {% if job_list|length == 0 %}
-                    <p class="text-muted text-center py-4">暫無職位信息</p>
+                    <p class="text-muted text-center py-4">No job listings found. Please try searching again.</p>
                 {% else %}
                     {% for job in job_list %}
                     <div class="job_summary border rounded-3 p-3 mb-3 bg-light shadow-sm hover-shadow transition-all"
@@ -246,7 +268,7 @@
                 {% if job_list|length == 0 %}
                 <div class="text-center py-5">
                     <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
-                    <p class="text-muted">請選擇左側職位查看詳情</p>
+                    <p class="text-muted">No job listings found. Please try searching again.</p>
                 </div>
                 {% else %}
                 {% for job in job_list %}
@@ -436,14 +458,14 @@ select.form-select:active {
                                 }
                             } else {
                                 console.log('Nothing found');
-                                $('#job_list').html('<p class="text-muted text-center py-4">沒有找到相關職位</p>');
-                                $('#job_detail').html('<div class="text-center py-5"><p class="text-muted">請選擇左側職位查看詳情</p></div>');
+                                $('#job_list').html('<p class="text-muted text-center py-4">No job listings found. Please try searching again.</p>');
+                                $('#job_detail').html('<div class="text-center py-5"><p class="text-muted"></p></div>');
                             }
                         },
                         error: function (error) {
                             console.error('Error:', error);
-                            $('#job_list').html('<p class="text-muted text-center py-4">搜索時發生錯誤</p>');
-                            $('#job_detail').html('<div class="text-center py-5"><p class="text-muted">請稍後再試</p></div>');
+                            $('#job_list').html('<p class="text-muted text-center py-4">Search error. Please try again.</p>');
+                            $('#job_detail').html('<div class="text-center py-5"><p class="text-muted">Please try again later.</p></div>');
                         }
                     });
                 }
