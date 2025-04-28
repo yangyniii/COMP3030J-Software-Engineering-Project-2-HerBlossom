@@ -149,7 +149,7 @@
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on {{ featured_job.publish_date if featured_job else 'April 03, 2025' }}</a>
+                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on {{ featured_job.publish_date if featured_job else 'April 28, 2025' }}</a>
                     </div>
                 </div>
             </div>
@@ -299,15 +299,9 @@
                                 <strong>Education：</strong>{{ job.education }}
                             </div>
                         </div>
-                        <div class="job-tags mt-3">
-                            {% for tag in job.tags.split(',') %}
-                            <span class="badge bg-light text-dark border me-2">{{ tag.strip() }}</span>
-                            {% endfor %}
-                        </div>
                     </div>
                     <div class="job-description">
                         <h5 class="mb-3">Description:</h5>
-                        <p><strong></strong></p>
                         <div class="job-tags mb-3">
                             {% for tag in job.tags.split(',') %}
                             <span class="badge bg-light text-dark border me-2">{{ tag.strip() }}</span>
@@ -375,6 +369,15 @@ select.form-select:hover {
         border-bottom: none;
     }
 
+
+.job-tags .badge {
+    background-color: #f7d1d6; /* 深灰色背景 */
+    color: #757575; /* 浅白粉色字体 */
+    border: 2px solid #8c8c8c; /* 浅粉色边框 */
+    border-radius: 15px; /* 圆角 */
+    margin-right: 5px; /* 标签之间的间距 */
+    font-size: 13px; /* 字体大小 */
+}
 
 
 
@@ -547,7 +550,7 @@ select.form-select:active {
                     <h5 class="mb-3">Description:</h5>
                     <div class="job-tags mt-3">
                         ${job.tags.split(',').map(tag =>
-                            `<span class="badge bg-light text-dark border me-2">${tag.trim()}</span>`
+                            `<span class="badge">${tag.trim()}</span>`
                         ).join('')}
                     </div>
                     <ul class="list-unstyled">
