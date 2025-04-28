@@ -135,3 +135,21 @@ CREATE TABLE `blog` (
   INDEX `category`(`category` ASC) USING BTREE,
   INDEX `create_time`(`create_time` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '博客表' ROW_FORMAT = Dynamic;
+
+
+-- Table structure for job
+-- ----------------------------
+DROP TABLE IF EXISTS `job`;
+CREATE TABLE `job` (
+  `job_id` int NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `salary` int DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `experience` varchar(255) DEFAULT NULL,
+  `education` varchar(255) DEFAULT NULL,
+  `short_desc` varchar(255) DEFAULT NULL,
+  `full_desc` text,
+  `tags` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`job_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
