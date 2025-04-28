@@ -234,7 +234,7 @@
 <section class="job_listings_section py-4">
     <div class="container d-flex flex-row gap-4">
         <!-- 左侧职位概览 -->
-        <div class="left_panel border p-3 bg-white shadow-sm rounded-3" style="width: 40%; height: 1000px; overflow-y: auto; min-width: 400px;">
+        <div class="left_panel border p-3 bg-white shadow-sm rounded-3" style="width: 40%; height: 800px; overflow-y: auto; min-width: 400px;">
             <div id="job_list">
                 {% if job_list|length == 0 %}
                     <p class="text-muted text-center py-4">No job listings found. Please try searching again.</p>
@@ -268,7 +268,7 @@
 
         <!-- 右侧详细信息 -->
         <div class="right_panel border p-4 bg-white shadow-sm rounded-3 flex-fill"
-             style="width: 60%; height: 1000px; overflow-y: auto; min-width: 600px;">
+             style="width: 60%; height: 800px; overflow-y: auto; min-width: 600px;">
             <div id="job_detail">
                 {% if job_list|length == 0 %}
                 <div class="text-center py-5">
