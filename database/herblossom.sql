@@ -151,5 +151,8 @@ CREATE TABLE `job` (
   `short_desc` varchar(255) DEFAULT NULL,
   `full_desc` text,
   `tags` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
