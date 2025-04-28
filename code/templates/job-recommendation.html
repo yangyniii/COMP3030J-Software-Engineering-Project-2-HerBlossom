@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+
     <title>HerBlossom</title>
 </head>
 
@@ -272,7 +277,12 @@
                 </div>
                 {% else %}
                 {% for job in job_list %}
-                <div id="{{ job.job_id }}" class="job_detail {% if not loop.first %}d-none{% endif %}">
+                <div
+                        id="{{ job.job_id }}"
+                        class="job_detail {% if not loop.first %}d-none{% endif %}"
+                        data-lat="{{ job.latitude }}"
+                        data-lng="{{ job.longitude }}"
+                >
                     <div class="job-header border-bottom pb-3 mb-4">
                         <h4 class="mb-3">{{ job.title }}</h4>
                         <div class="job-meta d-flex flex-wrap gap-3">
@@ -310,6 +320,10 @@
                 {% endfor %}
                 {% endif %}
             </div>
+
+            <!-- 地图区域 -->
+            <div id="map"
+                 style="width:100%; height:400px; margin-top:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);"></div>
         </div>
     </div>
 </section>
@@ -397,7 +411,9 @@ select.form-select:active {
         <script src="../static/js_test/jquery-3.2.1.min.js"></script>
         <script src="../static/js_test/pre-loader.js"></script>
         <script src="../static/assets/bootstrap/js/popper.min.js"></script>
-        <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script><!-- 引入 Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
         <script src="../static/js_test/parallaxie.js"></script>
         <script src="../static/js_test/TweenMax.min.js"></script>
         <script src="../static/js_test/jquery.wavify.js"></script>
@@ -498,7 +514,8 @@ select.form-select:active {
         `;
 
         detailHtml += `
-            <div id="${job.job_id}" class="job_detail ${index === 0 ? '' : 'd-none'}">
+            <div id="${job.job_id}" class="job_detail ${index === 0 ? '' : 'd-none'}"
+                   data-lat="${job.latitude}" data-lng="${job.longitude}">
                 <div class="job-header border-bottom pb-3 mb-4">
                     <h4 class="mb-3">${job.title}</h4>
                     <div class="job-meta d-flex flex-wrap gap-3">
@@ -548,10 +565,37 @@ select.form-select:active {
                 });
             });
 
+            let map; // 地图对象
+            let marker; // 当前marker
+
             // 展示職位詳情
             function showJobDetail(id) {
                 $('.job_detail').addClass('d-none');
                 $(`#${id}`).removeClass('d-none');
+
+                // 读取经纬度
+                const $detail = $('#' + id);
+                const lat = parseFloat($detail.data('lat'));
+                const lng = parseFloat($detail.data('lng'));
+                if (isNaN(lat) || isNaN(lng)) {
+                    console.warn('The latitude and longitude is invalid.');
+                    return;
+                }
+
+                // 第一次初始化地图
+                if (!map) {
+                  map = L.map('map').setView([lat, lng], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap'
+                  }).addTo(map);
+                  marker = L.marker([lat, lng]).addTo(map);
+                } else {
+                  map.setView([lat, lng], 13);
+                  marker.setLatLng([lat, lng]);
+                  // 强制 Leaflet 重新计算容器尺寸
+                  map.invalidateSize();  // 确保瓦片正确显示 :contentReference[oaicite:7]{index=7}
+                }
+
             }
 
 

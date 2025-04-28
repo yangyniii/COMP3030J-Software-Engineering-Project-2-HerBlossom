@@ -1121,7 +1121,7 @@ class Mysql(object):
         return [row[0] for row in results]
 
     def get_all_jobs(self):
-        sql = "SELECT job_id, title, location, salary, company, experience, education, short_desc, full_desc, tags FROM job"
+        sql = "SELECT job_id, title, location, salary, company, experience, education, short_desc, full_desc, tags, latitude, longitude FROM job"
         try:
             self.cursor.execute(sql)
             jobs = self.cursor.fetchall()
@@ -1139,13 +1139,14 @@ class Mysql(object):
                     'short_desc': job[7],
                     'full_desc': job[8],
                     'tags': job[9],
+                    'latitude': job[10],
+                    'longitude': job[11]
                 })
             print(job_list)
             return job_list
         except Exception as e:
             print(f"查询 job 表失败: {e}")
             return []
-
 
     def search_jobs_by_keyword(self, keyword, location='', title='', salary='', education='', tag='',company=''):
         """
@@ -1175,7 +1176,9 @@ class Mysql(object):
                    job.education,
                    job.short_desc,
                    job.full_desc,
-                   job.tags
+                   job.tags,
+                   job.latitude,
+                   job.longitude
             FROM job
             WHERE 1=1
         """
