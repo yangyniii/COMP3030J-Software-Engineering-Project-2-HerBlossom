@@ -322,6 +322,8 @@
             </div>
 
             <!-- 地图区域 -->
+          <div class="border-top pb-3 mb-3" id="specific-location-line"></div>
+<h5 class="mb-3" id="map-title">Specific Location:</h5>
             <div id="map"
                  style="width:100%; height:400px; margin-top:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);"></div>
         </div>
@@ -404,6 +406,30 @@ select.form-select:active {
   background-color: #f8d7da; /* 保持一致的点击反馈背景 */
 }
 
+    .job-tags .badge {
+    background-color: #f7d1d6; /* 深灰色背景 */
+    color: #757575; /* 浅白粉色字体 */
+    border: 2px solid #8c8c8c; /* 浅粉色边框 */
+    border-radius: 0px; /* 直角边框 */
+    margin-right: 10px; /* 标签之间的间距 */
+    display: inline-flex;         /* 关键：使内部文字居中 */
+    align-items: center;          /* 垂直居中 */
+    justify-content: center;      /* 水平居中 */
+
+    font-size: 14px;
+    padding: 7px 14px;
+    line-height: 1;               /* 避免额外行高 */
+    vertical-align: middle;       /* 保证多个标签在一行时对齐 */
+    transition: all 0.3s ease;    /* 添加平滑过渡效果 */
+}
+
+.job-tags .badge:hover {
+    background-color: #e8a9b0;  /* 鼠标悬停时的背景颜色 */
+    color: #222; /* 鼠标悬停时字体颜色 */
+    border-color: #d4a5a5; /* 鼠标悬停时的边框颜色 */
+    cursor: pointer; /* 鼠标悬停时显示手形光标 */
+}
+
 </style>
 
         <!-- Back to top button -->
@@ -471,6 +497,11 @@ select.form-select:active {
                             
                             if (response.success && response.jobs && response.jobs.length > 0) {
                                 updateJobList(response.jobs);
+                                $('#job_list').show();
+                                $('#job_detail').show();
+                                $('#map').show();
+                                $('#map-title').show(); // 显示地图标题
+                                $('#specific-location-line').show(); // 显示横线
                                 // 顯示第一個職位的詳情
                                 if (response.jobs.length > 0) {
                                     showJobDetail(response.jobs[0].job_id);
@@ -479,12 +510,18 @@ select.form-select:active {
                                 console.log('Nothing found');
                                 $('#job_list').html('<p class="text-muted text-center py-4">No job listings found. Please try searching again.</p>');
                                 $('#job_detail').html('<div class="text-center py-5"><p class="text-muted"></p></div>');
+                                $('#map').hide();
+                                $('#map-title').hide();
+                                $('#specific-location-line').hide(); // 隐藏横线
                             }
                         },
                         error: function (error) {
                             console.error('Error:', error);
                             $('#job_list').html('<p class="text-muted text-center py-4">Search error. Please try again.</p>');
                             $('#job_detail').html('<div class="text-center py-5"><p class="text-muted">Please try again later.</p></div>');
+                            $('#map').hide();
+                            $('#map-title').hide();
+                            $('#specific-location-line').hide(); // 隐藏横线
                         }
                     });
                 }
@@ -535,14 +572,15 @@ select.form-select:active {
                             <strong>Education: </strong>${job.education}
                         </div>
                     </div>
-                    <div class="job-tags mt-3">
-                        ${job.tags.split(',').map(tag =>
-                            `<span class="badge bg-light text-dark border me-2">${tag.trim()}</span>`
-                        ).join('')}
-                    </div>
+
                 </div>
                 <div class="job-description">
                     <h5 class="mb-3">Description:</h5>
+                     <div class="job-tags mt-3">
+                        ${job.tags.split(',').map(tag =>
+                            `<span class="badge">${tag.trim()}</span>`
+                        ).join('')}
+                    </div>
                     <ul class="list-unstyled">
                         ${job.full_desc.split('\n').map(line =>
                             `<li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> ${line}</li>`
