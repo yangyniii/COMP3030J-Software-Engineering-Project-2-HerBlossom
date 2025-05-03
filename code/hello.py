@@ -162,7 +162,7 @@ def profile():
 
     # print("email", session)
     # Render the Profile page
-    return render_template('profile.html')
+    return render_template('Account.html')
 
 
 @app.route('/get_user_info', methods=['GET'])
