@@ -181,8 +181,8 @@ def get_user_info():
     user_email = session.get('email')  # Get the current user's email from the session
 
 # 用于切换按钮
-    # if not user_email:
-    #     return jsonify({'is_logged_in': False}), 200
+    if not user_email:
+        return jsonify({'is_logged_in': False}), 200
 
     user_info = db.get_user_info(user_email)  # Query user information from the database
 
@@ -191,8 +191,8 @@ def get_user_info():
         # Return user information as JSON
         return jsonify({
             # 用于切换按钮
-            # 'is_logged_in': True,
-            'name': user_info['name'],
+            'is_logged_in': True,
+            'name': user_info['username'],
             'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
             'email': user_info['email'],
             'avatar': user_info.get('avatar')
@@ -201,8 +201,8 @@ def get_user_info():
         # If user is not found, return 404
 
         # 用于切换按钮
-        # return jsonify({'is_logged_in': False}), 200
-        return jsonify({'message': 'User not found'}), 404
+        return jsonify({'is_logged_in': False}), 200
+        # return jsonify({'message': 'User not found'}), 404
 
 
 @app.route('/get_user_info_by_id', methods=['GET'])

@@ -538,38 +538,8 @@
 <script src="../static/assets/counterup/jquery.counterup.min.js"></script>
 <script src="../static/assets/counterup/jquery.waypoints.min.js"></script>
 <script src="../static/js_test/main.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const authButton = document.getElementById('auth-button');
+<script src="../static/js/change-button.js"></script>
 
-    // 检查登录状态
-    fetch('/get_user_info')
-        .then(response => response.json())
-        .then(data => {
-            if (data.is_logged_in) {
-                // 用户已登录
-                authButton.textContent = 'Profile';
-                authButton.href = '/profile';
-                authButton.classList.remove('nav_btn');
-                authButton.classList.add('nav_btn_profile');
-            } else {
-                // 用户未登录
-                authButton.textContent = 'Sign In';
-                authButton.href = '/signin';
-                authButton.classList.remove('nav_btn_profile');
-                authButton.classList.add('nav_btn');
-            }
-        })
-        .catch(error => {
-            console.error('Error checking login status:', error);
-            // 发生错误时默认显示登录链接
-            authButton.textContent = 'Sign In';
-            authButton.href = '/signin';
-            authButton.classList.remove('nav_btn_profile');
-            authButton.classList.add('nav_btn');
-        });
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
