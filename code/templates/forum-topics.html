@@ -20,6 +20,21 @@
 </head>
 
 <body data-scroll-animation="true">
+        <div id="ai-float-button" onclick="toggleAIChat()">
+        <img src="../static/img/favicon.ico" alt="AI Assistant" />
+    </div>
+    
+    <div id="ai-chat-popup" class="hidden">
+        <div class="ai-chat-header">
+            <h4>AI Assistant</h4>
+            <button onclick="toggleAIChat()">×</button>
+        </div>
+        <div class="ai-chat-body">
+            <div id="ai-chat-messages"></div>
+            <textarea id="ai-chat-input" placeholder="Ask me anything..."></textarea>
+            <button id="ai-chat-send" onclick="sendAIMessage()">Send</button>
+        </div>
+    </div>
     <div id="preloader">
         <div id="ctn-preloader" class="ctn-preloader">
             <div class="round_spinner">
@@ -85,46 +100,24 @@
                                aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Products
-                            </a>
-                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
-                                data-toggle="dropdown"></i>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+                            <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown_menu_two">
                                 <li class="nav-item">
-                                    <a href="doc-archive.html" class="nav-link">
+                                    <a href="contact.html" class="nav-link">
                                         <img src="../static/img/tick.png" alt="">
                                         <div class="text">
-                                            <h5>HerBlossom</h5>
-                                            <p>Launch Simple Websites</p>
+                                            <h5>Contact Us</h5>
+                                            <p>Send your feedback here!</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="doclist.html" class="nav-link">
+                                    <a href="/about-us" class="nav-link">
                                         <img src="../static/img/sheet.png" alt="">
                                         <div class="text">
-                                            <h5>docall</h5>
-                                            <p>Digital Assets Subscription</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="index.html" class="nav-link">
-                                        <img src="../static/img/shopping-bag.png" alt="">
-                                        <div class="text">
-                                            <h5>Docenvato</h5>
-                                            <p>Tutorials & Courses</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="index.html" class="nav-link">
-                                        <img src="../static/img/gear.png" alt="">
-                                        <div class="text">
-                                            <h5>Tools</h5>
-                                            <p>Hire a Freelancer</p>
+                                            <h5>About Us</h5>
+                                            <p>Want to know more about<br>QUEENs NEVER CRY?</p>
                                         </div>
                                     </a>
                                 </li>
@@ -886,6 +879,32 @@
                 fetchPosts(searchTerm);
             }
         });
+        function toggleAIChat() {
+            const popup = document.getElementById('ai-chat-popup');
+            popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'flex' : 'none';
+        }
+
+        async function sendAIMessage() {
+            const input = document.getElementById('ai-chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesDiv = document.getElementById('ai-chat-messages');
+            messagesDiv.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+            input.value = '';
+
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+            messagesDiv.innerHTML += `<div><strong>AI:</strong> ${data.reply}</div>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
 </script>
 
 </html>
