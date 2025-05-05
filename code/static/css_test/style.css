@@ -10507,3 +10507,83 @@ button.active {
   width: 100%;
   height: 400px; /* 或 50vh、100vh 等 */
 }
+#ai-float-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #ed7595;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#ai-float-button img {
+    width: 50%;
+    height: 50%;
+}
+
+#ai-chat-popup {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#ai-chat-popup.hidden {
+    display: none;
+}
+
+.ai-chat-header {
+    background: #fdcdd9;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-chat-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+}
+
+#ai-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#ai-chat-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#ai-chat-send {
+    background: #fdcdd9;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

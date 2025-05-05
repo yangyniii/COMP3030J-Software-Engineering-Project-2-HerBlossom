@@ -5,15 +5,20 @@ from werkzeug.utils import secure_filename
 import time
 import os
 import time
+import requests
 from datetime import datetime, timedelta
 
 from flask import Flask, request, jsonify, session, render_template, redirect  # 导入 redirect
 import bcrypt
 import logging
+import openai
 from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = '1'  # Set a random secret key
+
+API_KEY = os.getenv("OPENAI_API_KEY", "sk-ZwnpPxT6vBJ5Y8EiHIKHKK6nCvQr1Bjz4ZtnkQHwflUz4zT7")  # 替换为你的 key
+BASE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
 
 
 # Main page route
@@ -539,6 +544,9 @@ def blog_grid_two():
 def forum_topics():
     return render_template('forum-topics.html')
 
+@app.route('/about-us', methods=['GET'])
+def about_us():
+    return render_template('aboutus.html')
 
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
@@ -693,7 +701,38 @@ def search_jobs():
             'jobs': [],
             'count': 0
         })
+    
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    user_message = data.get("message", "")
 
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": user_message}
+        ]
+    }
+
+    try:
+        response = requests.post(BASE_URL, json=payload, headers=headers)
+        response.raise_for_status()
+        result = response.json()
+        reply = result["choices"][0]["message"]["content"]
+        return jsonify({"reply": reply})
+    except Exception as e:
+        return jsonify({"reply": "Sorry, I couldn't process your request."}), 500
+    except Exception as e:
+        # 捕获所有异常并打印详细信息
+        print(f"Unexpected Error: {str(e)}")
+        return jsonify({'reply': 'Error: Unable to process your request.'}), 500
+    
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
