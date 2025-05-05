@@ -47,6 +47,11 @@ def show_index():
     return render_template('index.html')
 
 
+@app.route('/about-us', methods=['GET'])
+def show_about_us():
+    return render_template('aboutus.html')
+
+
 # Login route
 @app.route('/signin', methods=['POST'])
 def sign_in():
@@ -169,12 +174,19 @@ def profile():
 def get_user_info():
     db = Mysql()  # Instantiate the database object
     user_email = session.get('email')  # Get the current user's email from the session
+
+# 用于切换按钮
+    # if not user_email:
+    #     return jsonify({'is_logged_in': False}), 200
+
     user_info = db.get_user_info(user_email)  # Query user information from the database
 
     if user_info:
         # print("Fetched user info:", user_info)
         # Return user information as JSON
         return jsonify({
+            # 用于切换按钮
+            # 'is_logged_in': True,
             'name': user_info['name'],
             'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
             'email': user_info['email'],
@@ -182,6 +194,9 @@ def get_user_info():
         })
     else:
         # If user is not found, return 404
+
+        # 用于切换按钮
+        # return jsonify({'is_logged_in': False}), 200
         return jsonify({'message': 'User not found'}), 404
 
 

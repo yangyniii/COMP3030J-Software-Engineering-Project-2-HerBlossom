@@ -178,7 +178,7 @@
 
 
                 <div class="card">
-                    <a class="index-jump-aboutus" href="aboutus.html">About Us <i class="arrow_right"></i></a>
+                    <a class="index-jump-aboutus" href="/about-us">About Us <i class="arrow_right"></i></a>
                     <p class="index-little-white" data-wow-delay="0.2s">Click to learn more about us.</p>
                 </div>
 
@@ -500,7 +500,7 @@
                         <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
                             <h3 class="f_title">Company</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="Aboutus.html">About Us</a></li>
+                                <li><a href="/about-us">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
 
 <!--                                <li><a href="#">Careers</a></li>-->
@@ -544,15 +544,20 @@
 
     // 检查登录状态
     fetch('/get_user_info')
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.is_logged_in) {
                 // 用户已登录
                 authButton.textContent = 'Profile';
                 authButton.href = '/profile';
+                authButton.classList.remove('nav_btn');
+                authButton.classList.add('nav_btn_profile');
             } else {
                 // 用户未登录
                 authButton.textContent = 'Sign In';
                 authButton.href = '/signin';
+                authButton.classList.remove('nav_btn_profile');
+                authButton.classList.add('nav_btn');
             }
         })
         .catch(error => {
@@ -560,6 +565,8 @@
             // 发生错误时默认显示登录链接
             authButton.textContent = 'Sign In';
             authButton.href = '/signin';
+            authButton.classList.remove('nav_btn_profile');
+            authButton.classList.add('nav_btn');
         });
     });
 </script>
