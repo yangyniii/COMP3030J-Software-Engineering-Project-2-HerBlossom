@@ -116,19 +116,19 @@
             <div class="carousel-container" style="margin-top: 30px;">
                 <div class="carousel-slide">
                     <div class="carousel-item">
-                        <a href="#">
+                        <a href="/blog-list">
                             <img src="../static/img/Blog.png" alt="Blog">
                             <h3>Blog</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="#">
+                        <a href="/forum-topics">
                             <img src="../static/img/Forum-2.png" alt="Forum">
                             <h3>Forum</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="#">
+                        <a href="/job-recommendation">
                             <img src="../static/img/Job.jpg" alt="Job Recommendation">
                             <h3>Job Recommendation</h3>
                         </a>
@@ -538,31 +538,8 @@
 <script src="../static/assets/counterup/jquery.counterup.min.js"></script>
 <script src="../static/assets/counterup/jquery.waypoints.min.js"></script>
 <script src="../static/js_test/main.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const authButton = document.getElementById('auth-button');
+<script src="../static/js/change-button.js"></script>
 
-    // 检查登录状态
-    fetch('/get_user_info')
-        .then(response => {
-            if (response.ok) {
-                // 用户已登录
-                authButton.textContent = 'Profile';
-                authButton.href = '/profile';
-            } else {
-                // 用户未登录
-                authButton.textContent = 'Sign In';
-                authButton.href = '/signin';
-            }
-        })
-        .catch(error => {
-            console.error('Error checking login status:', error);
-            // 发生错误时默认显示登录链接
-            authButton.textContent = 'Sign In';
-            authButton.href = '/signin';
-        });
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
