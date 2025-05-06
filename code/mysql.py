@@ -1247,5 +1247,36 @@ class Mysql(object):
             print(f"搜索職位失敗: {e}")
             return []
 
+    def get_comments_by_post_id(self, post_id):
+        sql = """
+              SELECT comment.*, users.username
+              FROM comment
+                       JOIN users ON comment.user_id = users.user_id -- 修正为 users.user_id
+              WHERE post_id = %s
+              ORDER BY create_time ASC \
+              """
+        self.cursor.execute(sql, (post_id,))
+        comments = self.cursor.fetchall()
+        author_comments = []
+        other_comments = []
+
+        for c in comments:
+            comment_data = {
+                'id': c[0],
+                'post_id': c[1],
+                'user_id': c[2],
+                'content': c[3],
+                'create_time': c[4],
+                'is_author': c[5],
+                'username': c[6]
+            }
+            if c[5]:  # is_author = 1
+                author_comments.append(comment_data)
+            else:
+                other_comments.append(comment_data)
+        return author_comments, other_comments
+
+
+
 
 

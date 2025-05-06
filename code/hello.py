@@ -622,7 +622,7 @@ def forum_single():
 
     if not post:
         return render_template('404.html', message="Post not found"), 404
-    print("Image URLs raw:", post['image_urls'])
+    author_comments, other_comments = db.get_comments_by_post_id(post_id)
 
     return render_template('forum-single.html', post={
         'post_id': post['id'],
@@ -635,7 +635,7 @@ def forum_single():
         'create_time': post['create_time'],
         'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
 
-    })
+    }, author_comments=author_comments, other_comments=other_comments)
 
 @app.route('/life-skills', methods=['GET'])
 def life_skills():
@@ -729,6 +729,32 @@ def chat():
         # 捕获所有异常并打印详细信息
         print(f"Unexpected Error: {str(e)}")
         return jsonify({'reply': 'Error: Unable to process your request.'}), 500
+
+
+@app.route('/add_comment', methods=['POST'])
+def add_comment():
+    post_id = request.form.get('post_id')
+    content = request.form.get('content')
+    user_id = session.get('user_id')  # 假设你已经在登录后设置了 session
+
+    if not all([post_id, content, user_id]):
+        return jsonify({'message': 'Missing data'}), 400
+
+    db = Mysql()
+    post = db.get_post_by_id(post_id)
+    if not post:
+        return jsonify({'message': 'Post not found'}), 404
+
+    is_author = 1 if int(post['user_id']) == int(user_id) else 0
+
+    try:
+        db.insert_comment(post_id, user_id, content, is_author)
+        return jsonify({'message': 'Comment added successfully'}), 200
+    except Exception as e:
+        print(f"Error inserting comment: {e}")
+        return jsonify({'message': 'Error adding comment'}), 500
+
+
     
 # Set up the basic port for the pages
 if __name__ == '__main__':

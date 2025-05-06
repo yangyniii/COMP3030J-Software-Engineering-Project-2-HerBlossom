@@ -20,19 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for comment
 -- ----------------------------
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment`  (
-  `comment_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回答评论ID',
-  `commentable_id` int UNSIGNED NOT NULL COMMENT '评论目标的ID',
-  `commentable_type` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论目标类型：post、comment',
-  `user_id` int UNSIGNED NOT NULL COMMENT '用户ID',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '原始正文内容',
-  `create_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  PRIMARY KEY (`comment_id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `commentable_id`(`commentable_id` ASC) USING BTREE,
-  INDEX `create_time`(`create_time` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
@@ -156,3 +143,16 @@ CREATE TABLE `job` (
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+DROP TABLE IF EXISTS comment;
+
+CREATE TABLE comment (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `post_id` INT UNSIGNED NOT NULL,
+    `user_id` INT UNSIGNED NOT NULL,
+    `content` TEXT NOT NULL,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `is_author` TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (`post_id`) REFERENCES `post`(`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
