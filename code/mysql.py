@@ -1247,11 +1247,23 @@ class Mysql(object):
             print(f"搜索職位失敗: {e}")
             return []
 
+    def insert_comment(self, post_id, user_id, content, is_author):
+        sql = """
+              INSERT INTO comment (post_id, user_id, content, is_author)
+              VALUES (%s, %s, %s, %s) \
+              """
+        try:
+            self.cursor.execute(sql, (post_id, user_id, content, is_author))
+            self.conn.commit()  # 确保提交事务
+        except Exception as e:
+            self.conn.rollback()  # 发生错误时回滚事务
+            raise e
+
     def get_comments_by_post_id(self, post_id):
         sql = """
               SELECT comment.*, users.username
               FROM comment
-                       JOIN users ON comment.user_id = users.user_id -- 修正为 users.user_id
+                       JOIN users ON comment.user_id = users.user_id
               WHERE post_id = %s
               ORDER BY create_time ASC \
               """

@@ -209,6 +209,8 @@ def get_user_info():
 def get_user_info_by_id():
     user_id = request.args.get('user_id')  # 从查询参数获取 user_id
     print(f"Received user_id: {user_id}")
+    print(f"Session user_id: {session.get('user_id')}")
+
     if not user_id:
         return jsonify({'message': 'User ID is required'}), 400  # 如果 user_id 为空，则返回 400
 
@@ -735,7 +737,7 @@ def chat():
 def add_comment():
     post_id = request.form.get('post_id')
     content = request.form.get('content')
-    user_id = session.get('user_id')  # 假设你已经在登录后设置了 session
+    user_id = session.get('user_id')
 
     if not all([post_id, content, user_id]):
         return jsonify({'message': 'Missing data'}), 400
@@ -748,12 +750,21 @@ def add_comment():
     is_author = 1 if int(post['user_id']) == int(user_id) else 0
 
     try:
+        # 插入评论
         db.insert_comment(post_id, user_id, content, is_author)
-        return jsonify({'message': 'Comment added successfully'}), 200
+
+        # 获取评论列表
+        author_comments, other_comments = db.get_comments_by_post_id(post_id)
+
+        # 返回成功消息和评论数据
+        return jsonify({
+            'message': 'Comment added successfully',
+            'author_comments': author_comments,
+            'other_comments': other_comments
+        }), 200
     except Exception as e:
         print(f"Error inserting comment: {e}")
         return jsonify({'message': 'Error adding comment'}), 500
-
 
     
 # Set up the basic port for the pages
