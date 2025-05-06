@@ -544,9 +544,6 @@ def blog_grid_two():
 def forum_topics():
     return render_template('forum-topics.html')
 
-@app.route('/about-us', methods=['GET'])
-def about_us():
-    return render_template('aboutus.html')
 
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
