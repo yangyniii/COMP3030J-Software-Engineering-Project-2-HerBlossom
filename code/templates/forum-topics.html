@@ -17,6 +17,30 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Topics</title>
+    <style>
+        .like-button {
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .like-button.liked {
+            color: #ff4444 !important;
+        }
+
+        .like-button:hover {
+            color: #ff4444;
+        }
+
+        .like-button i {
+            margin-right: 5px;
+        }
+
+        .likes-count {
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -749,7 +773,12 @@
                 <div class="post-meta-wrapper">
                     <ul class="post-meta-info">
                         <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
-                        <li><a href="#"><i class="icon_star"></i>5</a></li>
+                        <li>
+                            <a href="#" class="like-button" data-post-id="${post.post_id}" onclick="toggleLike(event, ${post.post_id})">
+                                <i class="icon_heart"></i>
+                                <span class="likes-count">0</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             `;
@@ -757,6 +786,9 @@
 
             const userLink = postItem.querySelector('a[data-userid]');
             fetchUserAndSetUsername(post.user_id, userLink);
+            
+            // 獲取點讚信息
+            fetchPostLikes(post.post_id);
         });
     }
 
@@ -906,6 +938,68 @@
             messagesDiv.innerHTML += `<div><strong>AI:</strong> ${data.reply}</div>`;
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
+
+    async function fetchPostLikes(postId) {
+        try {
+            const response = await fetch(`/get_post_likes?post_id=${postId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
+                if (likeButton) {
+                    const likesCount = likeButton.querySelector('.likes-count');
+                    likesCount.textContent = data.likes_count;
+                    
+                    // 根據用戶是否點讚來設置按鈕顏色
+                    if (data.has_liked) {
+                        likeButton.classList.add('liked');
+                    } else {
+                        likeButton.classList.remove('liked');
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching post likes:', error);
+        }
+    }
+
+    async function toggleLike(event, postId) {
+        event.preventDefault();
+        
+        try {
+            const response = await fetch('/toggle_like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ post_id: postId })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // 刷新頁面
+                window.location.reload();
+                const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
+                
+                if (likeButton) {
+                    const likesCount = likeButton.querySelector('.likes-count');
+                    likesCount.textContent = data.likes_count;
+                    
+                    if (data.has_liked) {
+                        likeButton.classList.add('liked');
+                    } else {
+                        likeButton.classList.remove('liked');
+                    }
+                }
+            } else {
+                alert(data.message || '操作失敗');
+            }
+        } catch (error) {
+            console.error('Error toggling like:', error);
+            alert('操作失敗，請稍後重試');
+        }
+    }
 </script>
 
 </html>

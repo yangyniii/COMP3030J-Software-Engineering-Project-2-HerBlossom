@@ -17,6 +17,34 @@
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Single</title>
+    <style>
+        .like-button {
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .like-button.liked {
+            color: #ff4444 !important;
+        }
+
+        .like-button:hover {
+            color: #ff4444;
+        }
+
+        .like-button i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+
+        .likes-count {
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -219,6 +247,14 @@
 
                                 <div class="taxonomy forum-post-cat">
                                     <img src="../static/img/forum/logo-favicon.png" alt=""><a href="#">HerBlossom Support</a>
+                                </div>
+                                
+                                <!-- 添加點讚按鈕 -->
+                                <div class="post-actions">
+                                    <a href="#" class="like-button" data-post-id="{{ post.post_id }}" onclick="toggleLike(event, {{ post.post_id }})">
+                                        <i class="icon_heart"></i>
+                                        <span class="likes-count">0</span>
+                                    </a>
                                 </div>
                             </div>
 
@@ -513,6 +549,64 @@ fetch(`/get_user_info_by_id?user_id=${user_id}`)
                   alert('Error adding comment');
               }
           });
+    });
+
+    async function toggleLike(event, postId) {
+        event.preventDefault();
+        
+        try {
+            const response = await fetch('/toggle_like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ post_id: postId })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // 刷新頁面
+                window.location.reload();
+            } else {
+                alert(data.message || '操作失敗');
+            }
+        } catch (error) {
+            console.error('Error toggling like:', error);
+            alert('操作失敗，請稍後重試');
+        }
+    }
+
+    async function fetchPostLikes(postId) {
+        try {
+            const response = await fetch(`/get_post_likes?post_id=${postId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
+                if (likeButton) {
+                    const likesCount = likeButton.querySelector('.likes-count');
+                    likesCount.textContent = data.likes_count;
+                    
+                    // 根據用戶是否點讚來設置按鈕顏色
+                    if (data.has_liked) {
+                        likeButton.classList.add('liked');
+                    } else {
+                        likeButton.classList.remove('liked');
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching post likes:', error);
+        }
+    }
+
+    // 頁面加載時獲取點讚信息
+    document.addEventListener('DOMContentLoaded', function() {
+        const postId = document.querySelector('.like-button').getAttribute('data-post-id');
+        if (postId) {
+            fetchPostLikes(postId);
+        }
     });
 
 </script>

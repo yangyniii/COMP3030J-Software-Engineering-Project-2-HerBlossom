@@ -767,6 +767,56 @@ def add_comment():
         return jsonify({'message': 'Error adding comment'}), 500
 
     
+@app.route('/toggle_like', methods=['POST'])
+def toggle_like():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '無效的請求數據'})
+            
+        post_id = data.get('post_id')
+        if not post_id:
+            return jsonify({'success': False, 'message': '缺少帖子ID'})
+            
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'success': False, 'message': '請先登錄'})
+            
+        db = Mysql()
+        try:
+            is_liked = db.toggle_post_like(post_id, user_id)
+            likes_count = db.get_post_likes_count(post_id)
+            
+            return jsonify({
+                'success': True,
+                'is_liked': is_liked,
+                'likes_count': likes_count
+            })
+        except Exception as e:
+            print(f"數據庫操作錯誤: {str(e)}")
+            return jsonify({'success': False, 'message': f'數據庫操作失敗: {str(e)}'})
+    except Exception as e:
+        print(f"處理點讚請求時發生錯誤: {str(e)}")
+        return jsonify({'success': False, 'message': '操作失敗，請稍後重試'})
+
+@app.route('/get_post_likes', methods=['GET'])
+def get_post_likes():
+    try:
+        post_id = request.args.get('post_id')
+        user_id = session.get('user_id')
+        
+        db = Mysql()
+        likes_count = db.get_post_likes_count(post_id)
+        has_liked = db.has_user_liked_post(post_id, user_id) if user_id else False
+        
+        return jsonify({
+            'success': True,
+            'likes_count': likes_count,
+            'has_liked': has_liked
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
