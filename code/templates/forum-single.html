@@ -49,7 +49,18 @@
             font-size: 14px;
         }
 
+.reply-box {
+        position: relative; /* 设置为相对定位，用于控制内部绝对定位元素 */
+    }
 
+    .btn-container {
+        position: absolute;
+        bottom: -40px; /* 距离底部5px */
+        right: 5px; /* 距离右侧5px */
+        display: flex;
+        gap: 15px; /* 按钮间距 */
+
+    }
 .reply-btn {
         background-color: #FFE6F0; /* 浅粉色背景 */
         border: 2px solid #d88a94; /* 深粉色边框 */
@@ -59,7 +70,8 @@
         font-size: 16px; /* 字体大小 */
         cursor: pointer; /* 鼠标悬停时显示为指针 */
         transition: all 0.3s ease; /* 平滑过渡效果 */
-        text-decoration: none !important
+        text-decoration: none !important;
+        margin-top: 10px; /* 与上方空白行的距离 */
     }
 
     .reply-btn:hover {
@@ -72,6 +84,51 @@
 .reply-btn {
         font-family: 'Comic Sans MS', sans-serif;
     }
+
+
+.send-btn {
+        background-color: #D0E7FF; /* 蓝色背景 */
+        border: 2px solid #66B3FF; /* 蓝色边框 */
+        color: #4A90E2; /* 蓝色字体 */
+        border-radius: 20px; /* 圆角 */
+        padding: 6px 15px; /* 按钮内边距 */
+        font-size: 16px; /* 字体大小 */
+        cursor: pointer; /* 鼠标悬停时显示为指针 */
+        transition: all 0.3s ease; /* 平滑过渡效果 */
+        text-decoration: none !important; /* 去掉下划线 */
+    }
+
+    .send-btn:hover {
+         color: #66B3FF; /* 鼠标悬停时字体颜色变为灰色 */
+         border-color: #4A90E2; /* 鼠标悬停时边框颜色变为灰色 */
+         background-color: #E0F2FF; /* 鼠标悬停时背景变为浅蓝色 */
+    }
+
+    /* Cancel 按钮样式 */
+    .cancel-btn {
+        background-color: #FFEBEB; /* 红色背景 */
+        border: 2px solid #FF6B6B; /* 红色边框 */
+        color: #F44336; /* 红色字体 */
+        border-radius: 20px; /* 圆角 */
+        padding: 6px 15px; /* 按钮内边距 */
+        font-size: 16px; /* 字体大小 */
+        cursor: pointer; /* 鼠标悬停时显示为指针 */
+        transition: all 0.3s ease; /* 平滑过渡效果 */
+        text-decoration: none !important; /* 去掉下划线 */
+    }
+
+    .cancel-btn:hover {
+        border: 2px solid #FF6B6B; /* 红色边框 */
+        color: #F44336; /* 鼠标悬停时边框颜色变为灰色 */
+background-color: #FFE5E5;
+        /* background-color: #FFA1A1; /* 鼠标悬停时背景变为浅红色 */
+    }
+
+    /* 通用字体样式 */
+    .send-btn, .cancel-btn {
+        font-family: 'Comic Sans MS', sans-serif; /* 统一使用艺术字 */
+    }
+
     </style>
 </head>
 
@@ -305,6 +362,7 @@
 
 
                             <!-- 回复按钮 -->
+                            <div style="margin-bottom: 10px;"></div>
                             <button class="btn btn-link reply-btn">Comment</button>
 
                             <!-- 回复输入框（默认隐藏） -->
@@ -313,9 +371,10 @@
                                     <textarea name="content" id="reply-content" rows="3" style="width: 100%;"
                                               placeholder="Enter your reply..."></textarea>
                                     <input type="hidden" id="reply-post-id" value="{{ post.post_id }}">
-                                    <div style="margin-top: 5px;">
-                                        <button type="submit" class="btn btn-primary">Send</button>
-                                        <button type="button" id="cancel-reply" class="btn btn-secondary">Cancel
+                                    <div class="btn-container">
+                                        <button type="submit" class="btn btn-primary send-btn">Send</button>
+                                        <button type="button" id="cancel-reply" class="btn btn-secondary cancel-btn">
+                                            Cancel
                                         </button>
                                     </div>
                                 </form>
