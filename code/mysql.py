@@ -1265,7 +1265,7 @@ class Mysql(object):
               FROM comment
                        JOIN users ON comment.user_id = users.user_id
               WHERE post_id = %s
-              ORDER BY create_time ASC \
+              ORDER BY create_time DESC
               """
         self.cursor.execute(sql, (post_id,))
         comments = self.cursor.fetchall()
