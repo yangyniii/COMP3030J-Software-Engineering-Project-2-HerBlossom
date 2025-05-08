@@ -1241,6 +1241,15 @@ text-shadow: none;
 .ml1 .line1 { top: 0; }
 .ml1 .line2 { bottom: 0; }
 
+.about-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;           /* 关键：让 <a> 成为块级元素 */
+  width: fit-content;
+  margin: 0 auto;           /* 居中显示 */
+}
+
+
 .about-card {
     display: flex;
     flex-direction: column;
@@ -1253,7 +1262,7 @@ text-shadow: none;
     background: white;
     border-radius: 75px;
     font-family: "Montserrat", sans-serif;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: lighter;
     letter-spacing: 1px;
     text-align: center;
