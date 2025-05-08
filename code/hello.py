@@ -65,6 +65,7 @@ def sign_in():
         if not data:
             return jsonify({'message': 'Invalid data format'}), 400
 
+
         email = data.get('email')
         password = data.get('password')
 
