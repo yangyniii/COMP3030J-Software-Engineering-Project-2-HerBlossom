@@ -63,6 +63,7 @@
     flex: 0 0 33.3%;  /* 每个item占1/3宽度 */
     box-sizing: border-box;
     padding: 20px;
+    margin-top: 30px;
     flex-shrink: 0;     /* 防止轮播项被压缩 */
     text-align: center; /* 文本居中 */
     display: flex;      /* 弹性布局 */
@@ -101,6 +102,7 @@
     display: flex;        /* 弹性布局 */
     justify-content: center;  /* 水平居中 */
     margin-top: 20px;     /* 顶部外边距20px */
+    margin-bottom: 20px;
 }
 
 

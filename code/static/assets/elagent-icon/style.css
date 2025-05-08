@@ -1218,6 +1218,7 @@ text-shadow: none;
   font-style: italic;
   display: inline-block;
   line-height: 1em;
+	font-size: 70px;
 }
 
 .ml1 .text-wrapper {
