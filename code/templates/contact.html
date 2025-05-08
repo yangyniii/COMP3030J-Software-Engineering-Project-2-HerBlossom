@@ -10,33 +10,33 @@
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <!-- icon css_test-->
     <link rel="stylesheet" href="../static/assets/elagent-icon/style.css">
-    <link rel="stylesheet" href="../static/assets/font-awesome/css/all.css">
-    <link rel="stylesheet" href="../static/assets/niceselectpicker/nice-select.css">
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
-    <link rel="stylesheet" href="../static/assets/mcustomscrollbar/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="../static/css_test/style.css">
     <link rel="stylesheet" href="../static/css_test/responsive.css">
+
+<!--    additional css-->
+    <link rel="stylesheet" href="../static/css_new/index.css">
     <title>HerBlossom</title>
 </head>
 
-<body data-spy="scroll" data-target="#navbar-example3" data-offset="86" data-scroll-animation="true">
-    <div id="preloader">
-        <div id="ctn-preloader" class="ctn-preloader">
-            <div class="round_spinner">
-                <div class="spinner"></div>
-                <div class="text">
-                    <img src="../static/img/spinner_logo.png" alt="">
-                    <h4><span>kb</span>Doc</h4>
-                </div>
+<body data-scroll-animation="true">
+<div id="preloader">
+    <div id="ctn-preloader" class="ctn-preloader">
+        <div class="round_spinner">
+            <div class="spinner"></div>
+            <div class="text">
+                <img src="../static/img/spinner_logo.png" alt="">
+                <h4><span>Her</span>Blossom</h4>
             </div>
-            <h2 class="head">Did You Know?</h2>
-            <p></p>
         </div>
+        <h2 class="head">Welcome Girls! </h2>
+        <p></p>
     </div>
-    <div class="body_wrapper">
-        <nav class="navbar navbar-expand-lg menu_two" id="sticky">
+</div>
+<div class="body_wrapper">
+    <nav class="navbar navbar-expand-lg menu_two" id="sticky">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/index">
                 <img src="../static/img/logo.png" srcset="../static/img/logo-2x.png 2x" alt="logo">
             </a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
@@ -58,79 +58,33 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav menu ml-auto">
                         <li class="nav-item dropdown submenu">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+                            <a href="/index" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu">
-                               <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                            </ul>
+<!--?                            <ul class="dropdown-menu">-->
+<!--?                               <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>-->
+<!--?                            </ul>-->
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
+                            <a href="/forum-topics" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="true" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-lg-5 tabHeader">
-                                            <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                <li class="nav-item active">
-                                                    <a class="nav-link active" id="v-pills-doc-tab" data-toggle="pill" href="#v-pills-doc" role="tab" aria-controls="v-pills-doc" aria-selected="true">Forum</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="v-pills-code-tab" data-toggle="pill" href="#v-pills-code" role="tab" aria-controls="v-pills-code" aria-selected="false">Blogs</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="v-pills-layout-tab" data-toggle="pill" href="#v-pills-layout" role="tab" aria-controls="v-pills-layout" aria-selected="false">Jobs Recommendation</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-7">
-                                            <div class="tab-content tabContent" id="v-pills-tabContent">
-                                                <div class="tab-pane fade active show" id="v-pills-doc" role="tabpanel" aria-labelledby="v-pills-doc-tab">
-                                                    <div class="d-flex">
-                                                        <ul class="list-unstyled tab_list">
-                                                            <li>
-                                                                 <a href="/forum-topics">Forum Community</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="blog.html">Official Blogs</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href="index.html"><p>Home</p></a>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-code" role="tabpanel" aria-labelledby="v-pills-code-tab">
-                                                    <div class="d-flex">
-                                                        <ul class="list-unstyled tab_list">
-                                                            <li><a href="life-skills.html">Life Skills</a></li>
-                                                            <li><a href="physical-health.html">Physical Health</a></li>
-                                                            <li><a href="mental-health.html">Mental Health</a></li>
-                                                            <li><a href="tab.html">Tables</a></li>
-                                                            <li><a href="image-pointing.html">Image Lightbox</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href="index.html"><p>Home</p></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu mega_menu tab-demo">
+                            <a href="/blog" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Blog</a>
+                        </li>
+                        <li class="nav-item dropdown submenu mega_menu tab-demo">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Products
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown_menu_two">
                                 <li class="nav-item">
-                                    <a href="contact.html" class="nav-link">
+                                    <a href="/contact-us" class="nav-link">
                                         <img src="../static/img/tick.png" alt="">
                                         <div class="text">
-                                            <h5>Content Us</h5>
+                                            <h5>Contact Us</h5>
                                             <p>Send your feedback here!</p>
                                         </div>
                                     </a>
@@ -147,22 +101,21 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav_btn" href="/signin" id="auth-button">Sign In</a>
+                    <a class="nav_btn" href="/signin" id="signin-link">Sign In</a>
                 </div>
             </div>
         </nav>
         <section class="breadcrumb_area breadcrumb_area_four">
             <img class="p_absolute bl_left" src="../static/img/v.svg" alt="">
             <img class="p_absolute bl_right" src="../static/img/home_one/b_leaf.svg" alt="">
-            <img class="p_absolute one wow fadeInRight" src="../static/img/home_one/b_man_two.png" alt="">
+            <img class="p_absolute one wow fadeInRight" src="../static/img/home_one/girl_img.png" alt="">
             <div class="container">
                 <div class="breadcrumb_content_two text-center">
-                    <h2>Contact</h2>
+                    <h2>Contact Us</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                            <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
                         </ol>
                     </nav>
                 </div>
@@ -188,7 +141,7 @@
                             <div class="time">
                                 Expected response time: <span>72 hours</span>
                             </div>
-                            <a href="#" class="doc_border_btn doc_border_btn_two">Email Us</a>
+                            <a href="https://mail.google.com/mail" class="doc_border_btn doc_border_btn_two">Email Us</a>
                         </div>
                     </div>
                     <div class="row get_info_item align-items-center justify-content-between">
@@ -205,7 +158,7 @@
                             <div class="time">
                                 Expected response time: <span>72 hours</span>
                             </div>
-                            <a href="#" class="doc_border_btn doc_border_btn_two">Send Us a Tweet</a>
+                            <a href="https://www.x.com/" class="doc_border_btn doc_border_btn_two">Send Us a Tweet</a>
                         </div>
                     </div>
                     <div class="row get_info_item align-items-center justify-content-between">
@@ -222,16 +175,16 @@
                             <div class="time">
                                 Expected response time: <span>72 hours</span>
                             </div>
-                            <a href="#" class="doc_border_btn doc_border_btn_two">Ask The Community</a>
+                            <a href="/forum" class="doc_border_btn doc_border_btn_two">Ask The Community</a>
                         </div>
                     </div>
                 </div>
                 <div class="contact_info">
                     <div class="section_title text-left">
                         <h2 class="h_title wow fadeInUp">Let’s start the conversation</h2>
-                        <p>Please email us, we’ll happy to assist you.</p>
+                        <p>Please email us, we’ll be happy to assist you.</p>
                     </div>
-                    <form action="#" class="contact_form">
+                    <form action="/index" class="contact_form">
                         <div class="form-group">
                             <h6>What type of project you need?</h6>
                             <div class="box_info">
@@ -368,13 +321,15 @@
                 </div>
             </div>
         </section>
-            <footer class="footer_area footer_p_top f_bg_color">
+    <footer class="footer_area footer_p_top f_bg_color">
         <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
-        <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png" alt="">
+        <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png"
+             alt="">
         <img class="p_absolute f_cloud" src="../static/img/home_two/cloud.png" alt="">
         <img class="p_absolute f_email" src="../static/img/home_two/email-icon.png" alt="">
         <img class="p_absolute f_email_two" src="../static/img/home_two/email-icon_two.png" alt="">
-        <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="../static/img/home_two/man.png" alt="">
+        <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="../static/img/home_two/man.png"
+             alt="">
         <div class="footer_top">
             <div class="container">
                 <div class="row">
@@ -400,16 +355,16 @@
                         <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
                             <h3 class="f_title">HerBlossom Pages</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="signin.html">Sign In</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="forums.html">Forum</a></li>
-                                <li><a href="#">Job Recommendation</a></li>
+                                <li><a href="/index">Home</a></li>
+                                <li><a href="/signin">Sign In</a></li>
+                                <li><a href="/blog">Blog</a></li>
+                                <li><a href="/forum">Forum</a></li>
+                                <li><a href="/job-recommendation">Job Recommendation</a></li>
 
-<!--                                <li><a href="changelog.html">Changelog</a></li>-->
-<!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
-<!--                                <li><a href="#">Conversion Tracking</a></li>-->
-<!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
+                                <!--                                <li><a href="changelog.html">Changelog</a></li>-->
+                                <!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
+                                <!--                                <li><a href="#">Conversion Tracking</a></li>-->
+                                <!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -421,10 +376,9 @@
                                 <li><a href="life-skills.html">Life Skills</a></li>
                                 <li><a href="physical-health.html">Physical Health</a></li>
                                 <li><a href="mental-health.html">Mental Health</a></li>
-                                <li><a href="tab.html">Tables</a></li>
-<!--                                <li><a href="#">Image Lightbox</a></li>-->
-<!--                                <li><a href="#">iOS & Android</a></li>-->
-<!--                                <li><a href="#">Messages</a></li>-->
+                                <!--                                <li><a href="#">Image Lightbox</a></li>-->
+                                <!--                                <li><a href="#">iOS & Android</a></li>-->
+                                <!--                                <li><a href="#">Messages</a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -434,11 +388,11 @@
                             <h3 class="f_title">Company</h3>
                             <ul class="list-unstyled link_list">
                                 <li><a href="/about-us">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="/contact-us">Contact Us</a></li>
 
-<!--                                <li><a href="#">Careers</a></li>-->
-<!--                                <li><a href="#">HerBlossom for Good</a></li>-->
-<!--                                <li><a href="#">Contact Us</a></li>-->
+                                <!--                                <li><a href="#">Careers</a></li>-->
+                                <!--                                <li><a href="#">HerBlossom for Good</a></li>-->
+                                <!--                                <li><a href="#">Contact Us</a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -449,7 +403,7 @@
         </div>
         <div class="footer_bottom text-center">
             <div class="container">
-                <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+                <p>© 2025 All Rights Reserved by <a href="/index">HerBlossom</a></p>
             </div>
         </div>
     </footer>
