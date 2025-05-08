@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="../static/css_test/responsive.css">
     <title>HerBlossom - Forum Single</title>
     <style>
+
+
+
+
         .like-button {
             cursor: pointer;
             color: #999;
@@ -44,6 +48,30 @@
         .likes-count {
             font-size: 14px;
         }
+
+
+.reply-btn {
+        background-color: #FFE6F0; /* 浅粉色背景 */
+        border: 2px solid #d88a94; /* 深粉色边框 */
+        color: #a64f5f; /* 深粉色字体 */
+        border-radius: 20px; /* 圆角 */
+        padding: 6px 15px; /* 按钮内边距 */
+        font-size: 16px; /* 字体大小 */
+        cursor: pointer; /* 鼠标悬停时显示为指针 */
+        transition: all 0.3s ease; /* 平滑过渡效果 */
+        text-decoration: none !important
+    }
+
+    .reply-btn:hover {
+        color: #707070; /* 鼠标悬停时字体颜色变为黑色 */
+    border-color: #707070;
+    background-color:#FFCCE5;
+
+    }
+
+.reply-btn {
+        font-family: 'Comic Sans MS', sans-serif;
+    }
     </style>
 </head>
 
@@ -275,6 +303,7 @@
                                 {% endif %}
 
 
+
                             <!-- 回复按钮 -->
                             <button class="btn btn-link reply-btn">Comment</button>
 
@@ -294,7 +323,7 @@
 
                             <!-- 评论显示区域 -->
                             <div class="best-answer">
-                                <h4>作者评论：</h4>
+                                <h4>From Author：</h4>
                                 {% for comment in author_comments %}
                                 <div class="comment">
                                     <p><strong>{{ comment.username }}</strong>（作者）:</p>
@@ -305,7 +334,7 @@
                             </div>
 
                             <div class="other-comments">
-                                <h4>其他用户评论：</h4>
+                                <h4>From others：</h4>
                                 {% for comment in other_comments %}
                                 <div class="comment">
                                     <p><strong>{{ comment.username }}</strong>:</p>
