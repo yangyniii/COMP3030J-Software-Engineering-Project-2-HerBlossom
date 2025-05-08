@@ -1247,5 +1247,126 @@ class Mysql(object):
             print(f"搜索職位失敗: {e}")
             return []
 
+    def insert_comment(self, post_id, user_id, content, is_author):
+        sql = """
+              INSERT INTO comment (post_id, user_id, content, is_author)
+              VALUES (%s, %s, %s, %s) \
+              """
+        try:
+            self.cursor.execute(sql, (post_id, user_id, content, is_author))
+            self.conn.commit()  # 确保提交事务
+        except Exception as e:
+            self.conn.rollback()  # 发生错误时回滚事务
+            raise e
+
+    def get_comments_by_post_id(self, post_id):
+        sql = """
+              SELECT comment.*, users.username
+              FROM comment
+                       JOIN users ON comment.user_id = users.user_id
+              WHERE post_id = %s
+              ORDER BY create_time DESC
+              """
+        self.cursor.execute(sql, (post_id,))
+        comments = self.cursor.fetchall()
+        author_comments = []
+        other_comments = []
+
+        for c in comments:
+            comment_data = {
+                'id': c[0],
+                'post_id': c[1],
+                'user_id': c[2],
+                'content': c[3],
+                'create_time': c[4],
+                'is_author': c[5],
+                'username': c[6]
+            }
+            if c[5]:  # is_author = 1
+                author_comments.append(comment_data)
+            else:
+                other_comments.append(comment_data)
+        return author_comments, other_comments
+
+    def toggle_post_like(self, post_id, user_id):
+        """
+        切換帖子的點讚狀態
+        
+        Args:
+            post_id (int): 帖子ID
+            user_id (int): 用戶ID
+            
+        Returns:
+            bool: 是否點讚成功
+        """
+        try:
+            # 檢查是否已經點讚
+            check_sql = "SELECT id FROM post_likes WHERE post_id = %s AND user_id = %s"
+            self.cursor.execute(check_sql, (post_id, user_id))
+            existing_like = self.cursor.fetchone()
+            
+            if existing_like:
+                # 如果已經點讚，則取消點讚
+                delete_sql = "DELETE FROM post_likes WHERE post_id = %s AND user_id = %s"
+                self.cursor.execute(delete_sql, (post_id, user_id))
+                self.conn.commit()
+                print(f"Successfully unliked post {post_id} by user {user_id}")
+                return False
+            else:
+                # 如果沒有點讚，則添加點讚
+                insert_sql = "INSERT INTO post_likes (post_id, user_id) VALUES (%s, %s)"
+                self.cursor.execute(insert_sql, (post_id, user_id))
+                self.conn.commit()
+                print(f"Successfully liked post {post_id} by user {user_id}")
+                return True
+        except Exception as e:
+            print(f"Error toggling post like: {e}")
+            self.conn.rollback()
+            raise Exception(f"數據庫操作失敗: {str(e)}")
+        finally:
+            try:
+                self.cursor.close()
+            except:
+                pass
+
+    def get_post_likes_count(self, post_id):
+        """
+        獲取帖子的點讚數量
+        
+        Args:
+            post_id (int): 帖子ID
+            
+        Returns:
+            int: 點讚數量
+        """
+        try:
+            sql = "SELECT COUNT(*) FROM post_likes WHERE post_id = %s"
+            self.cursor.execute(sql, (post_id,))
+            return self.cursor.fetchone()[0]
+        except Exception as e:
+            print(f"Error getting post likes count: {e}")
+            return 0
+
+    def has_user_liked_post(self, post_id, user_id):
+        """
+        檢查用戶是否已經點讚過帖子
+        
+        Args:
+            post_id (int): 帖子ID
+            user_id (int): 用戶ID
+            
+        Returns:
+            bool: 是否已點讚
+        """
+        try:
+            sql = "SELECT id FROM post_likes WHERE post_id = %s AND user_id = %s"
+            self.cursor.execute(sql, (post_id, user_id))
+            return self.cursor.fetchone() is not None
+        except Exception as e:
+            print(f"Error checking post like status: {e}")
+            return False
+
+
+
 
 

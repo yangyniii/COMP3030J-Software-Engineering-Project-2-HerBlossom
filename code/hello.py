@@ -65,6 +65,7 @@ def sign_in():
         if not data:
             return jsonify({'message': 'Invalid data format'}), 400
 
+
         email = data.get('email')
         password = data.get('password')
 
@@ -209,6 +210,8 @@ def get_user_info():
 def get_user_info_by_id():
     user_id = request.args.get('user_id')  # 从查询参数获取 user_id
     print(f"Received user_id: {user_id}")
+    print(f"Session user_id: {session.get('user_id')}")
+
     if not user_id:
         return jsonify({'message': 'User ID is required'}), 400  # 如果 user_id 为空，则返回 400
 
@@ -622,7 +625,7 @@ def forum_single():
 
     if not post:
         return render_template('404.html', message="Post not found"), 404
-    print("Image URLs raw:", post['image_urls'])
+    author_comments, other_comments = db.get_comments_by_post_id(post_id)
 
     return render_template('forum-single.html', post={
         'post_id': post['id'],
@@ -635,7 +638,7 @@ def forum_single():
         'create_time': post['create_time'],
         'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
 
-    })
+    }, author_comments=author_comments, other_comments=other_comments)
 
 @app.route('/life-skills', methods=['GET'])
 def life_skills():
@@ -729,7 +732,92 @@ def chat():
         # 捕获所有异常并打印详细信息
         print(f"Unexpected Error: {str(e)}")
         return jsonify({'reply': 'Error: Unable to process your request.'}), 500
+
+
+@app.route('/add_comment', methods=['POST'])
+def add_comment():
+    post_id = request.form.get('post_id')
+    content = request.form.get('content')
+    user_id = session.get('user_id')
+
+    if not all([post_id, content, user_id]):
+        return jsonify({'message': 'Missing data'}), 400
+
+    db = Mysql()
+    post = db.get_post_by_id(post_id)
+    if not post:
+        return jsonify({'message': 'Post not found'}), 404
+
+    is_author = 1 if int(post['user_id']) == int(user_id) else 0
+
+    try:
+        # 插入评论
+        db.insert_comment(post_id, user_id, content, is_author)
+
+        # 获取评论列表
+        author_comments, other_comments = db.get_comments_by_post_id(post_id)
+
+        # 返回成功消息和评论数据
+        return jsonify({
+            'message': 'Comment added successfully',
+            'author_comments': author_comments,
+            'other_comments': other_comments
+        }), 200
+    except Exception as e:
+        print(f"Error inserting comment: {e}")
+        return jsonify({'message': 'Error adding comment'}), 500
+
     
+@app.route('/toggle_like', methods=['POST'])
+def toggle_like():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '無效的請求數據'})
+            
+        post_id = data.get('post_id')
+        if not post_id:
+            return jsonify({'success': False, 'message': '缺少帖子ID'})
+            
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'success': False, 'message': '請先登錄'})
+            
+        db = Mysql()
+        try:
+            is_liked = db.toggle_post_like(post_id, user_id)
+            likes_count = db.get_post_likes_count(post_id)
+            
+            return jsonify({
+                'success': True,
+                'is_liked': is_liked,
+                'likes_count': likes_count
+            })
+        except Exception as e:
+            print(f"數據庫操作錯誤: {str(e)}")
+            return jsonify({'success': False, 'message': f'數據庫操作失敗: {str(e)}'})
+    except Exception as e:
+        print(f"處理點讚請求時發生錯誤: {str(e)}")
+        return jsonify({'success': False, 'message': '操作失敗，請稍後重試'})
+
+@app.route('/get_post_likes', methods=['GET'])
+def get_post_likes():
+    try:
+        post_id = request.args.get('post_id')
+        user_id = session.get('user_id')
+        
+        db = Mysql()
+        likes_count = db.get_post_likes_count(post_id)
+        has_liked = db.has_user_liked_post(post_id, user_id) if user_id else False
+        
+        return jsonify({
+            'success': True,
+            'likes_count': likes_count,
+            'has_liked': has_liked
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
