@@ -57,7 +57,7 @@
 
     .btn-container {
         position: absolute;
-        bottom: -40px; /* 距离底部5px */
+        bottom: 10px; /* 距离底部5px */
         right: 5px; /* 距离右侧5px */
         display: flex;
         gap: 15px; /* 按钮间距 */
@@ -106,6 +106,8 @@
          background-color: #E0F2FF; /* 鼠标悬停时背景变为浅蓝色 */
     }
 
+
+
     /* Cancel 按钮样式 */
     .cancel-btn {
         background-color: #FFEBEB; /* 红色背景 */
@@ -122,7 +124,7 @@
     .cancel-btn:hover {
         border: 2px solid #FF6B6B; /* 红色边框 */
         color: #F44336; /* 鼠标悬停时边框颜色变为灰色 */
-background-color: #FFE5E5;
+        background-color: #FFE5E5;
         /* background-color: #FFA1A1; /* 鼠标悬停时背景变为浅红色 */
     }
 
@@ -136,14 +138,23 @@ background-color: #FFE5E5;
         margin-top: 20px;
     }
 
+.other-outside-container {
+    background-color: #FFE6F0; /* 浅粉色背景 */
+    padding: 40px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    /*max-width: 80%; /* 根据需要设置最大宽度 */
+    margin-top: 20px;
+}
     .other-comments h4 {
-        font-size: 18px;
+        font-size: 22px;
         margin-bottom: 10px;
         color: #a64f5f; /* 深粉色标题 */
     }
 
     .comment {
-        background-color: #FFE6F0; /* 浅粉色背景 */
+        background-color: #f9d9de; /* 浅粉色背景 */
         border-radius: 15px; /* 圆角 */
         padding: 10px;
         margin-bottom: 10px; /* 每条评论间距 */
@@ -152,7 +163,7 @@ background-color: #FFE5E5;
     }
 
     .comment:hover {
-        background-color: #FFE6F0; /* 鼠标悬停时背景稍微变亮 */
+        background-color: #f8d7da; /* 鼠标悬停时背景稍微变亮 */
         transform: translateY(-3px); /* 悬停时略微上移 */
     }
 
@@ -163,7 +174,9 @@ background-color: #FFE5E5;
     }
 
     .comment-content {
+        margin-left: 30px;
         margin-bottom: 8px;
+
         color: #707070; /* 字体颜色 */
     }
 
@@ -176,40 +189,69 @@ font-family: 'Dancing Script', cursive;
     }
 
 .best-answer {
-    background-color: #CCFFCC; /* 浅绿色背景 */
-    border-radius: 15px; /* 圆角 */
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.best-answer:hover {
-    background-color: #E6FFE6; /* 悬停时背景更浅 */
-    transform: translateY(-3px); /* 悬停时轻微上移 */
+    margin-top: 20px;
 }
 
 .best-answer h4 {
-    color: #4CAF50; /* 深绿色标题 */
-    margin-bottom: 8px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #3c763d; /* 深绿色标题 */
 }
 
 .best-answer .comment {
-    background-color: #CCFFCC; /* 保持浅绿色 */
-    padding: 8px;
-    margin-bottom: 6px;
-    border-radius: 10px;
-    color: #3A6B35; /* 深绿色字体 */
+    background-color: #dff0d8; /* 浅绿色背景 */
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
-.best-answer .comment p {
+.best-answer .comment:hover {
+    background-color: #c7e7b3; /* 鼠标悬停时背景稍微变亮 */
+    transform: translateY(-3px);
+}
+
+.best-answer .comment-user {
+    font-weight: bold;
+    color: #3c763d; /* 深绿色 */
     margin-bottom: 5px;
 }
 
-.best-answer .comment small {
-    font-size: 12px;
+.best-answer .comment-content {
+    margin-left: 30px;
+    margin-bottom: 8px;
     color: #707070;
 }
+
+.best-answer .comment-time {
+    float: right;
+    font-size: 12px;
+    color: #585858;
+    margin-top: -11px;
+    font-family: 'Dancing Script', cursive;
+}
+
+
+.reply-box {
+    border: 3px dashed #f5e1a4;
+    background-color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.reply-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #fff;
+    font-size: 14px;
+    resize: none;
+    transition: border-color 0.3s;
+    margin-bottom: 5px;
+}
+
     </style>
 </head>
 
@@ -461,18 +503,20 @@ font-family: 'Dancing Script', cursive;
                                 </form>
                             </div>
 
+
                             <!-- 评论显示区域 -->
                             <div class="best-answer">
                                 <h4>From Author：</h4>
                                 {% for comment in author_comments %}
                                 <div class="comment">
-                                    <p><strong>{{ comment.username }}</strong>（作者）:</p>
-                                    <p>{{ comment.content }}</p>
-                                    <small>{{ comment.create_time }}</small>
+                                    <p class="comment-user"><strong>{{ comment.username }}</strong>:</p>
+                                    <p class="comment-content">{{ comment.content }}</p>
+                                    <small class="comment-time">{{ comment.create_time }}</small>
                                 </div>
                                 {% endfor %}
                             </div>
 
+                            <div class="other-outside-container">
                             <div class="other-comments">
                                 <h4>From others：</h4>
                                 {% for comment in other_comments %}
@@ -482,24 +526,10 @@ font-family: 'Dancing Script', cursive;
                                     <small class="comment-time">{{ comment.create_time }}</small>
                                 </div>
                                 {% endfor %}
+
+                            </div>
                             </div>
 
-
-                            <div class="pagination-wrapper">
-                                <div class="view-post-of">
-                                    <p>Viewing 4 Comments - 1 through 10 (of 96 total)</p>
-                                </div>
-                                <ul class="post-pagination">
-                                    <li class="prev-post pegi-disable"><a href="#"><i class="arrow_carrot-left"></i></a>
-                                    </li>
-                                    <li><a href="#" class="active">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">15</a></li>
-                                    <li class="next-post"><a href="#"><i class="arrow_carrot-right"></i></a></li>
-                                </ul>
-                            </div>
 
                         </div>
                     </div>
