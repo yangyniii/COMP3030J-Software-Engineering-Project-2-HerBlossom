@@ -29,7 +29,7 @@
                 <h4><span>Her</span>Blossom</h4>
             </div>
         </div>
-        <h2 class="head">Did You Know?</h2>
+        <h2 class="head">Welcome Girls! </h2>
         <p></p>
     </div>
 </div>
@@ -73,7 +73,7 @@
                                aria-haspopup="true" aria-expanded="false">Blog</a>
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="/job-recommendation" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
@@ -84,7 +84,7 @@
                                     <a href="contact.html" class="nav-link">
                                         <img src="../static/img/tick.png" alt="">
                                         <div class="text">
-                                            <h5>Contact Us</h5>
+                                            <h5>Content Us</h5>
                                             <p>Send your feedback here!</p>
                                         </div>
                                     </a>
@@ -101,7 +101,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav_btn" href="/signin" id="auth-button">Sign In</a>
+                    <a class="nav_btn" href="/signin" id="signin-link">Sign In</a>
                 </div>
             </div>
         </nav>
@@ -110,25 +110,33 @@
     <section class="carousel-section" style="padding: 50px 0; background-color: #f8c8d8;">
         <div class="container">
             <div class="section_title text-center">
-                <h2 class="h_title wow fadeInUp">Main Function</h2>
-                <p class="wow fadeInUp" data-wow-delay="0.2s">Explore the core services HerBlossom offers</p>
+
+                <h2 class="ml1">
+                  <span class="text-wrapper">
+                      <span class="line line1"></span>
+                      <span class="letters">Her Blossom</span>
+                      <span class="line line2"></span>
+                    </span>
+                </h2>
+                <p style="font-style: italic">Explore from here!</p>
+
             </div>
             <div class="carousel-container" style="margin-top: 30px;">
                 <div class="carousel-slide">
                     <div class="carousel-item">
-                        <a href="/blog-list">
+                        <a href="#">
                             <img src="../static/img/Blog.png" alt="Blog">
                             <h3>Blog</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="/forum-topics">
+                        <a href="#">
                             <img src="../static/img/Forum-2.png" alt="Forum">
                             <h3>Forum</h3>
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="/job-recommendation">
+                        <a href="#">
                             <img src="../static/img/Job.jpg" alt="Job Recommendation">
                             <h3>Job Recommendation</h3>
                         </a>
@@ -471,7 +479,7 @@
                                 <li><a href="signin.html">Sign In</a></li>
                                 <li><a href="blog.html">Blog</a></li>
                                 <li><a href="forums.html">Forum</a></li>
-                                <li><a href="job-recommendation.html">Job Recommendation</a></li>
+                                <li><a href="#">Job Recommendation</a></li>
 
 <!--                                <li><a href="changelog.html">Changelog</a></li>-->
 <!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
@@ -500,7 +508,7 @@
                         <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
                             <h3 class="f_title">Company</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="/about-us">About Us</a></li>
+                                <li><a href="Aboutus.html">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
 
 <!--                                <li><a href="#">Careers</a></li>-->
@@ -529,6 +537,7 @@
 <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
 <script src="../static/js_test/jquery-3.2.1.min.js"></script>
 <script src="../static/js_test/pre-loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script src="../static/assets/bootstrap/js/popper.min.js"></script>
 <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="../static/js_test/parallaxie.js"></script>
@@ -538,8 +547,45 @@
 <script src="../static/assets/counterup/jquery.counterup.min.js"></script>
 <script src="../static/assets/counterup/jquery.waypoints.min.js"></script>
 <script src="../static/js_test/main.js"></script>
-<script src="../static/js/change-button.js"></script>
+<script>
+    window.onload = function() {
+    var isLoggedIn = false;  // 这里可以替换成你实际的登录检查逻辑
+    var signinLink = document.getElementById('signin-link');
 
+    if (isLoggedIn) {
+        signinLink.textContent = 'Profile';  // 如果用户已登录，显示"Profile"
+        signinLink.href = 'profile.html';    // 跳转到用户的个人主页
+    } else {
+        signinLink.textContent = 'Sign In';  // 如果用户未登录，显示"Sign In"
+        signinLink.href = '/signin';    // 跳转到登录页面
+    }
+};
+</script>
+
+<script>
+    // Wrap every letter in a span
+    var textWrapper = document.querySelector('.ml1 .letters');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+    anime.timeline()
+            .add({
+                targets: '.ml1 .letter',
+                scale: [0.3, 1],
+                opacity: [0, 1],
+                translateZ: 0,
+                easing: "easeOutExpo",
+                duration: 1000,
+                delay: (el, i) => 100 * (i + 1)
+            }).add({
+        targets: '.ml1 .line',
+        scaleX: [0, 1],
+        opacity: [0.5, 1],
+        easing: "easeOutExpo",
+        duration: 1000,
+        offset: '-=875',
+        delay: (el, i, l) => 100 * (l - i)
+    })
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
