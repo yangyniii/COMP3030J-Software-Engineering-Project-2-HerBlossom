@@ -1376,3 +1376,28 @@ text-shadow: none;
     right: 0;
   }
   }
+
+  .blog_top_post_area {
+  position: relative;
+  overflow: hidden; /* 避免装饰图溢出 */
+}
+
+.section-bottom-decor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none; /* 不阻挡点击 */
+  z-index: 1;
+}
+
+.section-top-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
