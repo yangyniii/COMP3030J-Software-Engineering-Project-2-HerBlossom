@@ -47,9 +47,9 @@ def show_signin_form():
     return render_template('signin.html')
 
 
-@app.route('/index', methods=['GET'])
+@app.route('/contact-us', methods=['GET'])
 def show_index():
-    return render_template('index.html')
+    return render_template('contact.html')
 
 
 @app.route('/about-us', methods=['GET'])
