@@ -1218,6 +1218,7 @@ text-shadow: none;
   font-style: italic;
   display: inline-block;
   line-height: 1em;
+	font-size: 70px;
 }
 
 .ml1 .text-wrapper {
@@ -1240,3 +1241,173 @@ text-shadow: none;
 
 .ml1 .line1 { top: 0; }
 .ml1 .line2 { bottom: 0; }
+
+.about-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;           /* 关键：让 <a> 成为块级元素 */
+  width: fit-content;
+  margin: 0 auto;           /* 居中显示 */
+}
+
+
+.about-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 20px auto;
+    width: 500px;
+    height: 250px;
+    background: white;
+    border-radius: 75px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 10px;
+    transition: 1s box-shadow;
+  }
+
+  .about-card:hover {
+    box-shadow: 0 5px 35px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .about-card:hover::before,
+  .about-card:hover::after {
+    display: block;
+	  content: "";
+	  position: absolute;
+	  width: 500px;
+	  height: 250px;
+	  background: #fda8cf;
+	  border-radius: 75px;
+	  z-index: -1;
+	  animation: 1s about-counterclockwise infinite;
+  }
+
+  .about-card:hover::after {
+    background: #58cef1;
+  animation: about-clockwise 1s infinite;
+  }
+
+  @keyframes about-clockwise {
+    0% {
+    top: -5px;
+    left: 0;
+  }
+
+  12% {
+    top: -2px;
+    left: 2px;
+  }
+
+  25% {
+    top: 0;
+    left: 5px;
+  }
+
+  37% {
+    top: 2px;
+    left: 2px;
+  }
+
+  50% {
+    top: 5px;
+    left: 0;
+  }
+
+  62% {
+    top: 2px;
+    left: -2px;
+  }
+
+  75% {
+    top: 0;
+    left: -5px;
+  }
+
+  87% {
+    top: -2px;
+    left: -2px;
+  }
+
+  100% {
+    top: -5px;
+    left: 0;
+  }
+  }
+
+  @keyframes about-counterclockwise {
+    0% {
+    top: -5px;
+    right: 0;
+  }
+
+  12% {
+    top: -2px;
+    right: 2px;
+  }
+
+  25% {
+    top: 0;
+    right: 5px;
+  }
+
+  37% {
+    top: 2px;
+    right: 2px;
+  }
+
+  50% {
+    top: 5px;
+    right: 0;
+  }
+
+  62% {
+    top: 2px;
+    right: -2px;
+  }
+
+  75% {
+    top: 0;
+    right: -5px;
+  }
+
+  87% {
+    top: -2px;
+    right: -2px;
+  }
+
+  100% {
+    top: -5px;
+    right: 0;
+  }
+  }
+
+  .blog_top_post_area {
+  position: relative;
+  overflow: hidden; /* 避免装饰图溢出 */
+}
+
+.section-bottom-decor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none; /* 不阻挡点击 */
+  z-index: 1;
+}
+
+.section-top-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}

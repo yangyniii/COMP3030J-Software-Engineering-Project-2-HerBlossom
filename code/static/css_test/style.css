@@ -1672,6 +1672,7 @@ ul.list-style li:last-child {
 }
 .HerBlossom-banner-support .banner-content-wrapper .banner-title {
   font-size: 44px;
+  font-style: italic;
   font-weight: 500;
   color: #774c6e;
   margin-bottom: 12px;

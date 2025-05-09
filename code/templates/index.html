@@ -26,7 +26,7 @@
             <div class="spinner"></div>
             <div class="text">
                 <img src="../static/img/spinner_logo.png" alt="">
-                <h4><span>Her</span>Blossom</h4>
+                <h4 style="font-size: 35px"><span>Her</span>Blossom</h4>
             </div>
         </div>
         <h2 class="head">Welcome Girls! </h2>
@@ -73,7 +73,7 @@
                                aria-haspopup="true" aria-expanded="false">Blog</a>
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                            <a href="/job-recommendation" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
@@ -81,10 +81,10 @@
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown_menu_two">
                                 <li class="nav-item">
-                                    <a href="contact.html" class="nav-link">
+                                    <a href="/contact-us" class="nav-link">
                                         <img src="../static/img/tick.png" alt="">
                                         <div class="text">
-                                            <h5>Content Us</h5>
+                                            <h5>Contact Us</h5>
                                             <p>Send your feedback here!</p>
                                         </div>
                                     </a>
@@ -101,7 +101,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav_btn" href="/signin" id="signin-link">Sign In</a>
+                    <a class="nav_btn" href="/signin" id="auth-button">Sign In</a>
                 </div>
             </div>
         </nav>
@@ -121,7 +121,7 @@
                 <p style="font-style: italic">Explore from here!</p>
 
             </div>
-            <div class="carousel-container" style="margin-top: 30px;">
+            <div class="carousel-container" style="margin-top: 20px;">
                 <div class="carousel-slide">
                     <div class="carousel-item">
                         <a href="#">
@@ -184,13 +184,14 @@
 <!--            </div>-->
 
 
-
-                <div class="card">
-                    <a class="index-jump-aboutus" href="/about-us">About Us <i class="arrow_right"></i></a>
-                    <p class="index-little-white" data-wow-delay="0.2s">Click to learn more about us.</p>
+            <a href="/about-us" class="about-card-link">
+                <div class="about-card">
+                    <h3 style="font-size: 40px">About Us <i class="arrow_right"></i></h3>
+                    <p>Click to learn more about us.</p>
                 </div>
+            </a>
 
-<!--                <h2>Looking for information?</h2>-->
+            <!--                <h2>Looking for information?</h2>-->
 <!--                <p>HerBlossom is a well-stocked website for female.</p>-->
 <!--                <form action="#" class="banner_search_form">-->
 <!--                    <input type="search" class="form-control" placeholder="Search the Knowledge Base">-->
@@ -475,11 +476,11 @@
                         <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
                             <h3 class="f_title">HerBlossom Pages</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="signin.html">Sign In</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="forums.html">Forum</a></li>
-                                <li><a href="#">Job Recommendation</a></li>
+                                <li><a href="/index">Home</a></li>
+                                <li><a href="/signin">Sign In</a></li>
+                                <li><a href="/blog">Blog</a></li>
+                                <li><a href="/forum">Forum</a></li>
+                                <li><a href="/job-recommendation">Job Recommendation</a></li>
 
 <!--                                <li><a href="changelog.html">Changelog</a></li>-->
 <!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
@@ -496,7 +497,6 @@
                                 <li><a href="life-skills.html">Life Skills</a></li>
                                 <li><a href="physical-health.html">Physical Health</a></li>
                                 <li><a href="mental-health.html">Mental Health</a></li>
-                                <li><a href="tab.html">Tables</a></li>
 <!--                                <li><a href="#">Image Lightbox</a></li>-->
 <!--                                <li><a href="#">iOS & Android</a></li>-->
 <!--                                <li><a href="#">Messages</a></li>-->
@@ -508,8 +508,8 @@
                         <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
                             <h3 class="f_title">Company</h3>
                             <ul class="list-unstyled link_list">
-                                <li><a href="Aboutus.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="/about-us">About Us</a></li>
+                                <li><a href="/contact-us">Contact Us</a></li>
 
 <!--                                <li><a href="#">Careers</a></li>-->
 <!--                                <li><a href="#">HerBlossom for Good</a></li>-->
@@ -524,7 +524,7 @@
         </div>
         <div class="footer_bottom text-center">
             <div class="container">
-                <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+                <p>© 2025 All Rights Reserved by <a href="/index">HerBlossom</a></p>
             </div>
         </div>
     </footer>
@@ -547,6 +547,7 @@
 <script src="../static/assets/counterup/jquery.counterup.min.js"></script>
 <script src="../static/assets/counterup/jquery.waypoints.min.js"></script>
 <script src="../static/js_test/main.js"></script>
+<script src="../static/js/change-button.js"></script>
 <script>
     window.onload = function() {
     var isLoggedIn = false;  // 这里可以替换成你实际的登录检查逻辑
