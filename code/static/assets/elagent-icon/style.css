@@ -1390,6 +1390,7 @@ text-shadow: none;
   .blog_top_post_area {
   position: relative;
   overflow: hidden; /* 避免装饰图溢出 */
+	  z-index: 0; /* 明确设定层级 */
 }
 
 .section-bottom-decor {
@@ -1399,7 +1400,7 @@ text-shadow: none;
   width: 100%;
   height: auto;
   pointer-events: none; /* 不阻挡点击 */
-  z-index: 1;
+  z-index: -1;
 }
 
 .section-top-decor {
@@ -1408,6 +1409,6 @@ text-shadow: none;
   left: 0;
   width: 100%;
   height: auto;
-  z-index: 1;
+  z-index: -1;
   pointer-events: none;
 }
