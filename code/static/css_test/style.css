@@ -7816,8 +7816,11 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
   justify-content: flex-end;
 }
 .action-button-container.action-btns {
-  justify-content: flex-start;
+  justify-content: space-between; /* 左右分布 */
   margin-top: 30px;
+  display: flex;
+  gap: 260px; /* 增加 Post 与 Cancel 之间的距离 */
+  flex-wrap: wrap; /* 避免过小屏幕下重叠 */
 }
 .action-button-container.action-btns .action_btn {
   height: 30px;
@@ -7844,19 +7847,126 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 .action-button-container .ask-btn:hover {
   background: #16c9f0;
 }
-.action-button-container .reply-btn {
-  margin-right: 10px;
+.action_btn.reply-btn {
+  font-family: inherit;
+  font-size: 20px; /* 更大的字体 */
+  background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+  color: white;
+  padding: 1em 1.6em; /* 上下变宽，左右略增 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  margin-bottom: 8px; /* 给下方一点额外空间 */
 }
-.action-button-container .too-btn {
-  background: #fff;
-  border: 1px solid #d0d8dc;
-  color: #774c6e;
+
+.action_btn.reply-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.3);
 }
-.action-button-container .too-btn:hover {
-  background: #fff;
-  border: 1px solid #774c6e;
-  color: #774c6e;
+
+.action_btn.reply-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.action_btn.reply-btn span {
+  display: block;
+  margin-left: 0.5em;
+  transition: all 0.3s;
+}
+
+.action_btn.reply-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  transition: all 0.3s;
+}
+
+.action_btn.reply-btn .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: 0.6em;
+  transition: all 0.3s;
+}
+
+.action_btn.reply-btn:hover .svg-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.action_btn.reply-btn:hover svg {
+  transform: rotate(45deg);
+}
+
+/* Cancel 按钮样式：基于 too-btn */
+.action_btn.too-btn {
+  font-family: inherit;
+  font-size: 20px;
+  background: linear-gradient(to bottom, #ff6a6a 0%, #ff4b4b 100%);
+  color: white;
+  padding: 1em 1.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.action_btn.too-btn:hover {
+  transform: translateY(-3px);
+  background: #fa5252;
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.action_btn.too-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.action_btn.too-btn span {
+  display: block;
+  margin-left: 0.5em;
+  transition: all 0.3s;
+}
+
+.action_btn.too-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  transition: all 0.3s;
+}
+
+.action_btn.too-btn .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: 0.6em;
+  transition: all 0.3s;
+}
+
+.action_btn.too-btn:hover .svg-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.action_btn.too-btn:hover svg {
+  transform: rotate(90deg);
+}
+
 
 .q-title {
   display: flex;
