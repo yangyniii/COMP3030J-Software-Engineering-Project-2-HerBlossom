@@ -10533,7 +10533,7 @@ button.active {
     position: fixed;
     bottom: 90px;
     right: 20px;
-    width: 300px;
+    width: 40%;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -10560,7 +10560,7 @@ button.active {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: 500px;
 }
 
 #ai-chat-messages {
@@ -10581,10 +10581,45 @@ button.active {
 }
 
 #ai-chat-send {
-    background: #fdcdd9;
-    color: #fff;
+    background: #ed7595;
+    color: #fdcdd9;
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+#ai-chat-send:active {
+    transform: scale(0.95) rotate(-1deg);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.85;
+}
+#ai-chat-send:hover {
+    background-color: #ff8fa3; /* 悬停时改变背景颜色 */
+    color: #ffffff; /* 改变文字颜色 */
+}
+.close-btn {
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #bd3c55;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.close-btn:active {
+    transform: scale(0.95);
 }
