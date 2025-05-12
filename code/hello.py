@@ -214,7 +214,7 @@ def get_user_info():
             'name': user_info['username'],
             'password': user_info['password'],  # Original password is used only on the backend, hide it on the frontend
             'email': user_info['email'],
-            'avatar': user_info.get('avatar')
+            'avatar': user_info.get('avatar', '../static/images/default_avatar.jpg')  # 默认头像
         })
     else:
         # If user is not found, return 404
@@ -293,12 +293,13 @@ def upload_avatar():
 
         # Update the profile picture path (relative path) in the database
         db = Mysql()
-        db.update_user_avatar(user_email, relative_path)
-
-        session['avatar_url'] = absolute_path  # Save the updated avatar in the session
-
-        # Return success message and profile picture path (for direct use by the frontend)
-        return jsonify({'message': 'Avatar uploaded successfully', 'avatar_url': f'/{relative_path}'}), 200
+        try:
+            db.update_user_avatar(user_email, relative_path)  # 假设有一个方法更新头像路径
+            session['avatar_url'] = relative_path  # 更新 session 中的头像路径
+            return jsonify({'message': 'Avatar uploaded successfully', 'avatar_url': relative_path}), 200
+        except Exception as e:
+            print(f"Error updating avatar: {e}")
+            return jsonify({'message': 'Failed to update avatar'}), 500
 
     return jsonify({'message': 'File not allowed'}), 400
 

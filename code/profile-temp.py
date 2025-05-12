@@ -48,7 +48,7 @@ def profile():
             flash('File type not allowed')
             return redirect(request.url)
     # GET 请求时渲染模板
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, avatar_url=user.avatar_filename or '../static/images/default_avatar.jpg')
 
 if __name__ == '__main__':
     with app.app_context():
