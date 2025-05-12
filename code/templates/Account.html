@@ -703,6 +703,7 @@
             fileInput.addEventListener('change', function () {
                 const file = this.files[0];
                 if (file) {
+                    console.log("File selected:", file.name);
                     const reader = new FileReader();
                     reader.onload = function (e) {
                         preview.src = e.target.result;
@@ -710,6 +711,7 @@
                     }
                     reader.readAsDataURL(file);
                 } else {
+                    console.log("No file selected.");
                     preview.style.display = 'none';
                 }
             });
@@ -720,7 +722,27 @@
                     alert("Please choose your new avatar.");
                     return;
                 }
-                document.getElementById('avatarUploadForm').submit();
+
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]); // 将文件添加到 FormData 中
+
+                fetch('/upload_avatar', {
+                    method: 'POST',
+                    body: formData // 自动设置为 multipart/form-data
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Avatar uploaded successfully') {
+                        alert("Avatar updated successfully!");
+                        document.getElementById('avatar').src = data.avatar_url; // 更新头像预览
+                    } else {
+                        alert(data.message || "Failed to update avatar.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while uploading the avatar.");
+                });
             });
         });
     </script>
