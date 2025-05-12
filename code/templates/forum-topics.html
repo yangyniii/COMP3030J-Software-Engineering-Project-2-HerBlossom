@@ -885,7 +885,7 @@
                     renderPagination();
                     renderPostsForPage(currentPage);
                 } else {
-                    postList.innerHTML = '<p>沒有找到相關帖子。</p>';
+                    postList.innerHTML = '<p>No relevant posts were found.</p>';
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -949,27 +949,25 @@
         }
 
     async function fetchPostLikes(postId) {
-        try {
-            const response = await fetch(`/get_post_likes?post_id=${postId}`);
-            const data = await response.json();
-            
-            if (data.success) {
+        fetch(`/get_post_likes?post_id=${postId}`)
+            .then(response => response.json())
+            .then(data => {
                 const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
                 if (likeButton) {
                     const likesCount = likeButton.querySelector('.likes-count');
                     likesCount.textContent = data.likes_count;
                     
-                    // 根據用戶是否點讚來設置按鈕顏色
+                    // 更新點讚按鈕狀態
                     if (data.has_liked) {
                         likeButton.classList.add('liked');
+                        likeButton.querySelector('i').classList.add('liked');
                     } else {
                         likeButton.classList.remove('liked');
+                        likeButton.querySelector('i').classList.remove('liked');
                     }
                 }
-            }
-        } catch (error) {
-            console.error('Error fetching post likes:', error);
-        }
+            })
+            .catch(error => console.error('Error fetching post likes:', error));
     }
 
     async function toggleLike(event, postId) {
@@ -997,18 +995,21 @@
                     
                     if (data.has_liked) {
                         likeButton.classList.add('liked');
+                        likeButton.querySelector('i').classList.add('liked');
                     } else {
                         likeButton.classList.remove('liked');
+                        likeButton.querySelector('i').classList.remove('liked');
                     }
                 }
             } else {
-                alert(data.message || '操作失敗');
+                alert(data.message || 'Error');
             }
         } catch (error) {
             console.error('Error toggling like:', error);
-            alert('操作失敗，請稍後重試');
+            alert('Operation failed. Please try again later.');
         }
     }
 </script>
 
+</html>
 </html>

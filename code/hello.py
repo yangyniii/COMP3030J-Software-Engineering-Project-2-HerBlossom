@@ -818,6 +818,17 @@ def get_post_likes():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
+@app.route('/search_by_tag', methods=['GET'])
+def search_by_tag():
+    tag = request.args.get('tag', '')
+    db = Mysql()
+    try:
+        posts = db.search_posts_by_tag(tag)
+        return jsonify({'posts': posts})
+    except Exception as e:
+        print(f"Error searching posts by tag: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')

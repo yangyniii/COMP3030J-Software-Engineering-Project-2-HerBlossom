@@ -66,75 +66,6 @@ class Mysql(object):
             return user_id[0]  # 返回元组的第一个元素，即整数
         return None
 
-    def get_losts(self):
-        """
-        Retrieve a list of all losts from the database.
-
-        Returns:
-        - list: A list of dictionaries containing lost information.
-        """
-        sql = "SELECT * FROM lost"
-        self.cursor.execute(sql)
-        losts = self.cursor.fetchall()
-        lost_list = []
-        for lost in losts:
-            lost_list.append({
-                'id': lost[0],
-                'name': lost[1],
-                'date': lost[2],
-                'location': lost[3],
-                'description': lost[4],
-                'thumbnail_url': lost[5]
-            })
-        return lost_list
-
-    def get_lost_by_id(self, lost_id):
-        """
-        Retrieve a lost by its ID from the database.
-
-        Returns:
-        - dict: A dictionary containing lost information.
-        """
-        sql = "SELECT * FROM lost WHERE id = %s"
-        self.cursor.execute(sql, (lost_id,))
-        lost = self.cursor.fetchone()
-        if lost:
-            return {
-                'id': lost[0],
-                'name': lost[1],
-                'date': lost[2],
-                'location': lost[3],
-                'description': lost[4],
-                'thumbnail_url': lost[5]
-            }
-        return None
-
-    def get_books(self):
-        """
-        Retrieve a list of all books from the database.
-
-        Returns:
-        - list: A list of dictionaries containing book information.
-        """
-        sql = "SELECT * FROM books"
-        self.cursor.execute(sql)
-        books = self.cursor.fetchall()
-        book_list = []
-        for book in books:
-            book_list.append({
-                'id': book[0],
-                'title': book[1],
-                'author': book[2],
-                'publisher': book[3],
-                'edition': book[4],
-                'isbn': book[5],
-                'tag': book[6],
-                'description':book[7],
-                'collections':book[8],
-                'borrowed': book[9],
-                'thumbnail_url': book[10]
-            })
-        return book_list
 
     def get_post_by_id(self, post_id):
         """
@@ -160,275 +91,6 @@ class Mysql(object):
                 'image_urls': post[8],
             }
         return None
-
-    def update_book(self, book_id, updated_info):
-        try:
-            # Validate ISBN
-            if 'isbn' in updated_info:
-                isbn = updated_info['isbn']
-                self.cursor.execute("SELECT id FROM books WHERE isbn = %s AND id != %s", (isbn, book_id))
-                if self.cursor.fetchone():
-                    print("ISBN already exists.")
-                    return {
-                        'success': False,
-                        'message': 'ISBN already exists.'
-                    }
-
-            # Update the book information in the database
-            set_clause = ", ".join([f"{key} = %s" for key in updated_info.keys()])
-            query = f"UPDATE books SET {set_clause} WHERE id = %s"
-            values = list(updated_info.values()) + [book_id]
-            print(f"Executing query: {query} with values: {values}")
-            self.cursor.execute(query, values)
-            self.conn.commit()
-            print("Book updated successfully.")
-
-            return {
-                'success': True
-            }
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error updating book: {str(e)}")
-            return {
-                'success': False,
-                'message': str(e)
-            }
-
-    def update_book_thumbnail(self, book_id, thumbnail_url):
-        try:
-            # Validate the thumbnail URL
-            if not thumbnail_url.startswith('/static/photo/'):
-                print("Invalid thumbnail URL.")
-                return {
-                    'success': False,
-                    'message': 'Invalid thumbnail URL. Must be under /static/photo/.'
-                }
-
-            # Update the thumbnail in the database
-            query = "UPDATE books SET thumbnail_url = %s WHERE id = %s"
-            values = (thumbnail_url, book_id)
-
-            print(f"Executing query: {query} with values: {values}")
-            self.cursor.execute(query, values)
-            self.conn.commit()
-            print("Thumbnail updated successfully.")
-
-            return {
-                'success': True,
-                'message': 'Thumbnail updated successfully.'
-            }
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error updating thumbnail: {str(e)}")
-            return {
-                'success': False,
-                'message': str(e)
-            }
-
-    def update_lost_thumbnail(self, lost_id, thumbnail_url):
-        try:
-            # Validate the thumbnail URL
-            if not thumbnail_url.startswith('/static/photo/'):
-                print("Invalid thumbnail URL.")
-                return {
-                    'success': False,
-                    'message': 'Invalid thumbnail URL. Must be under /static/photo/.'
-                }
-
-            # Update the thumbnail in the database
-            query = "UPDATE lost SET thumbnail_url = %s WHERE id = %s"
-            values = (thumbnail_url, lost_id)
-
-            print(f"Executing query: {query} with values: {values}")
-            self.cursor.execute(query, values)
-            self.conn.commit()
-            print("Thumbnail updated successfully.")
-
-            return {
-                'success': True,
-                'message': 'Thumbnail updated successfully.'
-            }
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error updating thumbnail: {str(e)}")
-            return {
-                'success': False,
-                'message': str(e)
-            }
-    def update_lost(self, lost_id, updated_info):
-        try:
-            # Update the lost information in the database
-            set_clause = ", ".join([f"{key} = %s" for key in updated_info.keys()])
-            query = f"UPDATE lost SET {set_clause} WHERE id = %s"
-            values = list(updated_info.values()) + [lost_id]
-            print(f"Executing query: {query} with values: {values}")
-            self.cursor.execute(query, values)
-            self.conn.commit()
-            print("Lost updated successfully.")
-
-            return {
-                'success': True
-            }
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error updating lost: {str(e)}")
-            return {
-                'success': False,
-                'message': str(e)
-            }
-
-    def delete_lost(self, lost_id):
-        query = "DELETE FROM lost WHERE id = %s"
-        self.cursor.execute(query, (lost_id,))
-        self.conn.commit()
-        return True
-
-    def add_book(self, book_data):
-        try:
-            self.cursor.execute('''
-                INSERT INTO books (title, author, publisher, edition, isbn, tag, description, collections, borrowed, thumbnail_url, read_count)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            ''', (
-                book_data['title'],
-                book_data['author'],
-                book_data['publisher'],
-                book_data['edition'],
-                book_data['isbn'],
-                book_data['tag'],
-                book_data['description'],
-                book_data['collections'],
-                book_data['borrowed'],
-                book_data['thumbnail_url'],
-                book_data['read_count'],
-            ))
-            self.conn.commit()
-            return True
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error adding book: {e}")
-            return False
-
-    def add_lost(self, lost_data):
-        try:
-            self.cursor.execute('''
-                INSERT INTO lost (name, date, location, description,thumbnail_url)
-                VALUES (%s, %s, %s, %s, %s)
-            ''', (
-                lost_data['name'],
-                lost_data['date'],
-                lost_data['location'],
-                lost_data['description'],
-                lost_data['thumbnail_url'],
-            ))
-            self.conn.commit()
-            return True
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error adding lost: {e}")
-            return False
-
-    def isbn_exists(self, isbn):
-        query = "SELECT COUNT(*) FROM books WHERE isbn = %s"
-        self.cursor.execute(query, (isbn,))
-        result = self.cursor.fetchone()
-        return result[0] > 0
-
-    def lend_book(self, book_id, borrower_id, time_till_return):
-        try:
-            # Update the borrowed count and read_count in the books table
-            self.cursor.execute("""
-                        UPDATE books 
-                        SET borrowed = borrowed + 1, 
-                            read_count = read_count + 1 
-                        WHERE id = %s
-                    """, (book_id,))
-            self.conn.commit()
-
-            # update the borrower's read_count
-            self.cursor.execute("""
-                        UPDATE users 
-                        SET read_count = read_count + 1 
-                        WHERE id = %s
-                    """, (borrower_id,))
-            self.conn.commit()
-
-            # Insert a new record into the borrow table
-            self.cursor.execute("INSERT INTO borrow (book_id, borrower_id, time_till_return) VALUES (%s, %s, %s)",
-                                (book_id, borrower_id, time_till_return))
-            self.conn.commit()
-
-            # Get the updated borrowed count
-            self.cursor.execute("SELECT borrowed FROM books WHERE id = %s", (book_id,))
-            new_borrowed_count = self.cursor.fetchone()[0]
-
-            return {
-                'success': True,
-                'new_borrowed_count': new_borrowed_count
-            }
-        except Exception as e:
-            self.conn.rollback()
-            return {
-                'success': False,
-                'message': str(e)
-            }
-        finally:
-            self.cursor.close()
-
-    def return_book(self, book_id):
-        try:
-            # Update the borrowed count in the books table
-            self.cursor.execute("UPDATE books SET borrowed = borrowed - 1 WHERE id = %s", (book_id,))
-            self.conn.commit()
-
-            # Get the updated borrowed count
-            self.cursor.execute("SELECT borrowed FROM books WHERE id = %s", (book_id,))
-            new_borrowed_count = self.cursor.fetchone()[0]
-
-            return {
-                'success': True,
-                'new_borrowed_count': new_borrowed_count
-            }
-        except Exception as e:
-            self.conn.rollback()
-            return {
-                'success': False,
-                'message': str(e)
-            }
-        finally:
-            self.cursor.close()
-
-    def search_books_by_title(self, title):
-        query = ("SELECT id, title, author, publisher, collections, borrowed, thumbnail_url FROM books WHERE title "
-                 "LIKE %s")
-        self.cursor.execute(query, (f"%{title}%",))
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
-        results = self.cursor.fetchall()
-        books = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
-        return books
-
-    def search_losts_by_name(self, name):
-        query = "SELECT id, name, date, location, description , thumbnail_url FROM lost WHERE name LIKE %s"
-        self.cursor.execute(query, (f"%{name}%",))
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
-        results = self.cursor.fetchall()
-        losts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
-        return losts
-
-    def search_losts_by_date(self, date):
-        query = "SELECT id, name, date, location, description, thumbnail_url FROM lost WHERE date = %s"
-        self.cursor.execute(query, (date,))
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
-        results = self.cursor.fetchall()
-        losts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
-        return losts
-
-    def search_books_by_tag(self, tag):
-        query = "SELECT id, title, author, publisher, collections, borrowed , thumbnail_url FROM books WHERE tag = %s"
-        self.cursor.execute(query, (tag,))
-        columns = [desc[0] for desc in self.cursor.description]  # 获取列名
-        results = self.cursor.fetchall()
-        books = [{columns[i]: row[i] for i in range(len(columns))} for row in results]  # 将元组转换为包含键值对的列表
-        return books
 
 
     def register_user(self, name, password, email, avatar, cover, follower_count,followee_count,following_topic_count,post_count,comment_count,bio,company,location):
@@ -1365,6 +1027,30 @@ class Mysql(object):
         except Exception as e:
             print(f"Error checking post like status: {e}")
             return False
+
+    def search_posts_by_tag(self, tag):
+        """
+        根據標籤搜索帖子
+        
+        Args:
+            tag (str): 要搜索的標籤
+            
+        Returns:
+            list: 包含帖子信息的列表
+        """
+        query = """
+            SELECT p.post_id, p.user_id, p.title, p.content, p.tags, p.category, 
+                   p.comment_count, p.create_time, p.image_urls, u.username
+            FROM post p
+            LEFT JOIN users u ON p.user_id = u.user_id
+            WHERE p.tags LIKE %s
+        """
+        search_term = f"%{tag}%"
+        self.cursor.execute(query, (search_term,))
+        columns = [desc[0] for desc in self.cursor.description]
+        results = self.cursor.fetchall()
+        posts = [{columns[i]: row[i] for i in range(len(columns))} for row in results]
+        return posts
 
 
 
