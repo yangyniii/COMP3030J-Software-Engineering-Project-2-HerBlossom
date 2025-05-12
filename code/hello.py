@@ -554,7 +554,7 @@ def forum_single1():
         "title": "Are there any scandal-free sanitary pad brands left?",
         "content": "The first major scandal of this year's Consumer Rights Day (March 15) was about sanitary pads. It exposed a shocking black market: discarded pads were simply rinsed, pressed back into shape, and then sold as \"brand-new\" products.  The pictures were so disgusting that words can't even describe them.  These \"recycled\" sanitary pads had bacterial levels exceeding the limit by nearly 100 times, with dangerous pathogens like E. coli and Staphylococcus aureus present in alarming amounts. Long-term use could lead to gynecological infections and even infertility. Even worse, some products contained fluorescent agents far beyond safety standards, posing a cancer risk. When women's health is compromised, the next generation suffers too.  Whether we're called \"queens,\" \"goddesses,\" or just \"women\" doesn't really matter. What matters is:  Does society respect women's biological needs? Are women's basic health concerns acknowledged, discussed, and treated without bias or neglect?  So, are there any sanitary pad brands left that haven't been exposed yet? And will women's safety ever be taken seriously?"
     }
-    return render_template('forum-single1.html', post=post)  # 传递 post 变量
+    return render_template('forum-single1弃.html', post=post)  # 传递 post 变量
 
 
 
