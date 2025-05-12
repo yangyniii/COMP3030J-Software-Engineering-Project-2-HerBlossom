@@ -565,6 +565,9 @@ def blog_grid_two():
 def forum_topics():
     return render_template('forum-topics.html')
 
+@app.route('/useful-skills', methods=['GET'])
+def useful_skills():
+    return render_template('useful-skills.html')
 
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
