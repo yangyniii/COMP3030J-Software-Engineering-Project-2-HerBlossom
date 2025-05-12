@@ -165,14 +165,7 @@
                 <form action="#" class="banner_search_form banner_search_form_two">
                     <div class="input-group">
                         <label for="search-input"></label><input id="search-input" type="search" class="form-control" placeholder='Search ("/" to focus)'>
-                        <div class="input-group-append">
-                            <label for="inlineFormCustomSelect"></label><select class="custom-select" id="inlineFormCustomSelect">
-                                <option selected>All Category</option>
-                                <option value="1">Doc Archive</option>
-                                <option value="2">Doc List</option>
-                                <option value="3">HerBlossom</option>
-                            </select>
-                        </div>
+
                         <button id="search-button" type="submit"><i class="icon_search"></i></button>
                     </div>
                 </form>
@@ -191,7 +184,7 @@
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</a>
+                        <span class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</span>
                     </div>
                 </div>
             </div>
@@ -579,7 +572,7 @@ postsToShow.forEach(post => {
                 <div class="post-meta-wrapper">
                     <ul class="post-meta-info">
                         <span style="margin-left: 450px;"></span>
-                        <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
+
                         <li>
                             <a href="#" class="like-button" data-post-id="${post.post_id}" onclick="toggleLike(event, ${post.post_id})">
                                 <i class="icon_heart"></i>

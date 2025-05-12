@@ -553,6 +553,7 @@ class Mysql(object):
                OR p.content LIKE %s
                OR p.tags LIKE %s
                OR u.username LIKE %s
+                ORDER BY p.create_time DESC
         """
         search_term = f"%{title}%"
         self.cursor.execute(query, (search_term, search_term, search_term, search_term))

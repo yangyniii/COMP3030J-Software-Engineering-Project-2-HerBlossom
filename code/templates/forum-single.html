@@ -252,6 +252,60 @@ font-family: 'Dancing Script', cursive;
     margin-bottom: 5px;
 }
 
+
+        /* 弹窗全屏遮罩层 */
+        .custom-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* 隐藏弹窗 */
+        .custom-alert.hidden {
+            display: none;
+        }
+
+        /* 弹窗内部内容，边框为桃粉色 */
+        .custom-alert-content {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 5px solid #FFB6C1; /* 桃粉色边框 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* 弹窗消息的样式 */
+        .custom-alert-content p {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        /* 弹窗按钮，粉蓝色背景 */
+        .custom-alert-content button {
+            padding: 8px 16px;
+            border: none;
+            background-color: #FF69B4; /* 粉蓝色 */
+            color: #fff;
+            font-size: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .custom-alert-content button:hover {
+            background-color: #48bbff; /* hover 状态下的稍微深一点的蓝色 */
+        }
+
+
     </style>
 </head>
 
@@ -366,7 +420,7 @@ font-family: 'Dancing Script', cursive;
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</a>
+                        <span class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</span>
                     </div>
                 </div>
             </div>
@@ -380,11 +434,11 @@ font-family: 'Dancing Script', cursive;
                         <div class="row">
                             <div class="col-lg-9">
                                 <div class="forum-post-top">
-                                    <a class="author-avatar" href="#">
+                                    <div class="author-avatar">
                                         <img id="avatar" src="../static/images/chiikawa.jpg" alt="user avatar">
-                                    </a>
+                                    </div>
                                     <div class="forum-post-author">
-                                        <a class="author-name" href="#" id="username">  </a>
+                                        <span class="author-name" id="username"></span>
                                         <div class="forum-author-meta">
                                             <div class="author-badge">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
@@ -395,7 +449,7 @@ font-family: 'Dancing Script', cursive;
                                             </div>
                                             <div class="author-badge">
                                                 <i class="icon_calendar"></i>
-                                                <a href="">{{post.create_time}}</a>
+                                                <span>{{ post.create_time }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -412,7 +466,7 @@ font-family: 'Dancing Script', cursive;
                         <div class="q-title">
                             <span class="question-icon" title="Question">Q:</span>
                             <h1>{{ post.title }}</h1>
-                            <a href="#" class="badge">{{ post.category }}</a>
+                            <span class="badge">{{ post.category }}</span>
                         </div>
                         <div class="forum-post-content">
                             <div class="content">
@@ -649,6 +703,13 @@ font-family: 'Dancing Script', cursive;
         </div>
     </footer>
     </div>
+            <!-- 自定义弹窗 -->
+            <div id="customAlert" class="custom-alert hidden">
+                <div class="custom-alert-content">
+                    <p id="customAlertMessage"></p>
+                    <button id="customAlertOk">Done</button>
+                </div>
+            </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js_test, then Bootstrap JS -->
@@ -706,30 +767,36 @@ fetch(`/get_user_info_by_id?user_id=${user_id}`)
         document.querySelector('.reply-box').style.display = 'none';
     });
 
-    // 提交回复
-    document.querySelector('#reply-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+        // 提交回复
+        document.querySelector('#reply-form').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        const content = document.querySelector('#reply-content').value;
-        const post_id = document.querySelector('#reply-post-id').value;
+            const content = document.querySelector('#reply-content').value;
+            const post_id = document.querySelector('#reply-post-id').value;
 
-        // 提交请求到后台
-        fetch('/add_comment', {
-            method: 'POST',
-            body: new URLSearchParams({
-                'content': content,
-                'post_id': post_id
-            })
-        }).then(response => response.json())
-          .then(data => {
-              if (data.message === 'Comment added successfully') {
-                  alert('Comment added!');
-                  location.reload(); // 刷新页面显示评论
-              } else {
-                  alert('Error adding comment');
-              }
-          });
-    });
+            // 提交请求到后台
+            fetch('/add_comment', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'content': content,
+                    'post_id': post_id
+                })
+            }).then(response => response.json())
+                    .then(data => {
+                        if (data.message === 'Comment added successfully') {
+                            // 使用自定义弹窗显示成功消息
+                            showCustomAlert('Comment added successfully!', function () {
+                                location.reload(); // 刷新页面显示评论
+                            });
+                        } else {
+                            showCustomAlert('Error adding comment');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showCustomAlert('An error occurred while adding the comment.');
+                    });
+        });
 
     async function toggleLike(event, postId) {
         event.preventDefault();
@@ -818,6 +885,23 @@ fetch(`/get_user_info_by_id?user_id=${user_id}`)
     // 每秒更新一次时间
     setInterval(updateTime, 1000);
     updateTime();
+
+function showCustomAlert(message, callback) {
+    const customAlert = document.getElementById("customAlert");
+    const alertMessage = document.getElementById("customAlertMessage");
+    customAlert.classList.remove("hidden");
+    customAlert.classList.add("visible");
+    alertMessage.textContent = message;
+
+    // 使用 { once: true } 确保只注册一次点击事件
+    document.getElementById("customAlertOk").addEventListener("click", function () {
+        customAlert.classList.remove("visible");
+        customAlert.classList.add("hidden");
+        if (typeof callback === "function") {
+            callback();
+        }
+    }, { once: true });
+}
 </script>
 
 
