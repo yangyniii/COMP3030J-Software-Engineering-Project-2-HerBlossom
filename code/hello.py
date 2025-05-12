@@ -247,6 +247,7 @@ def get_user_info_by_id():
         avatar_path = '../static/images/' + avatar_path
     print('Avatar path11:', avatar_path)
 
+
     return jsonify({
         'username': user_info.get('username', ''),
         'password': user_info.get('password', ''),  # 这里最好不要返回密码
