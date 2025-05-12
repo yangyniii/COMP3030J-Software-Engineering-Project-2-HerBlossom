@@ -316,7 +316,7 @@ font-family: 'Dancing Script', cursive;
                                aria-haspopup="true" aria-expanded="false">Blog</a>
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                            <a href="/job-recommendation" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
@@ -423,16 +423,18 @@ font-family: 'Dancing Script', cursive;
                                 <div class="taxonomy forum-post-tags">
                                     <i class="icon_tags_alt"></i>
                                     {% if post.tags %}
-                                        <a href="#">{{ post.tags }}</a>
+                                    <span>{{ post.tags }}</span>
                                     {% else %}
-                                        <span>No tag</span>
+                                    <span>No tag</span>
                                     {% endif %}
                                 </div>
 
+
                                 <div class="taxonomy forum-post-cat">
-                                    <img src="../static/img/forum/logo-favicon.png" alt=""><a href="#">HerBlossom Support</a>
+                                    <img src="../static/img/forum/logo-favicon.png" alt="">
+                                    <span>HerBlossom Support</span>
                                 </div>
-                                
+
                                 <!-- 添加點讚按鈕 -->
                                 <div class="post-actions">
                                     <a href="#" class="like-button" data-post-id="{{ post.post_id }}" onclick="toggleLike(event, {{ post.post_id }})">
@@ -597,7 +599,7 @@ font-family: 'Dancing Script', cursive;
                                 <li><a href="signin.html">Sign In</a></li>
                                 <li><a href="blog.html">Blog</a></li>
                                 <li><a href="forums.html">Forum</a></li>
-                                <li><a href="#">Job Recommendation</a></li>
+                                <li><a href="job-recommendation.html">Job Recommendation</a></li>
 
 <!--                                <li><a href="changelog.html">Changelog</a></li>-->
 <!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
