@@ -8291,9 +8291,9 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
   max-width: 100%;
 }
 .blog_single_item p {
-  font-size: 16px;
-  line-height: 30px;
-  margin-bottom: 26px;
+  font-size: 1rem; /* 使用rem单位代替px */
+  line-height: 1.875rem; /* 调整line-height，使其与字体大小比例一致 */
+  margin-bottom: 1.625rem; /* 使用rem单位 */
 }
 .blog_single_item p a {
   color: #ed7595;
@@ -8303,11 +8303,11 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 blockquote {
   background: #f3f8f9;
   border-left: 4px solid #ed7595;
-  font-size: 20px;
-  padding: 50px 40px;
+  font-size: 1.25rem; /* 使用rem单位 */
+  padding: 3.125rem 2.5rem; /* 调整内边距，使用rem单位 */
   position: relative;
   z-index: 0;
-  margin: 46px 0;
+  margin: 2.875rem 0; /* 使用rem单位 */
 }
 blockquote:before, blockquote:after {
   content: "";
@@ -8316,60 +8316,60 @@ blockquote:before, blockquote:after {
 }
 blockquote:before {
   background: url("../img/blog-classic/quote_top.png") no-repeat scroll left top;
-  width: 132px;
-  height: 81px;
+  width: 8.25rem; /* 使用rem单位 */
+  height: 5.0625rem; /* 使用rem单位 */
   top: 0;
 }
 blockquote:after {
   background: url("../img/blog-classic/quote_bottom.png") no-repeat scroll left bottom;
-  width: 77px;
-  height: 75px;
-  right: 40px;
-  bottom: 30px;
+  width: 4.8125rem; /* 使用rem单位 */
+  height: 4.6875rem; /* 使用rem单位 */
+  right: 2.5rem; /* 使用rem单位 */
+  bottom: 1.875rem; /* 使用rem单位 */
 }
 blockquote .c_head {
   color: #6b707f;
   font-weight: 400;
-  line-height: 34px;
-  margin-bottom: 45px;
+  line-height: 2.125rem; /* 使用rem单位 */
+  margin-bottom: 2.8125rem; /* 使用rem单位 */
 }
 blockquote .author {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem; /* 使用rem单位 */
   color: #774c6e;
 }
 
 .single_post_two {
-  padding-top: 10px;
+  padding-top: 0.625rem; /* 使用rem单位 */
 }
 .single_post_two h2 {
-  font-size: 30px;
+  font-size: 1.875rem; /* 使用rem单位 */
   font-weight: 500;
-  margin-bottom: 15px;
+  margin-bottom: 0.9375rem; /* 使用rem单位 */
 }
 .single_post_two img {
-  margin-bottom: 25px;
+  margin-bottom: 1.5625rem; /* 使用rem单位 */
   max-width: 100%;
 }
 .single_post_two p {
-  margin-bottom: 28px;
+  margin-bottom: 1.75rem; /* 使用rem单位 */
 }
 
 .blog_social {
-  padding-top: 20px;
+  padding-top: 1.25rem; /* 使用rem单位 */
 }
 .blog_social h5 {
-  font-size: 16px;
+  font-size: 1rem; /* 使用rem单位 */
   margin-bottom: 0;
 }
 .blog_social .f_social_icon {
   display: inline-block;
-  margin-top: 28px;
+  margin-top: 1.75rem; /* 使用rem单位 */
   position: relative;
   z-index: 0;
   padding-top: 0;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 1.5rem; /* 使用rem单位 */
+  padding-right: 1.5rem; /* 使用rem单位 */
 }
 .blog_social .f_social_icon:before, .blog_social .f_social_icon:after {
   content: "";
@@ -8389,105 +8389,105 @@ blockquote .author {
   margin-right: 0;
   border: 1px solid #e5edef;
   color: #989da9;
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
+  width: 2.75rem; /* 使用rem单位 */
+  height: 2.75rem; /* 使用rem单位 */
+  line-height: 2.75rem; /* 使用rem单位 */
 }
 .blog_social .f_social_icon li + li {
-  margin-left: 5px;
+  margin-left: 0.3125rem; /* 使用rem单位 */
 }
 
 .blog_post_author {
   background: #f3f8f9;
-  padding: 40px;
-  padding-right: 70px;
-  margin-top: 35px;
+  padding: 2.5rem;
+  padding-right: 4.375rem; /* 使用rem单位 */
+  margin-top: 2.1875rem; /* 使用rem单位 */
   border-radius: 5px;
 }
 .blog_post_author .author_img {
-  width: 70px;
-  height: 70px;
+  width: 4.375rem; /* 使用rem单位 */
+  height: 4.375rem; /* 使用rem单位 */
   border-radius: 50%;
-  margin-right: 30px;
+  margin-right: 1.875rem; /* 使用rem单位 */
   overflow: hidden;
 }
 .blog_post_author .media-body h5 {
   font-weight: 500;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 1.125rem; /* 使用rem单位 */
+  margin-bottom: 1.25rem; /* 使用rem单位 */
 }
 .blog_post_author .media-body p {
   margin-bottom: 0;
 }
 
 .comment_inner {
-  padding-top: 80px;
+  padding-top: 5rem; /* 使用rem单位 */
 }
 
 .comment_box {
   margin-bottom: 0;
 }
 .comment_box .post_comment .comment_author {
-  padding-top: 40px;
+  padding-top: 2.5rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .img_rounded {
   border-radius: 50%;
-  margin-right: 30px;
+  margin-right: 1.875rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .media-body {
   border-bottom: 1px solid #dde5e7;
-  padding-bottom: 24px;
+  padding-bottom: 1.5rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .media-body .comment_info h3 {
-  font-size: 16px;
+  font-size: 1rem; /* 使用rem单位 */
   font-weight: 500;
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .media-body .comment_info .comment_date {
-  font-size: 14px;
+  font-size: 0.875rem; /* 使用rem单位 */
   font-weight: 400;
   color: #6b707f;
-  margin-bottom: 15px;
+  margin-bottom: 0.9375rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .media-body .comment_reply {
-  font-size: 14px;
+  font-size: 0.875rem; /* 使用rem单位 */
   font-weight: 500;
   color: #774c6e;
   transition: all 0.2s linear;
 }
 .comment_box .post_comment .comment_author .media-body .comment_reply i {
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 1.125rem; /* 使用rem单位 */
   position: relative;
-  top: -2px;
-  padding-right: 5px;
+  top: -0.125rem; /* 使用rem单位 */
+  padding-right: 0.3125rem; /* 使用rem单位 */
 }
 .comment_box .post_comment .comment_author .media-body .comment_reply:hover {
   color: #ed7595;
 }
 .comment_box .post_comment .reply_comment {
-  padding-left: 80px;
+  padding-left: 5rem; /* 使用rem单位 */
 }
 
 .blog_comment_box {
-  padding-top: 80px;
+  padding-top: 5rem; /* 使用rem单位 */
 }
 .blog_comment_box p {
   margin-bottom: 0;
 }
 .blog_comment_box .get_quote_form {
-  padding-top: 40px;
+  padding-top: 2.5rem; /* 使用rem单位 */
 }
 .blog_comment_box .get_quote_form .form-group {
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem; /* 使用rem单位 */
 }
 .blog_comment_box .get_quote_form .form-group .form-control {
-  height: 60px;
-  border-radius: 4px;
+  height: 3.75rem; /* 使用rem单位 */
+  border-radius: 0.25rem; /* 使用rem单位 */
   border: 1px solid #e1e8ea;
-  font-size: 14px;
+  font-size: 0.875rem; /* 使用rem单位 */
   line-height: 1.4;
-  padding-left: 30px;
+  padding-left: 1.875rem; /* 使用rem单位 */
 }
 .blog_comment_box .get_quote_form .form-group .form-control.placeholder {
   color: #6b707f;
@@ -8502,19 +8502,19 @@ blockquote .author {
   color: #6b707f;
 }
 .blog_comment_box .get_quote_form .form-group .form-control:focus {
-  box-shadow: 0 20px 30px 0 rgba(4, 73, 89, 0.1);
+  box-shadow: 0 1.25rem 1.875rem 0 rgba(4, 73, 89, 0.1);
   border-color: #f4f8f8;
 }
 .blog_comment_box .get_quote_form .form-group .form-control.message {
-  height: 160px;
-  padding-top: 22px;
+  height: 10rem; /* 使用rem单位 */
+  padding-top: 1.375rem; /* 使用rem单位 */
 }
 .blog_comment_box .get_quote_form .thm_btn {
-  padding: 12px 35px;
+  padding: 0.75rem 2.1875rem; /* 使用rem单位 */
   box-shadow: none;
 }
 .blog_comment_box .get_quote_form .thm_btn:hover {
-  box-shadow: 0 20px 30px 0 rgba(12, 118, 142, 0.24);
+  box-shadow: 0 1.25rem 1.875rem 0 rgba(12, 118, 142, 0.24);
 }
 
 /*============= doc_blog_classic_area css_test ==============*/
@@ -8800,6 +8800,73 @@ blockquote .author {
 .categorie_list li + li {
   margin-top: 8px;
 }
+/* 容器排版 */
+/* 让容器支持换行，并保持元素水平对齐 */
+.font-adjust-controls {
+  display: flex;          /* 1. 启用 Flexbox 布局 */
+  flex-wrap: wrap;        /* 2. 允许子项换行 */ :contentReference[oaicite:0]{index=0}
+  gap: 0.5rem;            /* 原有按钮间距 */
+  align-items: center;
+}
+
+/* 让 “Useful Tools” 标题独占一整行 */
+.font-adjust-controls .c_head {
+  flex-basis: 100%;       /* 子项宽度占满一行 */ :contentReference[oaicite:1]{index=1}
+  margin-bottom: 0.5rem;  /* 标题与按钮的垂直间距 */
+}
+
+/* 按钮和打印图标维持原有布局风格 */
+.font-adjust-controls button,
+.font-adjust-controls .print {
+  flex: 0 0 auto;         /* 不拉伸、不收缩，保持自身宽度 */
+}
+
+/* 基础样式：透明背景 +  圆角 + 同 .print 字号 */
+.font-adjust-controls button {
+  background: transparent;                          /* 透明背景，和 .print 一致 */
+  border: 0;                       /* 与 about_widget .img 相同的边框色 */
+  border-radius: 40px;                             /* 同 .print 文字颜色 */
+  font-size: 18px;                                 /* 与 .print 相同字号 */ :contentReference[oaicite:0]{index=0}
+  width: 36px;                                     /* 固定按钮宽高，便于布局 */
+  height: 36px;
+  display: inline-flex;                            /* 方便居中图标 */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease; /* 细微动效 */
+}
+
+/* 图标大小与 .print 保持一致 */
+.font-adjust-controls button i {
+  font-size: 18px;                                 /* 与 .print 字号同步 */ :contentReference[oaicite:1]{index=1}
+}
+
+/* 悬停：背景微亮 + 文字／图标变粉色，呼应整体 hover 效果 */
+.font-adjust-controls button:hover {
+  background-color: #f3f8f9;                       /* 浅灰背景，和 tag_widget 相似 */ :contentReference[oaicite:2]{index=2}
+  color: #ed7595;                                  /* 呼应其他 hover 主题色 */
+}
+
+/* 焦点：无障碍高对比 outline */
+.font-adjust-controls button:focus {
+  outline: 2px dashed #ed7595;
+  outline-offset: 2px;
+}
+
+/* 重置 .print 链接风格与按钮同行 */
+.print {
+  color: #6b707f;
+  font-size: 18px;
+  margin-left: 0.5rem;                            /* 与按钮保持间距 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.print:hover {
+  color: #ed7595;
+}
+
 
 .recent_post_item {
   align-items: center;

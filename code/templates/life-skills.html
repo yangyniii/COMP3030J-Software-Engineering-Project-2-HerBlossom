@@ -9,6 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../static/assets/font-size/css/rvfs.css">
+    <link rel="stylesheet" href="../static/assets/tooltipster/css/tooltipster.bundle.css">
     <!-- icon css_test-->
     <link rel="stylesheet" href="../static/assets/elagent-icon/style.css">
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
@@ -267,18 +269,35 @@
                             <div class="widget categorie_widget">
                                 <h4 class="c_head">Post Categories</h4>
                                 <ul class="list-unstyled categorie_list">
-                                    <li><a href="#">Creative <span>(12)</span></a></li>
-                                    <li><a href="#">Inspiration <span>(8)</span></a></li>
-                                    <li><a href="#">Lifestyle <span>(3)</span></a></li>
-                                    <li><a href="#">News <span>(4)</span></a></li>
-                                    <li><a href="#">Photography <span>(12)</span></a></li>
                                     <li><a href="#">Skill <span>(15)</span></a></li>
-                                    <li><a href="#">Tourist Tours <span>(10)</span></a></li>
-                                    <li><a href="#">Inspire <span>(5)</span></a></li>
                                 </ul>
                             </div>
+                            <div class="widget font-adjust-controls">
+                                <h4 class="c_head">Useful Tools</h4>
+
+                                <button class="btn-font-increase" onclick="changeFontSizeAll(1)">
+                                    <i class="fas fa-search-plus" aria-hidden="true"></i>
+                                    <span class="sr-only">A+</span>
+                                </button>
+
+                                <button class="btn-font-decrease" onclick="changeFontSizeAll(-1)">
+                                    <i class="fas fa-search-minus" aria-hidden="true"></i>
+                                    <span class="sr-only">A-</span>
+                                </button>
+
+                                <button class="btn-font-reset" onclick="resetFontSizeAll()">
+                                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                                    <span class="sr-only">Reset</span>
+                                </button>
+
+                                <a href="javascript:window.print()" class="print">
+                                    <i class="icon_printer" aria-hidden="true"></i>
+                                    <span class="sr-only">Print</span>
+                                </a>
+                            </div>
+
                             <div class="widget recent_news_widget">
-                                <h4 class="c_head">Reacent News</h4>
+                                <h4 class="c_head">Recent News</h4>
                                 <div class="media recent_post_item">
                                     <img src="../static/img/blog-single/news_01.jpg" alt="">
                                     <div class="media-body">
@@ -554,6 +573,7 @@
     <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- 依赖插件 -->
     <script src="../static/assets/bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="../static/assets/font-size/js/rvfs.js"></script>
     <script src="../static/js_test/TweenMax.min.js"></script>
     <script src="../static/assets/font-size/js/rv-jquery-fontsize-2.0.3.js"></script>
     <script src="../static/js_test/parallaxie.js"></script>
@@ -566,6 +586,42 @@
     <script src="../static/js/change-button.js"></script>
     <!-- 最后加载 main.js -->
     <script src="../static/js_test/main.js"></script>
+<script>
+    // 缓存所有需要调整的元素
+    let allTextElements = [];
+
+    // 页面加载完毕后缓存元素列表
+    window.addEventListener('DOMContentLoaded', () => {
+      allTextElements = Array.from(document.querySelectorAll('body *'))
+        // 过滤掉不能设置 fontSize 的标签，比如 <script>, <style> 等
+        .filter(el => el.nodeType === Node.ELEMENT_NODE);
+    });
+
+    /**
+     * 调整所有元素的字体大小
+     * @param {number} delta - 以像素为单位的增量（正数放大，负数缩小）
+     */
+    function changeFontSizeAll(delta) {
+      allTextElements.forEach(el => {
+        // 获取当前计算值，例如 "16px"
+        const style = window.getComputedStyle(el).getPropertyValue('font-size');
+        const current = parseFloat(style);
+        // 计算新的字号，并限制在 10px–36px
+        const next = Math.min(Math.max(current + delta, 10), 36);
+        el.style.fontSize = next + 'px';
+      });
+    }
+
+    /**
+     * 重置所有元素的字体大小到默认
+     * 移除内联 font-size，让它们回到原始 CSS 样式
+     */
+    function resetFontSizeAll() {
+      allTextElements.forEach(el => {
+        el.style.removeProperty('font-size');
+      });
+    }
+  </script>
 
 </body>
 
