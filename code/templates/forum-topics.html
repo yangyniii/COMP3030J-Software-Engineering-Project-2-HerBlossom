@@ -291,18 +291,11 @@
                         <!-- /.community-posts-wrapper -->
 
                         <div class="pagination-wrapper">
-                            <div class="view-post-of">
-                                <p>Viewing 8 topics - 1 through 10 (of 342 total)</p>
+                            <div class="view-post-of" id="pagination-info">
+                                <!-- 这里的内容会通过 JavaScript 动态更新 -->
                             </div>
                             <ul class="post-pagination">
-                                <li class="prev-post pegi-disable"><a href="#"><i class="arrow_carrot-left"></i></a>
-                                </li>
-                                <li><a href="#" class="active">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">15</a></li>
-                                <li class="next-post"><a href="#"><i class="arrow_carrot-right"></i></a></li>
+                                <!-- 翻页按钮会通过 JavaScript 动态生成 -->
                             </ul>
                         </div>
                         <!-- /.pagination-wrapper -->
@@ -337,21 +330,8 @@
 
                             <div class="widget ticket_widget">
                                 <h4 class="c_head">Ranking List</h4>
-
-                                <ul class="list-unstyled ticket_categories">
-                                    <li><img src="../static/img/home_support/cmm5.png" alt="category"><a href="#">Docs WordPress
-                                            Theme</a> <span class="count">10</span></li>
-                                    <li><img src="../static/img/home_support/cmm4.png" alt="category"><a href="#">Product Landing
-                                            Page</a><span class="count count-fill">13</span><span
-                                            class="count">54</span></li>
-                                    <li><img src="../static/img/home_support/cmm2.png" alt="category"><a href="#">Knowledge base
-                                            Template</a><span class="count">142</span></li>
-                                    <li><img src="../static/img/home_support/cmm8.png" alt="category"><a href="#">Startup and App
-                                            WP Theme</a> <span class="count">13</span></li>
-                                    <li><img src="../static/img/home_support/cmm9.png" alt="category"><a href="#">Clean Email
-                                            Template</a> <span class="count">123</span></li>
-                                    <li><img src="../static/img/home_support/cmm10.png" alt="category"><a href="#">Apps WordPress
-                                            Theme</a> <span class="count">18</span></li>
+                                <ul class="list-unstyled ticket_categories" id="ranking-list">
+                                    <!-- 排行榜内容将通过 JavaScript 动态加载 -->
                                 </ul>
                             </div>
 
@@ -489,7 +469,7 @@
     <script src="../static/js/change-button.js"></script>
 </body>
 <script>
-    const postsPerPage = 5;
+    const postsPerPage = 4;
     let allPosts = [];
     let currentPage = 1;
 
@@ -618,7 +598,13 @@
     function renderPagination() {
         const totalPages = Math.ceil(allPosts.length / postsPerPage);
         const paginationList = document.querySelector('.post-pagination');
+        const paginationInfo = document.getElementById('pagination-info');
         paginationList.innerHTML = '';
+
+        // 动态更新分页信息文字
+        const start = (currentPage - 1) * postsPerPage + 1;
+        const end = Math.min(currentPage * postsPerPage, allPosts.length);
+        paginationInfo.innerHTML = `<p>Viewing ${allPosts.length} topics - ${start} through ${end} (of ${allPosts.length} total)</p>`;
 
         // Prev Button
         const prev = document.createElement('li');
@@ -823,6 +809,32 @@
             alert('Operation failed. Please try again later.');
         }
     }
+// 获取点赞排行的帖子
+    fetch('/get_top_posts')
+        .then(response => response.json())
+        .then(data => {
+            const rankingList = document.getElementById('ranking-list');
+            rankingList.innerHTML = ''; // 清空现有内容
+
+            if (data.success && data.top_posts.length > 0) {
+                data.top_posts.forEach(post => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <a href="/forum-single?post_id=${post.post_id}">
+                            ${post.title} <span class="count">${post.likes_count} Likes</span>
+                        </a>
+                    `;
+                    rankingList.appendChild(listItem);
+                });
+            } else {
+                rankingList.innerHTML = '<li>No posts available</li>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching ranking list:', error);
+            const rankingList = document.getElementById('ranking-list');
+            rankingList.innerHTML = '<li>Error loading ranking list</li>';
+        });
 </script>
 
 </html>

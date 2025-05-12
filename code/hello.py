@@ -850,6 +850,32 @@ def search_by_tag():
         print(f"Error searching posts by tag: {str(e)}")
         return jsonify({'success': False, 'message': str(e)}), 500
 
+@app.route('/get_top_posts', methods=['GET'])
+def get_top_posts():
+    db = Mysql()
+    try:
+        # 查询点赞数前五的帖子，按点赞数降序排列，如果点赞数相同按标题字母顺序升序
+        query = """
+            SELECT p.post_id, p.title, COUNT(pl.id) AS likes_count
+            FROM post p
+            LEFT JOIN post_likes pl ON p.post_id = pl.post_id
+            GROUP BY p.post_id, p.title
+            ORDER BY likes_count DESC, p.title ASC
+            LIMIT 5
+        """
+        db.cursor.execute(query)
+        results = db.cursor.fetchall()
+
+        # 将结果转换为字典列表
+        top_posts = [
+            {'post_id': row[0], 'title': row[1], 'likes_count': row[2]}
+            for row in results
+        ]
+        return jsonify({'success': True, 'top_posts': top_posts})
+    except Exception as e:
+        print(f"Error fetching top posts: {e}")
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 # Set up the basic port for the pages
 if __name__ == '__main__':
     app.run(debug=True, port=5222, host='127.0.0.1')
