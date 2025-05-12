@@ -8867,6 +8867,18 @@ blockquote .author {
   color: #ed7595;
 }
 
+/* —— 在已有 .font-adjust-controls 定义后追加 —— */
+/* 1. 容器透传事件 */
+.font-adjust-controls {
+  pointer-events: none;
+}
+
+/* 2. 恢复按钮和打印图标点击 */
+.font-adjust-controls button,
+.font-adjust-controls .print {
+  pointer-events: auto;
+}
+
 
 .recent_post_item {
   align-items: center;
