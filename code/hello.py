@@ -306,11 +306,28 @@ def upload_avatar():
 # Update password
 @app.route('/profile', methods=['POST'])
 def update_password():
-    new_password = request.json.get('password')
-    email = session.get('email')  # Get the email from the session
+    # 检查用户是否已登录
+    email = session.get('email')
+    if not email:
+        return jsonify({'message': 'Please log in first'}), 403
+
+    # 获取新密码
+    data = request.get_json()
+    new_password = data.get('password')
+    if not new_password:
+        return jsonify({'message': 'Password is required'}), 400
+
+    # 使用 bcrypt 加密新密码
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
+    # 更新密码
     db = Mysql()
-    db.update_password(email, new_password)
-    return jsonify({'message': 'Password updated successfully'})
+    try:
+        db.update_password(email, hashed_password.decode('utf-8')) # 存储为字符串
+        return jsonify({'message': 'Password updated successfully'}), 200
+    except Exception as e:
+        print(f"Error updating password: {e}")
+        return jsonify({'message': 'An error occurred while updating the password'}), 500
 
 
 @app.route('/publish_post', methods=['GET'])
