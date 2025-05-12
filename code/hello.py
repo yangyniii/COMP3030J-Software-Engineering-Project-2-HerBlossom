@@ -565,6 +565,9 @@ def blog_grid_two():
 def forum_topics():
     return render_template('forum-topics.html')
 
+@app.route('/useful-skills', methods=['GET'])
+def useful_skills():
+    return render_template('useful-skills.html')
 
 @app.route('/forum-single1', methods=['GET'])
 def forum_single1():
@@ -572,7 +575,7 @@ def forum_single1():
         "title": "Are there any scandal-free sanitary pad brands left?",
         "content": "The first major scandal of this year's Consumer Rights Day (March 15) was about sanitary pads. It exposed a shocking black market: discarded pads were simply rinsed, pressed back into shape, and then sold as \"brand-new\" products.  The pictures were so disgusting that words can't even describe them.  These \"recycled\" sanitary pads had bacterial levels exceeding the limit by nearly 100 times, with dangerous pathogens like E. coli and Staphylococcus aureus present in alarming amounts. Long-term use could lead to gynecological infections and even infertility. Even worse, some products contained fluorescent agents far beyond safety standards, posing a cancer risk. When women's health is compromised, the next generation suffers too.  Whether we're called \"queens,\" \"goddesses,\" or just \"women\" doesn't really matter. What matters is:  Does society respect women's biological needs? Are women's basic health concerns acknowledged, discussed, and treated without bias or neglect?  So, are there any sanitary pad brands left that haven't been exposed yet? And will women's safety ever be taken seriously?"
     }
-    return render_template('forum-single1.html', post=post)  # 传递 post 变量
+    return render_template('forum-single1弃.html', post=post)  # 传递 post 变量
 
 
 
@@ -845,6 +848,32 @@ def search_by_tag():
         return jsonify({'posts': posts})
     except Exception as e:
         print(f"Error searching posts by tag: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/get_top_posts', methods=['GET'])
+def get_top_posts():
+    db = Mysql()
+    try:
+        # 查询点赞数前五的帖子，按点赞数降序排列，如果点赞数相同按标题字母顺序升序
+        query = """
+            SELECT p.post_id, p.title, COUNT(pl.id) AS likes_count
+            FROM post p
+            LEFT JOIN post_likes pl ON p.post_id = pl.post_id
+            GROUP BY p.post_id, p.title
+            ORDER BY likes_count DESC, p.title ASC
+            LIMIT 5
+        """
+        db.cursor.execute(query)
+        results = db.cursor.fetchall()
+
+        # 将结果转换为字典列表
+        top_posts = [
+            {'post_id': row[0], 'title': row[1], 'likes_count': row[2]}
+            for row in results
+        ]
+        return jsonify({'success': True, 'top_posts': top_posts})
+    except Exception as e:
+        print(f"Error fetching top posts: {e}")
         return jsonify({'success': False, 'message': str(e)}), 500
 
 # Set up the basic port for the pages
