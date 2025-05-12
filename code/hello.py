@@ -240,6 +240,7 @@ def get_user_info_by_id():
     if not user_info:
         return jsonify({'message': 'User not found'}), 404  # 如果用户不存在，则返回 404
 
+
     # 在确认 user_info 不为空后再访问 avatar
     avatar_path = user_info.get('avatar', 'chiikawa.jpg')
     if not avatar_path.startswith('../'):
