@@ -185,10 +185,9 @@
                     <div class="col-sm-7">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Blog with sidebar</li>
-                            </ol>
+                                <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Forum</a></li>
+                                </ol>
                         </nav>
                     </div>
                     <div class="col-sm-5">
@@ -496,15 +495,19 @@
 
                                 <div class="open-hours">
                                     <h4 class="title-sm">Our office hours</h4>
-                                    <p>Monday - Friday / 10am - 6pm (UTC +4) NewYork</p>
+                                    <p>Monday - Friday / 10am - 6pm (UTC +4) Beijing</p>
                                     <ul class="current-time list-unstyled">
                                         <li>
-                                            <h4 class="title-sm">Your time</h4>
-                                            <p>10:30:15 PM</p>
+                                            <h4 class="title-sm">Beijing Time</h4>
+                                            <p id="beijing-time">Loading...</p>
+                                            <p id="beijing-date">Loading...</p>
+                                            <p id="beijing-day">Loading...</p>
                                         </li>
                                         <li>
-                                            <h4 class="title-sm">Your time</h4>
-                                            <p>10:30:15 PM</p>
+                                            <h4 class="title-sm">Dublin Time</h4>
+                                            <p id="dublin-time">Loading...</p>
+                                            <p id="dublin-date">Loading...</p>
+                                            <p id="dublin-day">Loading...</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -563,7 +566,7 @@
                         <img src="../static/img/home_support/chat-smile.png" alt="">
                         <h2 class="action-title">New to Communities?</h2>
                     </div>
-                    <a href="#" class="action_btn">Join the community <i class="arrow_right"></i></a>
+                    <a href="/forum-topics" class="action_btn">Join the community <i class="arrow_right"></i></a>
                 </div>
                 <!-- /.action-content-wrapper -->
             </div>
@@ -755,32 +758,33 @@
         const end = start + postsPerPage;
         const postsToShow = allPosts.slice(start, end);
 
-        postsToShow.forEach(post => {
-            const postItem = document.createElement('div');
-            postItem.className = 'community-post style-two';
-            postItem.innerHTML = `
-                <div class="post-content">
-                    <div class="author-avatar">
-                        <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
-                    </div>
-                    <div class="entry-content">
-                        <h3 class="post-title">
-                            <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
-                        </h3>
-                        <div class="post-preview">
-                            ${post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content}
-                        </div>
-                        <ul class="meta">
-                            <li>
-                                <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
-                                <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
-                            </li>
-                            <li><i class="icon_calendar"></i>${post.create_time}</li>
-                        </ul>
-                    </div>
+postsToShow.forEach(post => {
+    const postItem = document.createElement('div');
+    postItem.className = 'community-post style-two';
+    postItem.innerHTML = `
+        <div class="post-content">
+            <div class="author-avatar">
+                <img src="${userAvatarMap.get(post.user_id) || '../static/img/home_support/default_avatar.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+            </div>
+            <div class="entry-content">
+                <h3 class="post-title">
+                    <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
+                </h3>
+                <div class="post-preview">
+                    ${post.content.length > 10 ? post.content.substring(0, 100) + '...' : post.content}
                 </div>
+                <ul class="meta">
+                    <li>
+                        <img src="../static/img/home_support/cmm1.png" alt="cmm" style="width: 30%; height: 30%;">
+                        <a href="#" data-userid="${post.user_id}">${userNameMap.get(post.user_id) || 'Loading...'}</a>
+                    </li>
+                    <span style="margin-left: 360px;"></span>
+                    <li><i class="icon_calendar"></i>${post.create_time}</li>
+                </ul>
+                
                 <div class="post-meta-wrapper">
                     <ul class="post-meta-info">
+                        <span style="margin-left: 450px;"></span>
                         <li><a href="#"><i class="icon_chat_alt"></i>${post.comment_count}</a></li>
                         <li>
                             <a href="#" class="like-button" data-post-id="${post.post_id}" onclick="toggleLike(event, ${post.post_id})">
@@ -790,15 +794,17 @@
                         </li>
                     </ul>
                 </div>
-            `;
-            postList.appendChild(postItem);
+            </div>
+        </div>
+    `;
+    postList.appendChild(postItem);
 
-            const userLink = postItem.querySelector('a[data-userid]');
-            fetchUserAndSetUsername(post.user_id, userLink);
-            
-            // 獲取點讚信息
-            fetchPostLikes(post.post_id);
-        });
+    const userLink = postItem.querySelector('a[data-userid]');
+    fetchUserAndSetUsername(post.user_id, userLink);
+
+    // 获取点赞信息
+    fetchPostLikes(post.post_id);
+});
     }
 
     function renderPagination() {
@@ -1009,6 +1015,37 @@
             alert('Operation failed. Please try again later.');
         }
     }
+
+    function updateTime() {
+        const beijingTimeElement = document.getElementById('beijing-time');
+        const beijingDateElement = document.getElementById('beijing-date');
+        const beijingDayElement = document.getElementById('beijing-day');
+        const dublinTimeElement = document.getElementById('dublin-time');
+        const dublinDateElement = document.getElementById('dublin-date');
+        const dublinDayElement = document.getElementById('dublin-day');
+
+        const now = new Date();
+
+        // 获取星期几的名称
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        // 北京时间 (UTC+8)
+        const beijingTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
+        beijingTimeElement.textContent = beijingTime.toLocaleTimeString();
+        beijingDateElement.textContent = beijingTime.toLocaleDateString();
+        beijingDayElement.textContent = daysOfWeek[beijingTime.getDay()];
+
+        // 都柏林时间 (UTC 或 UTC+1)
+        const dublinTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Dublin" }));
+        dublinTimeElement.textContent = dublinTime.toLocaleTimeString();
+        dublinDateElement.textContent = dublinTime.toLocaleDateString();
+        dublinDayElement.textContent = daysOfWeek[dublinTime.getDay()];
+    }
+
+    // 每秒更新一次时间
+    setInterval(updateTime, 1000);
+    updateTime();
+
 </script>
 
 </html>

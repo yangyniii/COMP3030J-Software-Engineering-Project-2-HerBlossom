@@ -812,11 +812,11 @@ def toggle_like():
                 'likes_count': likes_count
             })
         except Exception as e:
-            print(f"數據庫操作錯誤: {str(e)}")
-            return jsonify({'success': False, 'message': f'數據庫操作失敗: {str(e)}'})
+            print(f"Error: {str(e)}")
+            return jsonify({'success': False, 'message': f'Error: {str(e)}'})
     except Exception as e:
-        print(f"處理點讚請求時發生錯誤: {str(e)}")
-        return jsonify({'success': False, 'message': '操作失敗，請稍後重試'})
+        print(f"Error: {str(e)}")
+        return jsonify({'success': False, 'message': 'Error'})
 
 @app.route('/get_post_likes', methods=['GET'])
 def get_post_likes():
