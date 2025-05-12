@@ -63,36 +63,54 @@ def sign_in():
     try:
         data = request.get_json()
         if not data:
-            return jsonify({'message': 'Invalid data format'}), 400
-
+            return jsonify({'success': False, 'message': '無效的數據格式'}), 400
 
         email = data.get('email')
         password = data.get('password')
 
         if not email or not password:
-            return jsonify({'message': 'All fields are required'}), 400
+            return jsonify({'success': False, 'message': '請填寫所有欄位'}), 400
 
         db = Mysql()
+        
+        # 檢查郵箱是否存在
+        if not db.exist_log_user(email):
+            return jsonify({
+                'success': False,
+                'error': 'email_not_found',
+                'message': '此郵箱尚未註冊'
+            }), 401
+
         user = db.signin_user(email, password)
 
         if not user:
-            return jsonify({'message': 'Invalid email, password, or identification'}), 401
+            return jsonify({
+                'success': False,
+                'error': 'wrong_password',
+                'message': '密碼錯誤'
+            }), 401
 
         if user['email'] in session:
-            return jsonify({'message': 'Already logged in'}), 400
+            return jsonify({
+                'success': False,
+                'message': '已經登入'
+            }), 400
 
-        # Store user information in the session
+        # 存儲用戶信息到 session
         session['email'] = user['email']
         session['user_id'] = user['user_id']
 
-        print("Session data:", session)  # Debugging session data
-
-        # Redirect to main route
-        return redirect('/index')
+        return jsonify({
+            'success': True,
+            'message': '登入成功'
+        })
 
     except Exception as e:
-        print("An error occurred:", str(e))  # Debug message
-        return jsonify({'message': 'An error occurred during login'}), 500
+        print("An error occurred:", str(e))
+        return jsonify({
+            'success': False,
+            'message': '登入過程中發生錯誤'
+        }), 500
 
 
 @app.route('/logout', methods=['POST'])

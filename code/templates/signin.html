@@ -146,6 +146,7 @@
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.exists) {
+                        checkEmailExists()
                         emailError.style.display = "none";
                     } else {
                         emailError.style.display = "block";
@@ -162,7 +163,7 @@
         const password = document.getElementById("password").value;
 
         if (!email || !password) {
-            alert("Please fill in all fields.");
+            displayGeneralMessage("請填寫所有欄位。");
             return;
         }
 
@@ -171,47 +172,56 @@
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password})
         })
-                .then((response) => {
-                    // 处理登录响应
-                    visitMainPage();
-                })
-                .catch(error => console.error("Error:", error));
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                window.location.href = "/index";
+            } else {
+                if (data.error === "email_not_found") {
+                    displayGeneralMessage("This email address has not been registered yet. Please register first.");
+                } else if (data.error === "wrong_password") {
+                    displayGeneralMessage("Password incorrect. Please try again.");
+                } else {
+                    displayGeneralMessage(data.message || "Login failed. Please try again later.");
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            displayGeneralMessage("System error. Please try again later.");
+        });
     });
 
     // Display General Message
     function displayGeneralMessage(message) {
+        // 移除現有的錯誤訊息
+        const existingMessage = document.querySelector(".alert");
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
         const messageDiv = document.createElement("div");
         messageDiv.className = "alert alert-danger";
+        messageDiv.style.marginTop = "10px";
+        messageDiv.style.marginBottom = "10px";
         messageDiv.textContent = message;
         document.getElementById("signInForm").prepend(messageDiv);
 
+        // 5秒後自動移除錯誤訊息
         setTimeout(() => messageDiv.remove(), 5000);
     }
 
-    function displayBanMessage(message, banReason, timeLeftSeconds) {
-       const banFeedback = document.getElementById("banFeedback");
-       const banMessage = document.getElementById("banMessage");
-       const banDetails = document.getElementById("banDetails");
-
-       const hours = Math.floor(timeLeftSeconds / 3600);
-       const minutes = Math.floor((timeLeftSeconds % 3600) / 60);
-       const timeString = `${hours} hours and ${minutes} minutes`;
-
-       banMessage.textContent = message;
-       banDetails.innerHTML = `<strong>Reason:</strong> ${banReason}<br><strong>Time Remaining:</strong> ${timeString}`;
-       banFeedback.style.display = "block";
-   }
 
     // Clear Form Inputs
     document.getElementById("clearButton").addEventListener("click", function () {
         clearForm();
     });
 
-    // 清空表单的函数
+    // 清空表單的函數
     function clearForm() {
-        document.getElementById("email").value = ""; // 清空 email 输入框
-        document.getElementById("password").value = ""; // 清空密码输入框
-        document.getElementById("email-error").style.display = "none"; // 隐藏 email 错误提示
+        document.getElementById("email").value = ""; // 清空 email 輸入框
+        document.getElementById("password").value = ""; // 清空密碼輸入框
+        document.getElementById("email-error").style.display = "none"; // 隱藏 email 錯誤提示
     }
 
 </script>
