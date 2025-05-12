@@ -1,0 +1,14 @@
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (10, 20, 2, '2025-05-07 22:16:18');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (11, 21, 2, '2025-05-07 22:17:19');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (12, 21, 3, '2025-05-07 22:18:26');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (13, 8, 3, '2025-05-12 10:42:10');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (14, 23, 2, '2025-05-12 17:02:35');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (15, 23, 3, '2025-05-12 17:08:02');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (16, 24, 2, '2025-05-12 17:17:02');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (17, 24, 9, '2025-05-12 17:22:41');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (18, 24, 1, '2025-05-12 17:24:32');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (19, 24, 3, '2025-05-12 17:24:50');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (20, 24, 4, '2025-05-12 17:25:00');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (21, 24, 5, '2025-05-12 17:25:07');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (22, 24, 6, '2025-05-12 17:25:13');
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES (23, 24, 10, '2025-05-12 17:25:55');
