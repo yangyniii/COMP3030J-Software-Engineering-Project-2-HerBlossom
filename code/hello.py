@@ -242,7 +242,7 @@ def get_user_info_by_id():
 
 
     # 在确认 user_info 不为空后再访问 avatar
-    avatar_path = user_info.get('avatar', 'chiikawa.jpg')
+    avatar_path = user_info.get('avatar', '../static/images/chiikawa.jpg')
     if not avatar_path.startswith('../'):
         avatar_path = '../static/images/' + avatar_path
     print('Avatar path11:', avatar_path)
