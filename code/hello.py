@@ -407,12 +407,19 @@ def publish_comment():
         return jsonify({'message': f'Error: {str(e)}'}), 500
 
 
+
 @app.route('/search_posts', methods=['GET'])
 def search_posts():
     title = request.args.get('title', '')
     db = Mysql()
     try:
         posts = db.search_posts_by_title(title)
+        # 为每个帖子添加用户头像路径
+        for post in posts:
+            user_info = db.get_user_info_by_id(post['user_id'])
+            post['avatar'] = user_info['avatar'] if user_info and user_info[
+                'avatar'] else '../static/images/chiikawa.jpg'
+
         return jsonify({'posts': posts})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
@@ -872,6 +879,11 @@ def search_by_tag():
     db = Mysql()
     try:
         posts = db.search_posts_by_tag(tag)
+        for post in posts:
+            user_info = db.get_user_info_by_id(post['user_id'])
+            post['avatar'] = user_info['avatar'] if user_info and user_info[
+                'avatar'] else '../static/images/chiikawa.jpg'
+
         return jsonify({'posts': posts})
     except Exception as e:
         print(f"Error searching posts by tag: {str(e)}")
