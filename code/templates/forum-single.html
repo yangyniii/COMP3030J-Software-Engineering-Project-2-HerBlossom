@@ -420,7 +420,7 @@ font-family: 'Dancing Script', cursive;
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <span class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</span>
+                        <span class="date"><i class="icon_clock_alt"></i>/span>
                     </div>
                 </div>
             </div>
@@ -434,9 +434,9 @@ font-family: 'Dancing Script', cursive;
                         <div class="row">
                             <div class="col-lg-9">
                                 <div class="forum-post-top">
-                                    <div class="author-avatar">
-                                        <img id="avatar" src="../static/images/chiikawa.jpg" alt="user avatar">
-                                    </div>
+                                    <a class="author-avatar" >
+                                        <img id="avatar" src="{{ post.avatar }}" alt="user avatar">
+                                    </a>
                                     <div class="forum-post-author">
                                         <span class="author-name" id="username"></span>
                                         <div class="forum-author-meta">

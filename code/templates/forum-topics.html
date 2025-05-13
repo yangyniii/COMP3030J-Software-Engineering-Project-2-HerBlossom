@@ -184,7 +184,7 @@
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <span class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</span>
+                        <span class="date"><i class="icon_clock_alt"></i></span>
                     </div>
                 </div>
             </div>
@@ -551,8 +551,8 @@ postsToShow.forEach(post => {
     postItem.innerHTML = `
         <div class="post-content">
             <div class="author-avatar">
-                    <img src="${userAvatarMap.get(post.user_id) || '../static/images/chiikawa.jpg'}" alt="avatar" style="width: 80%; height: auto;">
-                </div>
+                <img src="${post.avatar || '../static/images/chiikawa.jpg'}" alt="avatar" style="width: 80%; height: auto;">
+            </div>
             <div class="entry-content">
                 <h3 class="post-title">
                     <a href="/forum-single?post_id=${post.post_id}">${post.title}</a>
@@ -655,6 +655,9 @@ postsToShow.forEach(post => {
             .then(data => {
                 const username = data.username || 'Unknown User';
                 const avatar = data.avatar || '../static/images/chiikawa.jpg';
+
+
+
 
                 userNameMap.set(userId, username);
                 userAvatarMap.set(userId, avatar);
