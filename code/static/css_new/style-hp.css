@@ -295,7 +295,7 @@ ul.list-style li:last-child {
 }
 
 .f_bg_color {
-  background: #f6fbfc;
+  background: #ffe8ef;
 }
 
 .local-video-container {
@@ -8662,23 +8662,31 @@ blockquote .author {
   margin-bottom: -40px;
 }
 .blog_related_post .blog_grid_post {
-  box-shadow: none;
+  box-shadow: 0 10px 20px 0 rgb(181, 181, 181);
+  border: 2px solid #ffadbf; /* 添加边框 */
+  background-color: rgb(255, 237, 242); /* 可选：设置背景颜色 */
+  padding: 15px; /* 内部留白 */
+  border-radius: 15px; /* 圆角边框 */
 }
+
 .blog_related_post .blog_grid_post img {
   border-radius: 4px;
   max-width: 100%;
 }
+
 .blog_related_post .grid_post_content {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
 }
+
 .blog_related_post .grid_post_content .post_tag {
   padding-bottom: 4px;
 }
 .blog_related_post .grid_post_content .b_title {
   font-size: 18px;
   line-height: 24px;
+  margin-bottom: -5px;
 }
 .blog_related_post .grid_post_content p {
   margin-bottom: 0;
