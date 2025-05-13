@@ -734,15 +734,18 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'Avatar uploaded successfully') {
-                        alert("Avatar updated successfully!");
+                        // alert("Avatar updated successfully!");
                         avatar.src = `/${data.avatar_url}`; // 更新头像显示
+                        // 关闭弹窗
+                        $(avatarModal).modal('hide'); // 使用 Bootstrap 的 modal 方法关闭弹窗
                     } else {
-                        alert(data.message || "Failed to update avatar.");
+                        // alert(data.message || "Failed to update avatar.");
+                        console.error('Failed to upload avatar:', data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert("An error occurred while uploading the avatar.");
+                    // alert("An error occurred while uploading the avatar.");
                 });
             });
         });
