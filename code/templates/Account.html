@@ -550,6 +550,19 @@
                                             </div>
                                         </div>
 
+                                        <!-- 保存密码后的弹窗 Modal（依赖 Bootstrap Modal） -->
+                                        <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content custom-modal-content">
+                                                    <!-- 弹窗主体内容 -->
+                                                    <div class="modal-body text-center">
+                                                        <p id="passwordModalMessage">Your password has been updated successfully!</p>
+                                                        <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <!-- Profile Information Section -->
                                         <div class="account-info">
@@ -806,14 +819,30 @@
         changeButton.style.display = 'none'; // 隐藏更改按钮
         }
 
+        //展示保存密码弹窗
+        function showPasswordModal(title, message) {
+        const modalMessage = document.getElementById('passwordModalMessage');
+
+        modalMessage.innerText = message;
+
+        // 显示模态框
+        $('#passwordModal').modal('show');
+        }
+
         function savePassword() {
         const passwordInput = document.getElementById('password');
+        const saveButton = document.getElementById('save-button');
         const newPassword = passwordInput.value;
 
         if (!newPassword) {
-            alert('Password cannot be empty.');
+            showPasswordModal('Error', 'Password cannot be empty.');
             return;
         }
+
+        // 禁用按钮以防止重复提交
+        // saveButton.disabled = true;
+
+
 
         // 发送请求到后端
         fetch('/profile', {
@@ -826,18 +855,20 @@
         .then(response => response.json())
         .then(data => {
             if (data.message === 'Password updated successfully') {
-                alert('Password updated successfully!');
+                showPasswordModal('Success', 'Your password has been updated successfully!');
                 passwordInput.disabled = true; // 禁用输入框
                 passwordInput.value = '********'; // 恢复默认值
-                document.getElementById('save-password').style.display = 'none'; // 隐藏保存按钮
+                // document.getElementById('save-password').style.display = 'none'; // 隐藏保存按钮
                 document.getElementById('change-password').style.display = 'inline-block'; // 显示更改按钮
             } else {
-                alert(data.message || 'Failed to update password.');
+                showPasswordModal('Error', data.message || 'Failed to update password.');
+                saveButton.disabled = false; // 如果失败，重新启用按钮
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while updating the password.');
+            showPasswordModal('Error', 'An error occurred while updating the password.');
+            saveButton.disabled = false; // 如果发生错误，重新启用按钮
         });
     }
     </script>
