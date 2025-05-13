@@ -181,140 +181,113 @@
                 </div>
                 <div class="contact_info">
                     <div class="section_title text-left">
-                        <h2 class="h_title wow fadeInUp">Let’s start the conversation</h2>
-                        <p>Please email us, we’ll be happy to assist you.</p>
+                        <h2 class="h_title wow fadeInUp">We Value Your Feedback</h2>
+                        <p>Your suggestions help us improve. Please share your thoughts with us below.</p>
                     </div>
-                    <form action="/index" class="contact_form">
+                    <form action="/submit-feedback" class="contact_form" onsubmit="return submitFeedback(event)">
                         <div class="form-group">
-                            <h6>What type of project you need?</h6>
+                            <h6>What would you like to give feedback on?</h6>
                             <div class="box_info">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checkone">
-                                    <label class="form-check-label" for="Checkone">
-                                        Web Design
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackOne">
+                                    <label class="form-check-label" for="feedbackOne"> Website Experience </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checktwo">
-                                    <label class="form-check-label" for="Checktwo">
-                                        Dashboard
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackTwo">
+                                    <label class="form-check-label" for="feedbackTwo"> Mobile App </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checkthree">
-                                    <label class="form-check-label" for="Checkthree">
-                                        Mobile App
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackThree">
+                                    <label class="form-check-label" for="feedbackThree"> Design/Layout </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checkfour">
-                                    <label class="form-check-label" for="Checkfour">
-                                        Mockup
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackFour">
+                                    <label class="form-check-label" for="feedbackFour"> Performance </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checkfive">
-                                    <label class="form-check-label" for="Checkfive">
-                                        Desktop App
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackFive">
+                                    <label class="form-check-label" for="feedbackFive"> Feature Request </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="Checksix">
-                                    <label class="form-check-label" for="Checksix">
-                                        Ui kit
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" id="feedbackSix">
+                                    <label class="form-check-label" for="feedbackSix"> Other </label>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <h6>Budget Range</h6>
+                            <h6>How satisfied are you with our service?</h6>
                             <div class="box_info">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="budgetOne" value="option1" checked="">
-                                    <label class="form-check-label" for="budgetOne">
-                                        $1k
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="satisfied1"
+                                           value="very" checked>
+                                    <label class="form-check-label" for="satisfied1"> Very Satisfied </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="budgetTwo" value="option2" checked="">
-                                    <label class="form-check-label" for="budgetTwo">
-                                        $2k
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="satisfied2"
+                                           value="satisfied">
+                                    <label class="form-check-label" for="satisfied2"> Satisfied </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="budgetThree" value="option3" checked="">
-                                    <label class="form-check-label" for="budgetThree">
-                                        $2k to $3k
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="satisfied3"
+                                           value="neutral">
+                                    <label class="form-check-label" for="satisfied3"> Neutral </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="budgetFour" value="option4" checked="">
-                                    <label class="form-check-label" for="budgetFour">
-                                        $4k to 5k
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="satisfied4"
+                                           value="unsatisfied">
+                                    <label class="form-check-label" for="satisfied4"> Unsatisfied </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="budgetFive" value="option5" checked="">
-                                    <label class="form-check-label" for="budgetFive">
-                                        More then $6k
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="satisfied5"
+                                           value="very-unsatisfied">
+                                    <label class="form-check-label" for="satisfied5"> Very Unsatisfied </label>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <h6>Deadline</h6>
+                            <h6>Would you like to be contacted about your feedback?</h6>
                             <div class="box_info">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Radios" id="weekOne" value="1" checked="">
-                                    <label class="form-check-label" for="weekOne">
-                                        1 week
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="contactPermission"
+                                           id="contactYes" value="yes">
+                                    <label class="form-check-label" for="contactYes"> Yes </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Radios" id="weekTwo" value="2" checked="">
-                                    <label class="form-check-label" for="weekTwo">
-                                        2 week
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Radios" id="weekThree" value="3" checked="">
-                                    <label class="form-check-label" for="weekThree">
-                                        3 week
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Radios" id="weekFour" value="4" checked="">
-                                    <label class="form-check-label" for="weekFour">
-                                        4 week
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Radios" id="weekFive" value="5" checked="">
-                                    <label class="form-check-label" for="weekFive">
-                                        5 week
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="contactPermission" id="contactNo"
+                                           value="no" checked>
+                                    <label class="form-check-label" for="contactNo"> No </label>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row contact_fill">
                             <div class="col-lg-4 form-group">
                                 <h6>Full Name</h6>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name here">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="Enter your name here">
                             </div>
+
                             <div class="col-lg-4 form-group">
                                 <h6>Email</h6>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="info@HerBlossom.com">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="you@example.com">
                             </div>
+
                             <div class="col-lg-4 form-group">
-                                <h6>Phone no</h6>
-                                <input type="tel" class="form-control" name="tel" id="phone" placeholder="+462">
+                                <h6>Phone (optional)</h6>
+                                <input type="tel" class="form-control" name="tel" id="phone" placeholder="+1234567890">
                             </div>
+
                             <div class="col-lg-12 form-group">
-                                <h6>Message</h6>
-                                <textarea class="form-control message" id="message" placeholder="Enter Your Text ..."></textarea>
+                                <h6>Your Feedback</h6>
+                                <textarea class="form-control message" id="message"
+                                          placeholder="Tell us what we can improve or do better..."></textarea>
                             </div>
+
                             <div class="col-lg-12 form-group">
-                                <button type="submit" class="btn action_btn thm_btn">Send Message</button>
+                                <button type="submit" class="btn action_btn thm_btn">Submit Feedback</button>
                             </div>
                         </div>
                     </form>
@@ -409,6 +382,12 @@
         </div>
     </footer>
     </div>
+<!-- 自定义模态框结构 -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+<div class="custom-modal" id="modalBox">
+    <h3>Thank you for your feedback!</h3>
+    <button onclick="closeModal()">Close</button>
+</div>
 
     <!-- Back to top button -->
     <a id="back-to-top" title="Back to Top"></a>
@@ -428,6 +407,22 @@
     <script src="../static/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="../static/js_test/main.js"></script>
     <script src="../static/js/change-button.js"></script>
+
+
+<script>
+    function submitFeedback(event) {
+        event.preventDefault(); // 阻止表单默认提交
+        // 弹出模态框
+        document.getElementById("modalOverlay").style.display = "block";
+        document.getElementById("modalBox").style.display = "block";
+        return false;
+    }
+
+    function closeModal() {
+        document.getElementById("modalOverlay").style.display = "none";
+        document.getElementById("modalBox").style.display = "none";
+    }
+</script>
 </body>
 
 </html>

@@ -9,6 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../static/assets/font-size/css/rvfs.css">
+    <link rel="stylesheet" href="../static/assets/tooltipster/css/tooltipster.bundle.css">
     <!-- icon css_test-->
     <link rel="stylesheet" href="../static/assets/elagent-icon/style.css">
     <link rel="stylesheet" href="../static/assets/animation/animate.css">
@@ -31,14 +33,14 @@
                     <h4><span>Her</span>Blossom</h4>
                 </div>
             </div>
-            <h2 class="head">WELCOME GIRLS!</h2>
-            <p></p>
+            <h2 class="head">KNOWLEDGE EMPOWER YOU</h2>
+            <p>Power come from yourself. You get your back!</p>
         </div>
     </div>
     <div class="body_wrapper">
         <nav class="navbar navbar-expand-lg menu_two" id="sticky">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/index">
                 <img src="../static/img/logo.png" srcset="../static/img/logo-2x.png 2x" alt="logo">
             </a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
@@ -79,7 +81,7 @@
                                aria-haspopup="true" aria-expanded="false">Blog</a>
                         </li>
                         <li class="nav-item dropdown submenu mega_menu tab-demo">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                            <a href="/job-recommendation" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Job Recommendation</a>
                         </li>
                         <li class="nav-item dropdown submenu">
@@ -89,10 +91,10 @@
                             <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown_menu_two">
                                 <li class="nav-item">
-                                    <a href="contact.html" class="nav-link">
+                                    <a href="/contact-us" class="nav-link">
                                         <img src="../static/img/tick.png" alt="">
                                         <div class="text">
-                                            <h5>Content Us</h5>
+                                            <h5>Contact Us</h5>
                                             <p>Send your feedback here!</p>
                                         </div>
                                     </a>
@@ -123,9 +125,9 @@
                         <div class="text">
                             <a href="https://hk.indeed.com/career-advice/about-us"><h4>HerBlossom</h4></a>
                             <div class="post_tag">
-                                <a href="#">Updated 22 July 2022</a>
-                                <a href="#">18 Min Read</a>
-                                <a class="c_blue" href="#">Skills</a>
+                                <a>Updated 22 July 2022</a>
+                                <a>18 Min Read</a>
+                                <a class="c_blue">Skills</a>
                             </div>
                         </div>
                     </div>
@@ -258,7 +260,7 @@
                             <div class="widget about_widget">
                                 <div class="img"><img src="../static/img/blog-single/about_img.jpg" alt=""></div>
                                 <div class="text">
-                                    <a href="#">
+                                    <a>
                                         <h3>Rodney Artichoke</h3>
                                     </a>
                                     <p>James Bond jolly good happy days smashing barney bonnet bits and bobs loo.!</p>
@@ -267,23 +269,40 @@
                             <div class="widget categorie_widget">
                                 <h4 class="c_head">Post Categories</h4>
                                 <ul class="list-unstyled categorie_list">
-                                    <li><a href="#">Creative <span>(12)</span></a></li>
-                                    <li><a href="#">Inspiration <span>(8)</span></a></li>
-                                    <li><a href="#">Lifestyle <span>(3)</span></a></li>
-                                    <li><a href="#">News <span>(4)</span></a></li>
-                                    <li><a href="#">Photography <span>(12)</span></a></li>
                                     <li><a href="#">Skill <span>(15)</span></a></li>
-                                    <li><a href="#">Tourist Tours <span>(10)</span></a></li>
-                                    <li><a href="#">Inspire <span>(5)</span></a></li>
                                 </ul>
                             </div>
+                            <div class="widget font-adjust-controls">
+                                <h4 class="c_head">Useful Tools</h4>
+
+                                <button class="btn-font-increase" onclick="changeFontSizeAll(1)">
+                                    <i class="fas fa-search-plus" aria-hidden="true"></i>
+                                    <span class="sr-only">A+</span>
+                                </button>
+
+                                <button class="btn-font-decrease" onclick="changeFontSizeAll(-1)">
+                                    <i class="fas fa-search-minus" aria-hidden="true"></i>
+                                    <span class="sr-only">A-</span>
+                                </button>
+
+                                <button class="btn-font-reset" onclick="resetFontSizeAll()">
+                                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                                    <span class="sr-only">Reset</span>
+                                </button>
+
+                                <a href="javascript:window.print()" class="print">
+                                    <i class="icon_printer" aria-hidden="true"></i>
+                                    <span class="sr-only">Print</span>
+                                </a>
+                            </div>
+
                             <div class="widget recent_news_widget">
-                                <h4 class="c_head">Reacent News</h4>
+                                <h4 class="c_head">Recent News</h4>
                                 <div class="media recent_post_item">
                                     <img src="../static/img/blog-single/news_01.jpg" alt="">
                                     <div class="media-body">
-                                        <a href="#">
-                                            <h5>Is It Worth Buying A Premium Form Builder.</h5>
+                                        <a href="/useful-skills">
+                                            <h5>Ten Life Hacks You Might Want to Know</h5>
                                         </a>
                                         <div class="entry_post_date">January 14, 2020</div>
                                     </div>
@@ -291,7 +310,7 @@
                                 <div class="media recent_post_item">
                                     <img src="../static/img/blog-single/news_02.jpg" alt="">
                                     <div class="media-body">
-                                        <a href="#">
+                                        <a href="https://travel.usnews.com/rankings/best-summer-vacations/">
                                             <h5>10 Classic Summer Vacations</h5>
                                         </a>
                                         <div class="entry_post_date">April 16, 2020</div>
@@ -300,7 +319,7 @@
                                 <div class="media recent_post_item">
                                     <img src="../static/img/blog-single/news_03.jpg" alt="">
                                     <div class="media-body">
-                                        <a href="#">
+                                        <a href="https://wedevs.com/blog/124359/weforms-widget-elementor/">
                                             <h5>How To Easily Add weForms Widget Using Elementor</h5>
                                         </a>
                                         <div class="entry_post_date">March 10, 2020</div>
@@ -309,7 +328,7 @@
                                 <div class="media recent_post_item">
                                     <img src="../static/img/blog-single/news_04.jpg" alt="">
                                     <div class="media-body">
-                                        <a href="#">
+                                        <a href="https://wpforms.com/how-to-add-a-gdpr-agreement-field-to-your-sites-forms/#:~:text=How%20to%20Create%20a%20GDPR%20Compliant%20Form%20in,Step%205%3A%20Publish%20Your%20GDPR%20Compliant%20Form%20">
                                             <h5>How to Create GDPR Consent Form In WordPress</h5>
                                         </a>
                                         <div class="entry_post_date">January 19, 2020</div>
@@ -321,25 +340,25 @@
                                 <ul class="list-unstyled recent_comments">
                                     <li>
                                         <h6><i class="icon_chat_alt"></i>Douglas Lyphe:</h6>
-                                        <a href="#" class="text">
+                                        <a class="text">
                                             French squiffy pukka gosh nancy boy buggered, bog-standard.!
                                         </a>
                                     </li>
                                     <li>
                                         <h6><i class="icon_chat_alt"></i>Hilary Ouse:</h6>
-                                        <a href="#" class="text">
+                                        <a class="text">
                                             Charles give us a bell butty blatant baking cakes cheesed off.
                                         </a>
                                     </li>
                                     <li>
                                         <h6><i class="icon_chat_alt"></i>Penny Tool:</h6>
-                                        <a href="#" class="text">
+                                        <a class="text">
                                             Starkers happy days bobby pardon me.
                                         </a>
                                     </li>
                                     <li>
                                         <h6><i class="icon_chat_alt"></i>Jackson Pot:</h6>
-                                        <a href="#" class="text">
+                                        <a class="text">
                                             Charles give us a bell butty blatant baking cakes cheesed off.
                                         </a>
                                     </li>
@@ -353,37 +372,7 @@
                                     <li><a href="#">Photography</a></li>
                                     <li><a href="#">Business</a></li>
                                     <li><a href="#">HerBlossom</a></li>
-                                    <li><a href="#">WordPress</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">DocAll</a></li>
-                                    <li><a href="#">Magento</a></li>
-                                    <li><a href="#">Doc Design</a></li>
-                                    <li><a href="#">ui/ux</a></li>
-                                    <li><a href="#">Docs</a></li>
                                 </ul>
-                            </div>
-                            <div class="widget instragram_widget">
-                                <h4 class="c_head">Instragram</h4>
-                                <div class="instragram_info">
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_01.jpg" alt="">
-                                    </a>
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_02.jpg" alt="">
-                                    </a>
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_03.jpg" alt="">
-                                    </a>
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_04.jpg" alt="">
-                                    </a>
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_05.jpg" alt="">
-                                    </a>
-                                    <a href="#" class="instragram_item">
-                                        <img src="../static/img/blog-single/image_06.jpg" alt="">
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -455,91 +444,93 @@
                 </div>
             </div>
         </section>
-            <footer class="footer_area footer_p_top f_bg_color">
-        <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
-        <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png" alt="">
-        <img class="p_absolute f_cloud" src="../static/img/home_two/cloud.png" alt="">
-        <img class="p_absolute f_email" src="../static/img/home_two/email-icon.png" alt="">
-        <img class="p_absolute f_email_two" src="../static/img/home_two/email-icon_two.png" alt="">
-        <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="../static/img/home_two/man.png" alt="">
-        <div class="footer_top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="f_widget subscribe_widget wow fadeInUp">
-                            <a href="index.html" class="f_logo"><img src="../static/img/logo.png" alt=""></a>
-                            <h4 class="c_head">Subscribe to our newsletter</h4>
-                            <form action="#" class="footer_subscribe_form">
-                                <input type="email" placeholder="Email" class="form-control">
-                                <button type="submit" class="s_btn">Send</button>
-                            </form>
-                            <ul class="list-unstyled f_social_icon">
-                                <li><a href="#"><i class="social_facebook"></i></a></li>
-                                <li><a href="#"><i class="social_twitter"></i></a></li>
-                                <li><a href="#"><i class="social_vimeo"></i></a></li>
-                                <li><a href="#"><i class="social_linkedin"></i></a></li>
-                            </ul>
+        <footer class="footer_area footer_p_top f_bg_color">
+            <img class="p_absolute leaf" src="../static/img/v.svg" alt="">
+            <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="../static/img/home_two/f_man.png"
+                 alt="">
+            <img class="p_absolute f_cloud" src="../static/img/home_two/cloud.png" alt="">
+            <img class="p_absolute f_email" src="../static/img/home_two/email-icon.png" alt="">
+            <img class="p_absolute f_email_two" src="../static/img/home_two/email-icon_two.png" alt="">
+            <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="../static/img/home_two/man.png"
+                 alt="">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="f_widget subscribe_widget wow fadeInUp">
+                                <a href="/index" class="f_logo"><img src="../static/img/logo.png" alt=""></a>
+                                <h4 class="c_head">Subscribe to our newsletter</h4>
+                                <form action="#" class="footer_subscribe_form">
+                                    <input type="email" placeholder="Email" class="form-control">
+                                    <button type="submit" class="s_btn">Send</button>
+                                </form>
+                                <ul class="list-unstyled f_social_icon">
+                                    <li><a href="https://www.facebook.com/"><i class="social_facebook"></i></a></li>
+                                    <li><a href="https://www.x.com/"><i class="social_twitter"></i></a></li>
+                                    <li><a href="https://vimeo.com/"><i class="social_vimeo"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/"><i class="social_linkedin"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
-                            <h3 class="f_title">HerBlossom Pages</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="signin.html">Sign In</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="forums.html">Forum</a></li>
-                                <li><a href="#">Job Recommendation</a></li>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="f_widget link_widget pl_70 wow fadeInUp" data-wow-delay="0.6s">
+                                <h3 class="f_title">HerBlossom Pages</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="/index">Home</a></li>
+                                    <li><a href="/signin">Sign In</a></li>
+                                    <li><a href="/blog">Blog</a></li>
+                                    <li><a href="/forum">Forum</a></li>
+                                    <li><a href="/job-recommendation">Job Recommendation</a></li>
 
-<!--                                <li><a href="changelog.html">Changelog</a></li>-->
-<!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
-<!--                                <li><a href="#">Conversion Tracking</a></li>-->
-<!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
-                            </ul>
+                                    <!--                                <li><a href="changelog.html">Changelog</a></li>-->
+                                    <!--                                <li><a href="Onepage.html">Onepage Docs</a></li>-->
+                                    <!--                                <li><a href="#">Conversion Tracking</a></li>-->
+                                    <!--                                <li><a href="cheatsheet.html">Cheatseet</a></li>-->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-2 col-sm-6">
-                        <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">
-                            <h3 class="f_title">Blog</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="life-skills.html">Life Skills</a></li>
-                                <li><a href="physical-health.html">Physical Health</a></li>
-                                <li><a href="mental-health.html">Mental Health</a></li>
-                                <li><a href="tab.html">Tables</a></li>
-<!--                                <li><a href="#">Image Lightbox</a></li>-->
-<!--                                <li><a href="#">iOS & Android</a></li>-->
-<!--                                <li><a href="#">Messages</a></li>-->
-                            </ul>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="f_widget link_widget wow fadeInUp" data-wow-delay="0.4s">
+                                <h3 class="f_title">Blog</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="/blog">Blog</a></li>
+                                    <li><a href="/blog-category/Skills">Life Skills</a></li>
+                                    <li><a href="/blog-category/Health">Physical & Mental Health</a></li>
+                                    <li><a href="/blog-category/Others">Others</a></li>
+                                    <!--                                <li><a href="#">Image Lightbox</a></li>-->
+                                    <!--                                <li><a href="#">iOS & Android</a></li>-->
+                                    <!--                                <li><a href="#">Messages</a></li>-->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
-                            <h3 class="f_title">Company</h3>
-                            <ul class="list-unstyled link_list">
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="f_widget link_widget pl_30 wow fadeInUp" data-wow-delay="0.2s">
+                                <h3 class="f_title">Company</h3>
+                                <ul class="list-unstyled link_list">
+                                    <li><a href="/about-us">About Us</a></li>
+                                    <li><a href="/contact-us">Contact Us</a></li>
 
-<!--                                <li><a href="#">Careers</a></li>-->
-<!--                                <li><a href="#">HerBlossom for Good</a></li>-->
-<!--                                <li><a href="#">Contact Us</a></li>-->
-                            </ul>
+                                    <!--                                <li><a href="#">Careers</a></li>-->
+                                    <!--                                <li><a href="#">HerBlossom for Good</a></li>-->
+                                    <!--                                <li><a href="#">Contact Us</a></li>-->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <div class="border_bottom"></div>
                 </div>
-                <div class="border_bottom"></div>
             </div>
-        </div>
-        <div class="footer_bottom text-center">
-            <div class="container">
-                <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+            <div class="footer_bottom text-center">
+                <div class="container">
+                    <p>© 2025 All Rights Reserved by <a href="/index">HerBlossom</a></p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 
     <!-- Back to top button -->
@@ -554,6 +545,7 @@
     <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- 依赖插件 -->
     <script src="../static/assets/bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="../static/assets/font-size/js/rvfs.js"></script>
     <script src="../static/js_test/TweenMax.min.js"></script>
     <script src="../static/assets/font-size/js/rv-jquery-fontsize-2.0.3.js"></script>
     <script src="../static/js_test/parallaxie.js"></script>
@@ -566,6 +558,42 @@
     <script src="../static/js/change-button.js"></script>
     <!-- 最后加载 main.js -->
     <script src="../static/js_test/main.js"></script>
+<script>
+    // 缓存所有需要调整的元素
+    let allTextElements = [];
+
+    // 页面加载完毕后缓存元素列表
+    window.addEventListener('DOMContentLoaded', () => {
+      allTextElements = Array.from(document.querySelectorAll('body *'))
+        // 过滤掉不能设置 fontSize 的标签，比如 <script>, <style> 等
+        .filter(el => el.nodeType === Node.ELEMENT_NODE);
+    });
+
+    /**
+     * 调整所有元素的字体大小
+     * @param {number} delta - 以像素为单位的增量（正数放大，负数缩小）
+     */
+    function changeFontSizeAll(delta) {
+      allTextElements.forEach(el => {
+        // 获取当前计算值，例如 "16px"
+        const style = window.getComputedStyle(el).getPropertyValue('font-size');
+        const current = parseFloat(style);
+        // 计算新的字号，并限制在 10px–36px
+        const next = Math.min(Math.max(current + delta, 10), 36);
+        el.style.fontSize = next + 'px';
+      });
+    }
+
+    /**
+     * 重置所有元素的字体大小到默认
+     * 移除内联 font-size，让它们回到原始 CSS 样式
+     */
+    function resetFontSizeAll() {
+      allTextElements.forEach(el => {
+        el.style.removeProperty('font-size');
+      });
+    }
+  </script>
 
 </body>
 
