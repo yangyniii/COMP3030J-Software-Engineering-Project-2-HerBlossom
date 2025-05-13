@@ -295,7 +295,7 @@ ul.list-style li:last-child {
 }
 
 .f_bg_color {
-  background: #f6fbfc;
+  background: #ffe8ef;
 }
 
 .local-video-container {
@@ -2102,7 +2102,7 @@ ul.list-style li:last-child {
 /*=========== End breadcrumb_area css_test ============*/
 /*=========== Start breadcrumb_area_two css_test ============*/
 .breadcrumb_area_two {
-  background: #edfbfe;
+  background: #ffe8ef;
   padding: 50px 0 60px;
 }
 
@@ -8662,23 +8662,31 @@ blockquote .author {
   margin-bottom: -40px;
 }
 .blog_related_post .blog_grid_post {
-  box-shadow: none;
+  box-shadow: 0 10px 20px 0 rgb(181, 181, 181);
+  border: 2px solid #ffadbf; /* 添加边框 */
+  background-color: rgb(255, 237, 242); /* 可选：设置背景颜色 */
+  padding: 15px; /* 内部留白 */
+  border-radius: 15px; /* 圆角边框 */
 }
+
 .blog_related_post .blog_grid_post img {
   border-radius: 4px;
   max-width: 100%;
 }
+
 .blog_related_post .grid_post_content {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
 }
+
 .blog_related_post .grid_post_content .post_tag {
   padding-bottom: 4px;
 }
 .blog_related_post .grid_post_content .b_title {
   font-size: 18px;
   line-height: 24px;
+  margin-bottom: -5px;
 }
 .blog_related_post .grid_post_content p {
   margin-bottom: 0;
@@ -8711,7 +8719,7 @@ blockquote .author {
   height: 36px;
   display: inline-flex;
   border-radius: 4px;
-  border: 1px solid #a7e1ed;
+  border: 1px solid #fdcdd9;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -8729,12 +8737,31 @@ blockquote .author {
 .pagination .page-numbers:hover, .pagination .page-numbers.current {
   background-color: #ed7595;
   border-color: #ed7595;
-  box-shadow: 0 20px 30px 0 rgba(12, 118, 142, 0.24);
+  box-shadow: 0 20px 30px 0 rgb(165, 68, 81);
   color: #fff;
 }
 .pagination .page-numbers.current {
   box-shadow: none;
 }
+
+/* 1. Define the custom font-size variable globally */
+:root {
+  --custom-font-size: 16px;
+}
+
+/* 1. 两段可调节的 <p> */
+p.adjustable-text,
+
+/* 2. 评论区整体 */
+.comment_inner.adjustable-text,
+.comment_inner.adjustable-text *,
+
+/* 3. blockquote 里的标题和作者 */
+blockquote .c_head,
+blockquote .author {
+  font-size: var(--custom-font-size) !important;
+}
+
 
 /*=========== End blog_area css_test ==========*/
 /*=========== Start blog_sidebar css_test ==========*/
@@ -8749,7 +8776,8 @@ blockquote .author {
 }
 
 .about_widget .img {
-  border: 1px solid #e5edef;
+  box-shadow: 0 0 10px 0 #a7acbd;
+  border: 2px solid #ffadbf;
   padding: 8px;
   border-radius: 4px;
 }
@@ -8783,7 +8811,7 @@ blockquote .author {
   content: "";
   width: 6px;
   height: 6px;
-  background: #aab0c0;
+  background: #ffe8ef;
   position: absolute;
   left: 0;
   top: 6.5px;
@@ -8951,6 +8979,7 @@ blockquote .author {
   color: #686d7d;
   padding: 8px 24px;
 }
+
 .comments_widget li + li {
   margin-top: 23px;
 }
@@ -10577,4 +10606,10 @@ button.active {
     color: white;
 }
 
+.custom-blockquote {
+    background-color: #fbf0f3; /* 浅粉色背景 */
+    padding: 15px 20px;
+    border-left: 5px solid #ff6b8b; /* 可选：左侧边栏强调条 */
+    margin: 20px 0;
+}
 /*# sourceMappingURL=style.css_test.map */
