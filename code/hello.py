@@ -244,7 +244,7 @@ def get_user_info_by_id():
     # 在确认 user_info 不为空后再访问 avatar
     avatar_path = user_info.get('avatar', '../static/images/chiikawa.jpg')
     if not avatar_path.startswith('../'):
-        avatar_path = '../static/images/' + avatar_path
+        avatar_path = avatar_path
     print('Avatar path11:', avatar_path)
 
 
@@ -367,14 +367,20 @@ def delete_post():
         return jsonify({'success': False, 'message': str(e)})
 
 
-@app.route('/post_post', methods=['GET'])
-def post_post():
+@app.route('/post_posts', methods=['GET'])
+def post_posts():
     db = Mysql()
     post_list = db.get_posts()
+
+    # 获取每个帖子的用户头像
+    for post in post_list:
+        user_info = db.get_user_info_by_id(post['user_id'])
+        post['avatar'] = user_info['avatar'] if user_info else '../static/images/chiikawa.jpg'
+
     if post_list:
         return jsonify({'posts': post_list})
     else:
-        return jsonify({'message': 'No books found'}), 404
+        return jsonify({'message': 'No post found'}), 404
 
 
 @app.route('/publish_comment', methods=['GET'])
@@ -643,14 +649,7 @@ def post_edit():
 
 
 
-@app.route('/post_posts', methods=['GET'])
-def post_posts():
-    db = Mysql()
-    post_list = db.get_posts()
-    if post_list:
-        return jsonify({'posts': post_list})
-    else:
-        return jsonify({'message': 'No post found'}), 404
+
 
 
 @app.route('/forum-single', methods=['GET'])
@@ -664,8 +663,15 @@ def forum_single():
     post = db.get_post_by_id(post_id)  # 你需要确保这个方法存在并能根据 post_id 返回数据
     print("forum- single Queried post:", post)
 
+    user_info = db.get_user_info_by_id(post['user_id'])
+    avatar = user_info['avatar'] if user_info and user_info['avatar'] else '../static/images/chiikawa.jpg'
+
     if not post:
+
         return render_template('404.html', message="Post not found"), 404
+
+        # 获取作者信息
+
     author_comments, other_comments = db.get_comments_by_post_id(post_id)
 
     return render_template('forum-single.html', post={
@@ -677,7 +683,8 @@ def forum_single():
         'category': post['category'],
         'comment_count': post['comment_count'],
         'create_time': post['create_time'],
-        'image_urls': post['image_urls'].split(',') if post['image_urls'] else []
+        'image_urls': post['image_urls'].split(',') if post['image_urls'] else [],
+        'avatar': avatar  # 添加头像路径
 
     }, author_comments=author_comments, other_comments=other_comments)
 
