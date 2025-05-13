@@ -2102,7 +2102,7 @@ ul.list-style li:last-child {
 /*=========== End breadcrumb_area css_test ============*/
 /*=========== Start breadcrumb_area_two css_test ============*/
 .breadcrumb_area_two {
-  background: #edfbfe;
+  background: #ffe8ef;
   padding: 50px 0 60px;
 }
 
@@ -8719,7 +8719,7 @@ blockquote .author {
   height: 36px;
   display: inline-flex;
   border-radius: 4px;
-  border: 1px solid #a7e1ed;
+  border: 1px solid #fdcdd9;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -8737,7 +8737,7 @@ blockquote .author {
 .pagination .page-numbers:hover, .pagination .page-numbers.current {
   background-color: #ed7595;
   border-color: #ed7595;
-  box-shadow: 0 20px 30px 0 rgba(12, 118, 142, 0.24);
+  box-shadow: 0 20px 30px 0 rgb(165, 68, 81);
   color: #fff;
 }
 .pagination .page-numbers.current {
@@ -8776,7 +8776,8 @@ blockquote .author {
 }
 
 .about_widget .img {
-  border: 1px solid #e5edef;
+  box-shadow: 0 0 10px 0 #a7acbd;
+  border: 2px solid #ffadbf;
   padding: 8px;
   border-radius: 4px;
 }
@@ -8810,7 +8811,7 @@ blockquote .author {
   content: "";
   width: 6px;
   height: 6px;
-  background: #aab0c0;
+  background: #ffe8ef;
   position: absolute;
   left: 0;
   top: 6.5px;
@@ -8969,14 +8970,13 @@ blockquote .author {
 }
 .comments_widget li .text {
   display: block;
-  background-color: #f3f8f9;
-  border: 1px solid #e7edee;
+  background-color: #fbf0f3;
+  border: 1px solid #ed7595;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   color: #686d7d;
-  padding: 8px 24px;
 }
 .comments_widget li + li {
   margin-top: 23px;
@@ -10604,4 +10604,10 @@ button.active {
     color: white;
 }
 
+.custom-blockquote {
+    background-color: #fbf0f3; /* 浅粉色背景 */
+    padding: 15px 20px;
+    border-left: 5px solid #ff6b8b; /* 可选：左侧边栏强调条 */
+    margin: 20px 0;
+}
 /*# sourceMappingURL=style.css_test.map */

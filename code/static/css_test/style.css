@@ -8872,7 +8872,8 @@ blockquote .author {
 }
 
 .about_widget .img {
-  border: 1px solid #e5edef;
+  box-shadow: 0 0 10px 0 #a7acbd;
+  border: 2px solid #ffadbf;
   padding: 8px;
   border-radius: 4px;
 }
@@ -8986,14 +8987,14 @@ blockquote .author {
 }
 .comments_widget li .text {
   display: block;
-  background-color: #f3f8f9;
-  border: 1px solid #e7edee;
-  border-radius: 4px;
+  background-color: #ffced9;
+  border: 1px solid #ed7595;
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #686d7d;
-  padding: 8px 24px;
+  color: #000000;
+  padding: 3px;
 }
 .comments_widget li + li {
   margin-top: 23px;
