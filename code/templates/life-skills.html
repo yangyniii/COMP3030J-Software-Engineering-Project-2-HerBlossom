@@ -141,7 +141,7 @@
                         <div class="blog_single_info">
                             <div class="blog_single_item">
                                 <div class="single_post_two">
-                                    <p>Learning how to read your natural gas meter is a simple but important life skill—especially if you’re living on your own for the first time. It helps you keep track of your energy usage, avoid overpaying, and catch any unusual activity. Here’s a quick guide to help you out!</p>
+                                    <p class="adjustable-text">Learning how to read your natural gas meter is a simple but important life skill—especially if you’re living on your own for the first time. It helps you keep track of your energy usage, avoid overpaying, and catch any unusual activity. Here’s a quick guide to help you out!</p>
                                     <!-- 将原有的静态图片替换为热点交互图片 -->
                                     <div class="pointing_img_container pointing_img_two">
                                         <img class="img-fluid" src="../static/img/blog-single/skill-3.jpg" alt="large">
@@ -159,7 +159,7 @@
                                             <div class="dot"></div>
                                         </div>
                                     </div>
-                                    <p>Remember: Being independent means being aware. Taking five minutes to read your gas meter can save you money and give you peace of mind. You’ve got this!</p>
+                                    <p class="adjustable-text">Remember: Being independent means being aware. Taking five minutes to read your gas meter can save you money and give you peace of mind. You’ve got this!</p>
                                 </div>
                                 <blockquote>
                                     <h4 class="c_head">If you notice a sudden spike in usage, there might be a leak—contact your gas provider immediately.</h4>
@@ -175,7 +175,7 @@
                                 </ul>
                                 </div>
                             </div>
-                            <div class="comment_inner">
+                            <div class="comment_inner  adjustable-text">
                                 <h2 class="c_head">4 Comments</h2>
                                 <ul class="comment_box list-unstyled">
                                     <li class="post_comment">
@@ -300,18 +300,16 @@
                             <div class="widget font-adjust-controls">
                                 <h4 class="c_head">Useful Tools</h4>
 
-                                <button class="btn-font-increase" onclick="changeFontSizeAll(1)">
-                                    <i class="fas fa-search-plus" aria-hidden="true"></i>
+                                <button onclick="changeTargetFontSize(1)">
+                                    <i class="fas fa-search-plus"></i>
                                     <span class="sr-only">A+</span>
                                 </button>
-
-                                <button class="btn-font-decrease" onclick="changeFontSizeAll(-1)">
-                                    <i class="fas fa-search-minus" aria-hidden="true"></i>
+                                <button onclick="changeTargetFontSize(-1)">
+                                    <i class="fas fa-search-minus"></i>
                                     <span class="sr-only">A-</span>
                                 </button>
-
-                                <button class="btn-font-reset" onclick="resetFontSizeAll()">
-                                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                                <button onclick="resetTargetFontSize()">
+                                    <i class="fas fa-sync-alt"></i>
                                     <span class="sr-only">Reset</span>
                                 </button>
 
@@ -555,41 +553,26 @@
     <!-- 最后加载 main.js -->
     <script src="../static/js_test/main.js"></script>
 <script>
-    // 缓存所有需要调整的元素
-    let allTextElements = [];
+  /**
+   * Adjust just the two paragraphs + comment area font-size
+   * @param {number} delta — pixels to add/subtract
+   */
+  function changeTargetFontSize(delta) {
+    // Read current value from :root
+    const root = document.documentElement;
+    const curr = parseFloat(getComputedStyle(root).getPropertyValue('--custom-font-size'));
+    // Compute next, clamped between 10px and 36px
+    const next = Math.min(Math.max(curr + delta, 10), 36);
+    // Write back to the CSS variable
+    root.style.setProperty('--custom-font-size', next + 'px');
+  }
 
-    // 页面加载完毕后缓存元素列表
-    window.addEventListener('DOMContentLoaded', () => {
-      allTextElements = Array.from(document.querySelectorAll('body *'))
-        // 过滤掉不能设置 fontSize 的标签，比如 <script>, <style> 等
-        .filter(el => el.nodeType === Node.ELEMENT_NODE);
-    });
+  /** Reset those elements back to 16px */
+  function resetTargetFontSize() {
+    document.documentElement.style.setProperty('--custom-font-size', '16px');
+  }
+</script>
 
-    /**
-     * 调整所有元素的字体大小
-     * @param {number} delta - 以像素为单位的增量（正数放大，负数缩小）
-     */
-    function changeFontSizeAll(delta) {
-      allTextElements.forEach(el => {
-        // 获取当前计算值，例如 "16px"
-        const style = window.getComputedStyle(el).getPropertyValue('font-size');
-        const current = parseFloat(style);
-        // 计算新的字号，并限制在 10px–36px
-        const next = Math.min(Math.max(current + delta, 10), 36);
-        el.style.fontSize = next + 'px';
-      });
-    }
-
-    /**
-     * 重置所有元素的字体大小到默认
-     * 移除内联 font-size，让它们回到原始 CSS 样式
-     */
-    function resetFontSizeAll() {
-      allTextElements.forEach(el => {
-        el.style.removeProperty('font-size');
-      });
-    }
-  </script>
 
 </body>
 

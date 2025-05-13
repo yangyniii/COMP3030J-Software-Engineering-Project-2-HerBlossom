@@ -8744,6 +8744,25 @@ blockquote .author {
   box-shadow: none;
 }
 
+/* 1. Define the custom font-size variable globally */
+:root {
+  --custom-font-size: 16px;
+}
+
+/* 1. 两段可调节的 <p> */
+p.adjustable-text,
+
+/* 2. 评论区整体 */
+.comment_inner.adjustable-text,
+.comment_inner.adjustable-text *,
+
+/* 3. blockquote 里的标题和作者 */
+blockquote .c_head,
+blockquote .author {
+  font-size: var(--custom-font-size) !important;
+}
+
+
 /*=========== End blog_area css_test ==========*/
 /*=========== Start blog_sidebar css_test ==========*/
 .widget .c_head {
