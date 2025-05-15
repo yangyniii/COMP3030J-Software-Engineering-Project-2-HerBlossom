@@ -408,7 +408,6 @@ def publish_comment():
 
 
 
-
 @app.route('/search_posts', methods=['GET'])
 def search_posts():
     title = request.args.get('title', '')
