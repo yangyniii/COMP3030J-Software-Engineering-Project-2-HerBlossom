@@ -23,7 +23,7 @@
     <!--    user change their information css-->
 <!--    <link rel="stylesheet" href="../static/css/style1.css">-->
     <link rel="stylesheet" href="../static/css_new/account.css">
-    <title>Account</title>
+    <title>Profile</title>
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example3" data-offset="86" data-scroll-animation="true" class="doc">
@@ -385,14 +385,14 @@
                     <div class="col-sm-7">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="Account.html">Account</a></li>
+                                <li class="breadcrumb-item"><a href="/profile">Profile</a></li>
 <!--                                <li class="breadcrumb-item"><a href="#">Docs</a></li>-->
 <!--                                <li class="breadcrumb-item active" aria-current="page">HerBlossom WordPress Theme</li>-->
                             </ol>
                         </nav>
                     </div>
                     <div class="col-sm-5">
-                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2020</a>
+                        <a href="#" class="date"><i class="icon_clock_alt"></i>Updated on March 03, 2025</a>
                     </div>
                 </div>
             </div>
@@ -486,8 +486,8 @@
                             <div class="caniuse">
                                 <div class="shortcode_title">
 <!--                                    edit the main content of Account here-->
-                                    <h1>Account</h1>
-                                    <p><span>Welcome to HerBlossom !</span> You can edit your Account information here.</p>
+                                    <h1>Profile</h1>
+                                    <p><span>Welcome to HerBlossom !</span> You can edit your Profile information here.</p>
                                 </div>
 
                                 <!-- Button to return to the home page -->
@@ -528,24 +528,30 @@
                                                                    accept="image/*" style="display: none;" required>
 
                                                             <!-- 图片预览区域 -->
-                                                            <div class="avatar-preview-container"
-                                                                 style="text-align:center;">
+                                                            <div class="avatar-preview-container text-center">
                                                                 <img id="avatarPreview" src="#" alt="Preview"
-                                                                     style="display:none; max-width:100%; border: 1px solid #ddd; margin:10px auto;">
+                                                                     class="img-fluid"
+                                                                     style="display:none; border: 1px solid #ddd; margin:10px auto;">
                                                             </div>
 
-                                                            <!-- 按钮区域：选择图片 & Done 两个按钮居中排列 -->
-                                                            <div class="button-row" style="text-align:center;">
-                                                                <button type="button" id="chooseImageBtn"
-                                                                        class="btn btn-secondary"
-                                                                        style="margin-right:10px;">Choose your new avatar
-                                                                </button>
-                                                                <button type="button" id="doneBtn"
-                                                                        class="btn btn-primary">Done
-                                                                </button>
+                                                            <!-- 按钮区域：两列布局 -->
+                                                            <div class="row mt-3">
+                                                                <div class="col-6 d-flex justify-content-center">
+                                                                    <button type="button" id="chooseImageBtn"
+                                                                            class="btn btn-outline-secondary w-auto text-nowrap">
+                                                                        Choose avatar
+                                                                    </button>
+                                                                </div>
+                                                                <div class="col-6 d-flex justify-content-center">
+                                                                    <button type="button" id="doneBtn"
+                                                                            class="btn btn-primary w-100 text-nowrap">
+                                                                        Done
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -636,7 +642,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-sm-6">
-                        <p>© 2020 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
+                        <p>© 2025 All Rights Reserved by <a href="index.html">HerBlossom</a></p>
                     </div>
                     <div class="col-sm-6 text-right">
                         <ul class="list-unstyled f_social_icon">
@@ -798,12 +804,12 @@
                     // 登出成功，重定向到首页
                     window.location.href = '/index';
                 } else {
-                    alert('登出失败，请重试');
+                    alert('Sign out failed. Please try again.');
                 }
             })
             .catch(error => {
                 console.error('Error during logout:', error);
-                alert('登出过程中发生错误，请重试');
+                alert('An error happened. Please try again.');
             });
         }
     </script>
