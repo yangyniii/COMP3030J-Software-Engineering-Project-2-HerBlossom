@@ -425,7 +425,6 @@ def search_posts():
         return jsonify({'success': False, 'message': str(e)})
 
 
-
 @app.route('/forum', methods=['GET'])
 def forum():
     try:
