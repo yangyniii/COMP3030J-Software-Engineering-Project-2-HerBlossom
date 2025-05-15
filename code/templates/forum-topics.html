@@ -40,6 +40,24 @@
         .likes-count {
             font-size: 14px;
         }
+
+.author-avatar img {
+        display: block; /* 确保图片是块级元素，避免 inline 元素的间距问题 */
+        width: 100%; /* 确保图片占满父容器 */
+        height: auto; /* 保持图片比例 */
+        border-radius: 50%; /* 如果需要圆形头像，添加圆角 */
+        object-fit: cover; /* 确保图片内容不会被拉伸或压缩 */
+    }
+
+    .author-avatar {
+        width: 50px; /* 设置头像容器的宽度 */
+        height: 50px; /* 设置头像容器的高度 */
+        overflow: hidden; /* 确保超出容器的部分被隐藏 */
+        border-radius: 50%; /* 如果需要圆形头像，添加圆角 */
+        display: flex; /* 居中对齐 */
+        align-items: center; /* 垂直居中 */
+        justify-content: center; /* 水平居中 */
+    }
     </style>
 </head>
 
