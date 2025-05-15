@@ -528,24 +528,30 @@
                                                                    accept="image/*" style="display: none;" required>
 
                                                             <!-- 图片预览区域 -->
-                                                            <div class="avatar-preview-container"
-                                                                 style="text-align:center;">
+                                                            <div class="avatar-preview-container text-center">
                                                                 <img id="avatarPreview" src="#" alt="Preview"
-                                                                     style="display:none; max-width:100%; border: 1px solid #ddd; margin:10px auto;">
+                                                                     class="img-fluid"
+                                                                     style="display:none; border: 1px solid #ddd; margin:10px auto;">
                                                             </div>
 
-                                                            <!-- 按钮区域：选择图片 & Done 两个按钮居中排列 -->
-                                                            <div class="button-row" style="text-align:center;">
-                                                                <button type="button" id="chooseImageBtn"
-                                                                        class="btn btn-secondary"
-                                                                        style="margin-right:10px;">Choose your new avatar
-                                                                </button>
-                                                                <button type="button" id="doneBtn"
-                                                                        class="btn btn-primary">Done
-                                                                </button>
+                                                            <!-- 按钮区域：两列布局 -->
+                                                            <div class="row mt-3">
+                                                                <div class="col-6 d-flex justify-content-center">
+                                                                    <button type="button" id="chooseImageBtn"
+                                                                            class="btn btn-outline-secondary w-auto text-nowrap">
+                                                                        Choose avatar
+                                                                    </button>
+                                                                </div>
+                                                                <div class="col-6 d-flex justify-content-center">
+                                                                    <button type="button" id="doneBtn"
+                                                                            class="btn btn-primary w-100 text-nowrap">
+                                                                        Done
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -798,12 +804,12 @@
                     // 登出成功，重定向到首页
                     window.location.href = '/index';
                 } else {
-                    alert('登出失败，请重试');
+                    alert('Sign out failed. Please try again.');
                 }
             })
             .catch(error => {
                 console.error('Error during logout:', error);
-                alert('登出过程中发生错误，请重试');
+                alert('An error happened. Please try again.');
             });
         }
     </script>
