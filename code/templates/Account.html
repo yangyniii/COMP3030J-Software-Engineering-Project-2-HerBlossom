@@ -646,10 +646,10 @@
                     </div>
                     <div class="col-sm-6 text-right">
                         <ul class="list-unstyled f_social_icon">
-                            <li><a href="#"><i class="social_facebook"></i></a></li>
-                            <li><a href="#"><i class="social_twitter"></i></a></li>
-                            <li><a href="#"><i class="social_vimeo"></i></a></li>
-                            <li><a href="#"><i class="social_linkedin"></i></a></li>
+                            <li><a href="https://www.facebook.com/"><i class="social_facebook"></i></a></li>
+                            <li><a href="https://www.x.com/"><i class="social_twitter"></i></a></li>
+                            <li><a href="https://vimeo.com/"><i class="social_vimeo"></i></a></li>
+                            <li><a href="https://www.linkedin.com/"><i class="social_linkedin"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -802,7 +802,7 @@
             .then(data => {
                 if (data.message === 'Logged out successfully') {
                     // 登出成功，重定向到首页
-                    window.location.href = '/index';
+                    window.location.href = '/signin';
                 } else {
                     alert('Sign out failed. Please try again.');
                 }
