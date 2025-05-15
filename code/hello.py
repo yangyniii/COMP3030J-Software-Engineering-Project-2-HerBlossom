@@ -610,7 +610,6 @@ def forum_single1():
     return render_template('forum-single1弃.html', post=post)  # 传递 post 变量
 
 
-
 @app.route('/post-edit', methods=['GET', 'POST'])
 def post_edit():
     if request.method == 'POST':
