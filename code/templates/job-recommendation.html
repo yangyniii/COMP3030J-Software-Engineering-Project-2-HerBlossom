@@ -376,6 +376,7 @@ select.form-select:hover {
   margin: 0.75rem;
   padding: 0.75rem 1.5rem;
   border: 3px solid #f48ca0; /* 原来是 1px，这里变成三倍 */
+border-radius: 10px; /* 圆角 */
   outline: none;
   background-color: #ffe6eb; /* 淡粉色填充 */
   color: #333333; /* 深灰色字体 */
@@ -388,7 +389,6 @@ select.form-select:hover {
   transition: all 150ms ease-out;
   width: 200px;
   letter-spacing: 1.6px;
-  border-radius: 2px;
 }
 
 /* 保留 hover 和 focus 效果，根据需要也可以改颜色 */
@@ -407,14 +407,14 @@ select.form-select:active {
     background-color: #f7d1d6; /* 深灰色背景 */
     color: #757575; /* 浅白粉色字体 */
     border: 2px solid #8c8c8c; /* 浅粉色边框 */
-    border-radius: 0px; /* 直角边框 */
+    border-radius: 10px; /* 直角边框 */
     margin-right: 10px; /* 标签之间的间距 */
     display: inline-flex;         /* 关键：使内部文字居中 */
     align-items: center;          /* 垂直居中 */
     justify-content: center;      /* 水平居中 */
 
     font-size: 14px;
-    padding: 7px 14px;
+    padding: 14px 18px;
     line-height: 1;               /* 避免额外行高 */
     vertical-align: middle;       /* 保证多个标签在一行时对齐 */
     transition: all 0.3s ease;    /* 添加平滑过渡效果 */
