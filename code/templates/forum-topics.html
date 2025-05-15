@@ -40,6 +40,27 @@
         .likes-count {
             font-size: 14px;
         }
+
+
+.author-avatar img {
+        display: block; /* 确保图片是块级元素，避免 inline 元素的间距问题 */
+    position: relative; /* 确保可以使用 top 属性调整位置 */
+    width: 80px; /* 设置头像容器的宽度 */
+    height: 80px; /* 设置头像容器的高度 */
+        border-radius: 50%; /* 如果需要圆形头像，添加圆角 */
+        object-fit: cover; /* 确保图片内容不会被拉伸或压缩 */
+        top: -5px;
+    }
+
+    .author-avatar {
+        width: 50px; /* 设置头像容器的宽度 */
+        height: 50px; /* 设置头像容器的高度 */
+        overflow: hidden; /* 确保超出容器的部分被隐藏 */
+        border-radius: 50%; /* 如果需要圆形头像，添加圆角 */
+        display: flex; /* 居中对齐 */
+        align-items: center; /* 垂直居中 */
+        justify-content: center; /* 水平居中 */
+    }
     </style>
 </head>
 
@@ -381,10 +402,10 @@
                                     <button type="submit" class="s_btn">Send</button>
                                 </form>
                                 <ul class="list-unstyled f_social_icon">
-                                    <li><a href="#"><i class="social_facebook"></i></a></li>
-                                    <li><a href="#"><i class="social_twitter"></i></a></li>
-                                    <li><a href="#"><i class="social_vimeo"></i></a></li>
-                                    <li><a href="#"><i class="social_linkedin"></i></a></li>
+                                    <li><a href="https://www.facebook.com/"><i class="social_facebook"></i></a></li>
+                                    <li><a href="https://www.x.com/"><i class="social_twitter"></i></a></li>
+                                    <li><a href="https://vimeo.com/"><i class="social_vimeo"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/"><i class="social_linkedin"></i></a></li>
                                 </ul>
                             </div>
                         </div>

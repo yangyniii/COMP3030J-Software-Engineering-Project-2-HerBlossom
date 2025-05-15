@@ -408,7 +408,6 @@ def publish_comment():
 
 
 
-
 @app.route('/search_posts', methods=['GET'])
 def search_posts():
     title = request.args.get('title', '')
@@ -424,7 +423,6 @@ def search_posts():
         return jsonify({'posts': posts})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
-
 
 
 @app.route('/forum', methods=['GET'])
